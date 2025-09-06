@@ -44,10 +44,21 @@ const Navigation = () => {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:block">
-            <Button variant="default" size="sm" onClick={() => {
+          <div className="hidden md:flex items-center space-x-3.5">
+            <iframe
+              src="https://github.com/sponsors/AppSolves/button"
+              title="Sponsor AppSolves"
+              height="32"
+              width="114"
+              style={{ border: 0, borderRadius: 6 }}
+            />
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => {
                 window.open("mailto:contact@appsolves.dev", "_blank");
-              }}>
+              }}
+            >
               Get in touch
             </Button>
           </div>

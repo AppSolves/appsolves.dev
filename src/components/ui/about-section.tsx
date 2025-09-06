@@ -50,7 +50,7 @@ const AboutSection = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    React, TypeScript, Next.js, Tailwind CSS
+                    React, TypeScript, Next.js, Tailwind CSS, Tk-Inter
                   </p>
                 </CardContent>
               </Card>
@@ -63,7 +63,7 @@ const AboutSection = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Node.js, Python, PostgreSQL, APIs
+                    Node.js, Python, PostgreSQL, DynamoDB, AWS, APIs
                   </p>
                 </CardContent>
               </Card>
@@ -76,7 +76,7 @@ const AboutSection = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Git, Docker, AWS, Figma
+                    Git, Docker, CUDA, Flutter, CMake, Blender, GIMP, PyTorch, AWS, Figma
                   </p>
                 </CardContent>
               </Card>
@@ -89,7 +89,7 @@ const AboutSection = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    Open Source, UI/UX, Performance
+                    AI, Open Source, UI/UX, Desktop Apps, SaaS, Performance
                   </p>
                 </CardContent>
               </Card>
