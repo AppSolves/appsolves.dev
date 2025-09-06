@@ -1,3 +1,7 @@
+import Navigation from "@/components/ui/navigation";
+import Footer from "@/components/ui/footer";
+import { Button } from "@/components/ui/button";
+import { StepBack } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -9,14 +13,26 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-gray-600">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 underline hover:text-blue-700">
-          Return to Home
-        </a>
-      </div>
+      <div className="flex flex-col min-h-screen bg-background">
+      <Navigation />
+      <main className="flex-grow flex items-center justify-center">
+        <div className="text-center flex flex-col items-center flex-grow justify-center">
+          <h1 className="mb-4 text-6xl font-bold">404</h1>
+          <p className="mb-6 text-2xl text-gray-400">Oops! Page not found</p>
+          <br></br>
+          <Button variant="default" size="lg" className="group flex items-center" onClick={() => {
+              if (document.referrer) {
+                window.history.back();
+              } else {
+                window.location.href = "/";
+              }
+            }}>
+            <StepBack className="ml-2 h-4 w-4 transition-transform group-hover:-translate-x-1 mt-0.5" />
+            Return to Home
+          </Button>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

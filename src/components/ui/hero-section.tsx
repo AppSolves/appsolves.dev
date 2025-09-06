@@ -33,12 +33,12 @@ const HeroSection = () => {
           <div className={`mt-10 flex items-center justify-center gap-x-6 transition-all duration-1000 delay-700 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
-            <Button variant="default" size="lg" className="group" onClick={() => {
+            <Button variant="default" size="lg" className="group flex items-center" onClick={() => {
                 const section = document.getElementById("projects-section");
                 section?.scrollIntoView({ behavior: "smooth" });
               }}>
               View My Work
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 mt-0.5" />
             </Button>
           </div>
         </div>

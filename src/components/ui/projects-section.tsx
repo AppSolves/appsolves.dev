@@ -35,11 +35,11 @@ const ProjectsSection = () => {
       githubUrl: "https://github.com/AppSolves/fastapi-users-db-dynamodb"
     },
     {
-      title: "QuickCLipAI", 
+      title: "QuickClipAI", 
       description: "A powerful tool to automatically generate AI-driven YouTube shorts, Instagram Reels and TikToks. Create engaging content in seconds with our AI-powered video generator!",
       tech: ["python", "fooocus", "moviepy", "automation", "gpt4free"],
       liveUrl: "https://youtube.com/@curioburstz",
-      githubUrl: "https://github.com/AppSolves/QuickCLipAI"
+      githubUrl: "https://github.com/AppSolves/QuickClipAI"
     }
   ];
 
