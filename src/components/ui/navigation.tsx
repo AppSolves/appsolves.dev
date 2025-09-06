@@ -56,9 +56,9 @@ const Navigation = () => {
               variant="default"
               size="sm"
               onClick={() => {
-                window.open("mailto:contact@appsolves.dev", "_blank");
-              }}
-            >
+                const section = document.getElementById("footer-section");
+                section?.scrollIntoView({ behavior: "smooth" });
+              }}>
               Get in touch
             </Button>
           </div>
@@ -90,7 +90,8 @@ const Navigation = () => {
               ))}
               <div className="pt-2">
                 <Button variant="default" size="sm" className="w-full" onClick={() => {
-                  window.open("mailto:contact@appsolves.dev", "_blank");
+                  const section = document.getElementById("footer-section");
+                  section?.scrollIntoView({ behavior: "smooth" });
                 }}>
                   Get in touch
                 </Button>
