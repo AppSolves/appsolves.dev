@@ -46,9 +46,9 @@
     --section-bg: 220 13% 8%;
     
     /* Animation variables */
-    --gradient-1: 220 13% 12%;
-    --gradient-2: 210 20% 15%;
-    --gradient-3: 200 15% 18%;
+    --gradient-1: 243 71% 40%;
+    --gradient-2: 243 71% 64%;
+    --gradient-3: 243 71% 80%;
     
     /* Sidebar system (keeping dark theme) */
     --sidebar-background: 220 13% 7%;
@@ -122,10 +122,11 @@
         hsl(var(--gradient-2)) 75%,
         hsl(var(--gradient-1)) 100%);
     background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-    z-index: -1;
-    opacity: 0.3;
-    mix-blend-mode: screen;
+    animation: gradientShift 30s ease infinite;
+    z-index: 1;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    pointer-events: none;
   }
 
   @keyframes gradientShift {
