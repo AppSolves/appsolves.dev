@@ -99,8 +99,9 @@
         hsl(var(--gradient-1)) 100%);
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
-    z-index: -1;
+    z-index: 1;
     opacity: 0.3;
+    mix-blend-mode: screen;
   }
 
   @keyframes gradientShift {
