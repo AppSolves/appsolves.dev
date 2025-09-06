@@ -69,6 +69,8 @@ const Footer = () => {
           {/* Copyright */}
           <div className="text-sm text-muted-foreground">
             <p>© {new Date().getFullYear()} Kaan Gönüldinc (aka AppSolves). All rights reserved.</p>
+            <br></br>
+            <p>You may find more information on the <a href="https://legacy.appsolves.dev" target="_blank">legacy version</a> of this site.</p>
           </div>
         </div>
       </div>
