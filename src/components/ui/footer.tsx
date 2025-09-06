@@ -68,6 +68,12 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="text-sm text-muted-foreground">
+            <p className="flex justify-center items-center gap-4">
+              <a href="/privacy_policy">Privacy Policy</a>
+              <span>|</span>
+              <a href="/terms_and_conditions">Terms & Conditions</a>
+            </p>
+            <br></br>
             <p>© {new Date().getFullYear()} Kaan Gönüldinc (aka AppSolves). All rights reserved.</p>
             <br></br>
             <p>You may find more information on the <a href="https://legacy.appsolves.dev" target="_blank">legacy version</a> of this site.</p>

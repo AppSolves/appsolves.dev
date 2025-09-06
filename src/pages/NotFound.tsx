@@ -15,7 +15,7 @@ const NotFound = () => {
   return (
       <div className="flex flex-col min-h-screen bg-background">
       <Navigation />
-      <main className="flex-grow flex items-center justify-center">
+      <main className="flex-grow flex flex-col items-center justify-center pt-20">
         <div className="text-center flex flex-col items-center flex-grow justify-center">
           <h1 className="mb-4 text-6xl font-bold">404</h1>
           <p className="mb-6 text-2xl text-gray-400">Oops! Page not found</p>
@@ -28,7 +28,7 @@ const NotFound = () => {
               }
             }}>
             <StepBack className="ml-2 h-4 w-4 transition-transform group-hover:-translate-x-1 mt-0.5" />
-            Return to Home
+            Go Back
           </Button>
         </div>
       </main>
