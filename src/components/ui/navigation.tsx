@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "./button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Heart } from "lucide-react";
 
 interface NavLink {
   name: string;
@@ -44,17 +44,22 @@ const Navigation = () => {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-3.5">
-            <iframe
-              src="https://github.com/sponsors/AppSolves/button"
-              title="Sponsor AppSolves"
-              height="32"
-              width="114"
-              style={{ border: 0, borderRadius: 6 }}
-            />
+          <div className="hidden md:flex items-center space-x-2.5">
             <Button
               variant="default"
               size="sm"
+              className="w-full flex items-center justify-center gap-2 group"
+              onClick={() => {
+                window.open("https://github.com/sponsors/AppSolves?o=esb", "_blank");
+              }}
+            >
+              <Heart className="h-4 w-4 text-pink-500 transition-transform transform group-hover:scale-125" />
+              <span>Sponsor Me</span>
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              className="w-full flex items-center justify-center group"
               onClick={() => {
                 const section = document.getElementById("footer-section");
                 section?.scrollIntoView({ behavior: "smooth" });
@@ -78,7 +83,7 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 border-t border-border">
+            <div className="px-2 pt-2 pb-3 space-x-2.5 items-center border-t border-border">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -88,11 +93,26 @@ const Navigation = () => {
                   {link.name}
                 </a>
               ))}
-              <div className="pt-2">
-                <Button variant="default" size="sm" className="w-full" onClick={() => {
-                  const section = document.getElementById("footer-section");
-                  section?.scrollIntoView({ behavior: "smooth" });
-                }}>
+              <div className="pt-2 flex flex-col items-center space-y-2.5">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="w-full flex items-center justify-center gap-2 group"
+                  onClick={() => {
+                    window.open("https://github.com/sponsors/AppSolves?o=esb", "_blank");
+                  }}
+                >
+                  <Heart className="h-4 w-4 text-pink-500 transition-transform transform group-hover:scale-125" />
+                  <span>Sponsor Me</span>
+                </Button>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="w-full flex items-center justify-center group"
+                  onClick={() => {
+                    const section = document.getElementById("footer-section");
+                    section?.scrollIntoView({ behavior: "smooth" });
+                  }}>
                   Get in touch
                 </Button>
               </div>
