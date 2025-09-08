@@ -43,9 +43,9 @@ const Footer = () => {
   return (
     <footer id="footer-section" className="border-t border-border bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col items-center text-center space-y-8">
+        <div className="flex flex-col items-center text-center gap-8">
           {/* Social Links */}
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {socialLinks.map((link) => (
               <Button
                 key={link.name}

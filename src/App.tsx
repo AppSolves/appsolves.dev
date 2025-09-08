@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -35,17 +36,17 @@ const App = () => {
         </BrowserRouter>
 
         {/* Scroll to Top Button */}
-        <button
+        <Button
           onClick={scrollToTop}
           className={`
-            fixed bottom-6 right-6 p-3 rounded-full bg-primary text-primary-foreground shadow-lg 
-            transition-opacity duration-300 z-50
+            group items-center fixed bottom-6 right-6 p-3 rounded-full bg-primary
+            text-primary-foreground shadow-lg transition-opacity duration-300 z-50
             ${showButton ? "opacity-100" : "opacity-0 pointer-events-none"}
           `}
           aria-label="Scroll to top"
         >
-          <ArrowUp className="w-5 h-5" />
-        </button>
+          <ArrowUp className="w-5 h-5 transition-transform group-hover:-translate-y-1" />
+        </Button>
       </TooltipProvider>
     </QueryClientProvider>
   );
