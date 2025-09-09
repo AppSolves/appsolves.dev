@@ -1,6 +1,8 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { resolve } from "path";
+import { writeFileSync, readFileSync } from "fs";
 import { componentTagger } from "lovable-tagger";
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
@@ -24,6 +26,16 @@ export default defineConfig(({ mode }) => {
           }
         ]
       }),
+      {
+        name: "copy-404",
+        closeBundle() {
+          const indexPath = resolve(__dirname, "dist/index.html");
+          const notFoundPath = resolve(__dirname, "dist/404.html");
+          const html = readFileSync(indexPath, "utf-8");
+          writeFileSync(notFoundPath, html);
+          console.log("✅ 404.html generated automatically!");
+        },
+      },
       mode === "development" && componentTagger(),
     ].filter(Boolean),
     resolve: {
