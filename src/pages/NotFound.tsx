@@ -20,14 +20,14 @@ const NotFound = () => {
           <h1 className="mb-4 text-6xl font-bold">404</h1>
           <p className="mb-6 text-2xl text-gray-400">Oops! Page not found</p>
           <br></br>
-          <Button variant="default" size="lg" className="group flex items-center" onClick={() => {
+          <Button variant="default" size="lg" className="group flex items-center gap-2" onClick={() => {
               if (document.referrer) {
                 window.history.back();
               } else {
                 window.location.href = "/";
               }
             }}>
-            <StepBack className="ml-2 h-4 w-4 transition-transform group-hover:-translate-x-1 mt-[0.175rem]" />
+            <StepBack className="h-4 w-4 transition-transform group-hover:-translate-x-1 mt-[0.1em]" />
             Go Back
           </Button>
         </div>
