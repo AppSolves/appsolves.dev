@@ -38,7 +38,7 @@ const HeroSection = () => {
                 section?.scrollIntoView({ behavior: "smooth" });
               }}>
               View My Work
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 mt-0.5" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 mt-[0.175rem]" />
             </Button>
           </div>
         </div>
