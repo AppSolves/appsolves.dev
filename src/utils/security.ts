@@ -39,9 +39,9 @@ export class SecurityManager {
   disableDevTools(): void {
     document.addEventListener('keydown', (e) => {
       // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-      if (e.key === 'F12' || 
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-          (e.ctrlKey && e.key === 'u')) {
+      if (e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+        (e.ctrlKey && e.key === 'u')) {
         e.preventDefault();
       }
     });
@@ -50,9 +50,9 @@ export class SecurityManager {
   // Console warning for potential scrapers
   addConsoleWarning(): void {
     console.clear();
-    console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
-    console.log('%cThis is a browser feature intended for developers. Using this console to run code could expose your personal information to malicious actors.', 'color: red; font-size: 16px;');
-    console.log('%cIf someone told you to copy/paste something here, it is likely a scam.', 'color: red; font-size: 16px;');
+    console.error('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
+    console.error('%cThis is a browser feature intended for developers. Using this console to run code could expose your personal information to malicious actors.', 'color: red; font-size: 16px;');
+    console.error('%cIf someone told you to copy/paste something here, it is likely a scam.', 'color: red; font-size: 16px;');
   }
 
   // Obfuscate email addresses
@@ -78,7 +78,7 @@ export class SecurityManager {
     // Basic bot detection
     if (this.detectBot()) {
       // Redirect bots or show limited content
-      console.log('Bot detected - implementing restrictions');
+      console.error('Bot detected - implementing restrictions');
     }
 
     // Add console warning

@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import ScrollReveal from "./scroll-reveal";
+import TermynalComponent from "./termynal";
 
 const AboutSection = () => {
+  const [visible, setVisible] = useState(false);
+
   return (
     <section className="py-24 bg-section-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,6 +100,25 @@ const AboutSection = () => {
             </ScrollReveal>
           </div>
         </div>
+        <ScrollReveal delay={800} afterReveal={() => setVisible(true)}>
+          <Card className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-center mt-16">
+            <CardHeader>
+              <CardTitle className="text-lg">My Stats</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {visible && <TermynalComponent
+                options={{
+                  lineData: [
+                    { type: "input", value: "appsolves-cli load-stats github" },
+                    { type: "progress" },
+                    { type: "stats" },
+                  ],
+                  progressLength: 30,
+                }}
+              />}
+            </CardContent>
+          </Card>
+        </ScrollReveal>
       </div>
     </section>
   );
