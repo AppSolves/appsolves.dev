@@ -103,7 +103,7 @@ const AboutSection = () => {
         <ScrollReveal delay={800} afterReveal={() => setVisible(true)}>
           <Card className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg text-center mt-16">
             <CardHeader>
-              <CardTitle className="text-lg">My Stats</CardTitle>
+              <CardTitle className="text-lg">My Stats 🚀</CardTitle>
             </CardHeader>
             <CardContent>
               {visible && <TermynalComponent

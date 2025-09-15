@@ -230,6 +230,7 @@ class Termynal {
         img.style.width = "100%";
         img.style.maxWidth = "650px";
         img.style.marginTop = "16px";
+        img.draggable = false;
 
         img.style.opacity = "0";
         img.style.transform = "scale(0.5)";
