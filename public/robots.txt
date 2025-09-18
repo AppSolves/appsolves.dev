@@ -11,6 +11,12 @@ User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
 
+User-agent: Google-adstxt
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
