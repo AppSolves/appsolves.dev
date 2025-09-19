@@ -5,6 +5,8 @@ Disallow: /private/
 Disallow: /.git/
 Disallow: /src/
 Disallow: /node_modules/
+Disallow: /privacy_policy*
+Disallow: /terms_and_conditions*
 
 # Allow legitimate crawlers for SEO
 User-agent: Googlebot

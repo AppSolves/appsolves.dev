@@ -44,11 +44,13 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+        "@legal": path.resolve(__dirname, "./legal"),
       },
     },
     build: {
       // Enable code minification and obfuscation
       minify: 'terser',
+      chunkSizeWarningLimit: 750,
       terserOptions: {
         compress: {
           drop_console: true, // Remove console.log in production
