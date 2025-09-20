@@ -27,7 +27,8 @@ export default defineConfig(({ mode }) => {
         ]
       }),
       sitemapPlugin({
-        hostname: "https://appsolves.dev",
+        hostname: "https://appsolves.dev/",
+        generateRobotsTxt: false,
       }),
       {
         name: "copy-404",
