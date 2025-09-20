@@ -22,7 +22,7 @@ const Navigation = () => {
           <div className="flex-shrink-0">
             <a href="/" className="text-xl font-semibold text-foreground hover:text-nav-text-hover transition-all duration-300 hover:scale-105">
               <img
-                src="wordmark2.png"
+                src="/wordmark2.png"
                 alt="Wordmark"
                 className="non-draggable"
                 draggable={false}
