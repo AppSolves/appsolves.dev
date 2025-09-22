@@ -26,21 +26,14 @@ const AboutSection = () => {
             <div className="space-y-6">
               <div className="prose prose-lg max-w-none">
                 <p className="text-muted-foreground leading-relaxed">Hello there,</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">I'm AppSolves, a software developer with a passion for crafting digital solutions that make a difference. My enthusiasm for coding knows no bounds.</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">My journey into the world of software development began at an early age, driven by a deep curiosity to understand the magic behind the virtual realm. Coding, especially in Python and Dart, has become my creative canvas, where I transform ideas into functional programs and projects.</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">With each line of code I write, I aim to create tools and applications that not only function flawlessly but also enhance the lives of those who use them. My goal is to make technology more accessible and user-friendly for everyone.</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">Apart from my coding adventures, I'm also a fitness enthusiast. When I'm not immersed in lines of code, you can often find me at the gym, pushing my limits and striving for personal growth.</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">I'm always up for discussions on a wide range of topics, whether it's diving into the intricacies of coding, exploring the mysteries of science, or simply chatting about the world around us.</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">Thank you for visiting my website, and I look forward to sharing my journey with you.</p>
-                <br></br>
-                <p className="text-muted-foreground leading-relaxed">Best regards,</p>
-                <p className="text-muted-foreground leading-relaxed">AppSolves</p>
+                <p className="text-muted-foreground leading-relaxed mt-8">I'm AppSolves, a software developer with a passion for crafting digital solutions that make a difference. My enthusiasm for coding knows no bounds.</p>
+                <p className="text-muted-foreground leading-relaxed mt-4">My journey into the world of software development began at an early age, driven by a deep curiosity to understand the magic behind the virtual realm. Coding, especially in Python and Dart, has become my creative canvas, where I transform ideas into functional programs and projects.</p>
+                <p className="text-muted-foreground leading-relaxed mt-4">With each line of code I write, I aim to create tools and applications that not only function flawlessly but also enhance the lives of those who use them. My goal is to make technology more accessible and user-friendly for everyone.</p>
+                <p className="text-muted-foreground leading-relaxed mt-4">Apart from my coding adventures, I'm also a fitness enthusiast. When I'm not immersed in lines of code, you can often find me at the gym, pushing my limits and striving for personal growth.</p>
+                <p className="text-muted-foreground leading-relaxed mt-4">I'm always up for discussions on a wide range of topics, whether it's diving into the intricacies of coding, exploring the mysteries of science, or simply chatting about the world around us.</p>
+                <p className="text-muted-foreground leading-relaxed mt-4">Thank you for visiting my website, and I look forward to sharing my journey with you.</p>
+                <p className="text-muted-foreground leading-relaxed mt-8">Best regards,</p>
+                <p className="text-muted-foreground leading-relaxed -mt-6">AppSolves</p>
               </div>
             </div>
           </ScrollReveal>
