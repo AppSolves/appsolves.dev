@@ -1,6 +1,7 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
+import { ExternalLink, LockIcon } from "lucide-react";
 import { Button } from "./button";
-import { ExternalLink, Github } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
+import { Icons } from "./icon";
 import ScrollReveal from "./scroll-reveal";
 
 interface Project {
@@ -8,7 +9,7 @@ interface Project {
   description: string;
   tech: string[];
   liveUrl: string;
-  githubUrl: string;
+  githubUrl: string | null;
 }
 
 const ProjectsSection = () => {
@@ -25,17 +26,17 @@ const ProjectsSection = () => {
       description: "A full-stack desktop application for TikTok Live Automation at scale. Features interactive gaming sessions and custom bots during TikTok Lives via our Plug & Play system.",
       tech: ["python", "tk-inter", "fastapi", "stripe", "nuitka", "tiktok-live", "typescript"],
       liveUrl: "https://tiktok-live-automation.appsolves.dev",
-      githubUrl: "https://github.com/AppSolves/TikTok-LIVE-Automation"
+      githubUrl: null,
     },
     {
-      title: "FastAPI Users - DynamoDB Adapter", 
+      title: "FastAPI Users - DynamoDB Adapter",
       description: "A ready-to-use database adapter for AWS DynamoDB, easy to use with FastAPI-Users!",
       tech: ["python", "aws", "aiopynamodb", "async", "adapter", "databases", "fastapi"],
       liveUrl: "https://pypi.org/project/fastapi-users-db-dynamodb",
       githubUrl: "https://github.com/AppSolves/fastapi-users-db-dynamodb"
     },
     {
-      title: "QuickClipAI", 
+      title: "QuickClipAI",
       description: "A powerful tool to automatically generate AI-driven YouTube shorts, Instagram Reels and TikToks. Create engaging content in seconds with our AI-powered video generator!",
       tech: ["python", "fooocus", "moviepy", "automation", "gpt4free"],
       liveUrl: "https://youtube.com/@curioburstz",
@@ -67,7 +68,7 @@ const ProjectsSection = () => {
                   </CardTitle>
                   <CardDescription>{project.description}</CardDescription>
                 </CardHeader>
-                
+
                 <CardContent className="flex-grow">
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech, techIndex) => (
@@ -88,12 +89,15 @@ const ProjectsSection = () => {
                       Live Demo
                     </a>
                   </Button>
-                  <Button variant="outline" size="sm" asChild className="flex-1 transition-all hover:scale-105">
+                  {project.githubUrl ? (<Button variant="outline" size="sm" asChild className="flex-1 transition-all hover:scale-105">
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github className="mr-2 h-4 w-4" />
+                      <Icons.Github className="mr-2 h-4 w-4" />
                       Source
                     </a>
-                  </Button>
+                  </Button>) : <Button disabled variant="outline" size="sm" className="flex-1 cursor-not-allowed opacity-50">
+                    <LockIcon className="mr-2 h-4 w-4" />
+                    Source
+                  </Button>}
                 </CardFooter>
               </Card>
             </ScrollReveal>

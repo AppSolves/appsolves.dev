@@ -1,11 +1,12 @@
-import { Github, Linkedin, Mail, Youtube, Instagram, Twitter, Play } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 import { Button } from "./button";
+import { Icons } from "./icon";
 
 const Footer = () => {
   const socialLinks = [
     {
       name: "GitHub",
-      icon: Github,
+      icon: Icons.Github,
       url: "https://github.com/AppSolves",
     },
     {
@@ -14,23 +15,23 @@ const Footer = () => {
       url: "https://linkedin.com/in/AppSolves",
     },
     {
-      name: "Twitter/X",
-      icon: Twitter,
+      name: "X",
+      icon: Icons.X,
       url: "https://x.com/AppSolves",
     },
     {
       name: "Instagram",
-      icon: Instagram,
+      icon: Icons.Instagram,
       url: "https://instagram.com/appsolves.dev",
     },
     {
       name: "Google Play",
-      icon: Play,
+      icon: Icons.GooglePlay,
       url: "https://play.google.com/store/apps/dev?id=6007461154397933888",
     },
     {
       name: "YouTube",
-      icon: Youtube,
+      icon: Icons.YouTube,
       url: "https://youtube.com/@curioburstz",
     },
     {
