@@ -112,7 +112,7 @@ const Navigation = () => {
                       window.open("https://github.com/sponsors/AppSolves?o=esb", "_blank");
                     }}
                   >
-                    <Icons.GithubSponsors className="h-4 w-4 text-pink-500 flex-none align-middle transition-transform transform group-hover:scale-125 translate-y-[1px]" />
+                    <Icons.GithubSponsors className="h-4 w-4 text-pink-500 flex-none align-middle transition-transform transform group-hover:scale-125" />
                     <span className="leading-none">Sponsor Me</span>
                   </Button>
                   <Button
