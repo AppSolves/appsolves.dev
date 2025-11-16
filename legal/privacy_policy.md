@@ -1,6 +1,6 @@
 # Privacy Policy — AppSolves
 
-**Last updated:** September 19, 2025
+**Last updated:** November 16, 2025
 
 This Privacy Policy explains how **AppSolves** (the “Controller”, “we”, “us” or “our”), operating from Baden-Württemberg, Germany, collects, uses, shares, and stores personal data in connection with our websites, applications, services, and products (collectively, the “Services”). This Privacy Policy applies to all current and future products and services provided by AppSolves unless otherwise stated.
 
@@ -75,7 +75,7 @@ We use cookies, local storage, JWTs, and similar technologies for authentication
 We share personal data with third parties strictly as necessary to provide the Services or for legitimate business purposes. Typical categories of recipients include:
 
 * **Payment processors:** e.g., Stripe — for payment processing and billing. We do not store raw card numbers; payment processors handle card data.
-* **Analytics & crash reporting providers:** e.g., Firebase, Google Analytics — for product analytics and crash reporting.
+* **Analytics & crash reporting providers:** e.g., Firebase, Google Analytics, Sentry SDK — for product analytics and crash reporting.
 * **Advertising partners:** e.g., Google ad partners — for ad delivery, measurement, and targeting. Personalized ads may be served.
 * **Hosting and infrastructure providers:** cloud and hosting vendors used to operate the Services.
 * **Professional services providers:** auditors, lawyers, accountants, and other service providers.
