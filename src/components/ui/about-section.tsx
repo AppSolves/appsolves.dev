@@ -47,7 +47,7 @@ const AboutSection = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground">
-                    React, TypeScript, Next.js, Tailwind CSS, Tk-Inter
+                    Flutter, React, TypeScript, Next.js, Tailwind CSS, Tk-Inter
                   </p>
                 </CardContent>
               </Card>

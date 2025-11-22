@@ -36,6 +36,13 @@ const ProjectsSection = () => {
       githubUrl: "https://github.com/AppSolves/fastapi-users-db-dynamodb"
     },
     {
+      title: "pylocalauth",
+      description: "A cross-platform local authentication library for Python applications. Don't rely on multiple third-party services/packages, manage user authentication locally with ease!",
+      tech: ["python", "local-auth", "authentication", "bcrypt", "winrt", "cross-platform", "security"],
+      liveUrl: "https://pypi.org/project/pylocalauth",
+      githubUrl: "https://github.com/AppSolves/pylocalauth"
+    },
+    {
       title: "QuickClipAI",
       description: "A powerful tool to automatically generate AI-driven YouTube shorts, Instagram Reels and TikToks. Create engaging content in seconds with our AI-powered video generator!",
       tech: ["python", "fooocus", "moviepy", "automation", "gpt4free"],
