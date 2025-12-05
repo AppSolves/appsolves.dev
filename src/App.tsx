@@ -39,18 +39,31 @@ const App = () => {
           </Routes>
         </BrowserRouter>
 
-        {/* Scroll to Top Button */}
-        <Button
-          onClick={scrollToTop}
-          className={`
-            group items-center fixed bottom-6 right-6 p-3 rounded-full bg-primary
-            text-primary-foreground shadow-lg transition-opacity duration-300 z-50
-            ${showButton ? "opacity-100" : "opacity-0 pointer-events-none"}
-          `}
-          aria-label="Scroll to top"
-        >
-          <ArrowUp className="w-5 h-5 transition-transform group-hover:-translate-y-1" />
-        </Button>
+        {/* Bottom Right Actions */}
+        <div className={`fixed bottom-6 right-6 flex items-center gap-3 transition-opacity duration-300 z-50 ${showButton ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+          <a href="https://www.buymeacoffee.com/AppSolves" target="_blank" rel="noopener noreferrer">
+            <img
+              style={{
+                height: "40px", width: "auto", pointerEvents: "none",
+                WebkitUserDrag: "none",
+                userSelect: "none",
+                MozUserSelect: "none",
+                WebkitUserSelect: "none", msUserSelect: "none",
+              } as React.CSSProperties}
+              alt="Buy Me A Coffee"
+              src="/bmc-button.png"
+              draggable="false"
+            />
+          </a>
+
+          <Button
+            onClick={scrollToTop}
+            className="group items-center p-3 rounded-full bg-primary text-primary-foreground shadow-lg"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="w-5 h-5 transition-transform group-hover:-translate-y-1" />
+          </Button>
+        </div>
       </TooltipProvider>
     </QueryClientProvider>
   );
