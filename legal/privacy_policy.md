@@ -45,12 +45,17 @@ We collect a variety of information in order to provide, improve, secure, and su
 
 We process personal data for the following purposes and on the legal bases described below:
 
-**3.1 To provide and maintain the Services** — performance of a contract (e.g., account management, subscriptions, payments).
-**3.2 To operate, improve and analyze the Services** — legitimate interests (product improvement, debugging, analytics, performance monitoring, crash reporting, fraud detection, and security).
-**3.3 For customer support and communication** — performance of a contract and/or legitimate interests.
-**3.4 For billing, invoicing and record-keeping** — legal obligation and performance of a contract.
-**3.5 For marketing and advertising** — consent where required; otherwise legitimate interests for non-personalized or limited communications. Note: personalized ads may be served and ad-IDs may be shared with advertising partners.
-**3.6 For legal compliance and safety** — legal obligations, legitimate interests (preventing abuse, enforcement of our terms, protecting rights and property).
+* **3.1 To provide and maintain the Services** — performance of a contract (e.g., account management, subscriptions, payments).
+
+* **3.2 To operate, improve and analyze the Services** — legitimate interests (product improvement, debugging, analytics, performance monitoring, crash reporting, fraud detection, and security).
+
+* **3.3 For customer support and communication** — performance of a contract and/or legitimate interests.
+
+* **3.4 For billing, invoicing and record-keeping** — legal obligation and performance of a contract.
+
+* **3.5 For marketing and advertising** — consent where required; otherwise legitimate interests for non-personalized or limited communications. Note: personalized ads may be served and ad-IDs may be shared with advertising partners.
+
+* **3.6 For legal compliance and safety** — legal obligations, legitimate interests (preventing abuse, enforcement of our terms, protecting rights and property).
 
 ---
 
