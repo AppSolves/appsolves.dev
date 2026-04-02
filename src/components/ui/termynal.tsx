@@ -1,5 +1,10 @@
 import React, { useEffect, useRef } from "react";
 
+const TERMYNAL_STYLE_LINKS = [
+    "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/termynal.css",
+    "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/custom.css",
+];
+
 interface TermynalOptions {
     prefix?: string;
     startDelay?: number;
@@ -17,7 +22,7 @@ interface LineData {
     type?: string;
     value?: string;
     class?: string;
-    [key: string]: any;
+    [key: string]: string | undefined;
 }
 
 class Termynal {
@@ -81,7 +86,7 @@ class Termynal {
 
         // Only use lineData, not elements already in the container
         this.lines = [...this.lineData];
-        for (let line of this.lines) {
+        for (const line of this.lines) {
             (line as HTMLElement).style.visibility = "hidden";
         }
 
@@ -99,7 +104,7 @@ class Termynal {
 
         this.container.setAttribute("data-termynal", "");
         this.container.innerHTML = "";
-        for (let line of this.lines) {
+        for (const line of this.lines) {
             (line as HTMLElement).style.visibility = "visible";
         }
         this.start();
@@ -109,7 +114,7 @@ class Termynal {
         this.addFinish();
         await this._wait(this.startDelay);
 
-        for (let line of this.lines) {
+        for (const line of this.lines) {
             const type = line.getAttribute(this.pfx);
             const delay = parseFloat(line.getAttribute(`${this.pfx}-delay`) || "") || this.lineDelay;
 
@@ -180,7 +185,7 @@ class Termynal {
         line.textContent = "";
         this.container.appendChild(line);
 
-        for (let char of chars) {
+        for (const char of chars) {
             const delay = parseFloat(line.getAttribute(`${this.pfx}-typeDelay`) || "") || this.typeDelay;
             await this._wait(delay);
             line.textContent += char;
@@ -266,7 +271,7 @@ class Termynal {
 
     _attributes(line: LineData): string {
         let attrs = "";
-        for (let prop in line) {
+        for (const prop in line) {
             if (prop === "class") {
                 attrs += ` class=${line[prop]} `;
                 continue;
@@ -285,15 +290,11 @@ class Termynal {
 const TermynalComponent: React.FC<{ options?: TermynalOptions }> = ({ options }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const shadowRef = useRef<ShadowRoot | null>(null);
-    const styleLinks = [
-        "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/termynal.css",
-        "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/custom.css",
-    ];
 
-    async function loadCSS() {
+    const loadCSS = React.useCallback(async () => {
         if (!shadowRef.current) return;
 
-        for (const link of styleLinks) {
+        for (const link of TERMYNAL_STYLE_LINKS) {
             try {
                 const res = await fetch(link);
                 const cssText = await res.text();
@@ -304,7 +305,7 @@ const TermynalComponent: React.FC<{ options?: TermynalOptions }> = ({ options })
                 console.error("Fehler beim Laden der CSS:", err);
             }
         }
-    }
+    }, []);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -318,7 +319,7 @@ const TermynalComponent: React.FC<{ options?: TermynalOptions }> = ({ options })
 
             new Termynal(div, options);
         }
-    }, [options]);
+    }, [loadCSS, options]);
 
     return (
         <div className="items-center justify-center" ref={containerRef} />
