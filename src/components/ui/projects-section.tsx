@@ -15,6 +15,13 @@ interface Project {
 const ProjectsSection = () => {
   const projects: Project[] = [
     {
+      title: "Fidan",
+      description: "Fidan is a next-generation programming language that lets you prototype like Python, run like C, and ship with Rust-level safety.",
+      tech: ["fidan", "programming", "language", "modern", "expressive", "fast", "safe", "native"],
+      liveUrl: "https://fidan.dev",
+      githubUrl: "https://github.com/fidan-lang/fidan"
+    },
+    {
       title: "LanePilot",
       description: "The worlds first real-time AI-powered traffic management system, featuring automated vehicle detection, lane allocation optimization, and dynamic control for (autonomous) cars!",
       tech: ["python", "pytorch", "docker", "opencv", "nvidia-jetson", "raspberrypi"],
