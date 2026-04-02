@@ -18,22 +18,43 @@ const HeroSection = () => {
               className="text-2xl sm:text-3xl font-semibold text-primary/80 tracking-wide"
             />
           </div>
-          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-bold text-hero-text tracking-tight transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
+          <h1
+            className={`text-4xl sm:text-5xl lg:text-6xl font-bold text-hero-text tracking-tight transition-all duration-1000 delay-300 ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+          >
             Full-Stack Developer & Deep Learning Engineer
           </h1>
-          <p className={`mt-6 text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
-            Building modern AI applications with clean code and thoughtful design.
-            Passionate about creating exceptional user experiences across all platforms.
+          <p
+            className={`mt-6 text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-1000 delay-500 ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+          >
+            Building modern AI applications with clean code and thoughtful
+            design. Passionate about creating exceptional user experiences
+            across all platforms.
           </p>
 
-          <div className={`mt-10 flex items-center justify-center gap-x-6 transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}>
-            <Button variant="default" size="lg" className="group flex items-center gap-2" onClick={() => {
-              const section = document.getElementById("projects-section");
-              section?.scrollIntoView({ behavior: "smooth" });
-            }}>
+          <div
+            className={`mt-10 flex items-center justify-center gap-x-6 transition-all duration-1000 delay-700 ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+          >
+            <Button
+              variant="default"
+              size="lg"
+              className="group flex items-center gap-2"
+              onClick={() => {
+                const section = document.getElementById("projects-section");
+                section?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
               View My Work
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 md:mt-[0.1em]" />
             </Button>

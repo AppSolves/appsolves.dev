@@ -4,7 +4,12 @@ import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: "class",
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -106,7 +111,7 @@ export default {
             width: "100%",
           },
         },
-        "blink": {
+        blink: {
           "0%, 50%": {
             opacity: "1",
           },
@@ -120,7 +125,7 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in-up": "fade-in-up 0.6s ease-out",
         "type-write": "type-write 3s steps(40, end)",
-        "blink": "blink 1s infinite",
+        blink: "blink 1s infinite",
       },
     },
   },

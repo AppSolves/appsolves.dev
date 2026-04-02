@@ -20,7 +20,10 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="text-xl font-semibold text-foreground hover:text-nav-text-hover transition-all duration-300 hover:scale-105">
+            <a
+              href="/"
+              className="text-xl font-semibold text-foreground hover:text-nav-text-hover transition-all duration-300 hover:scale-105"
+            >
               <img
                 src="/wordmark2.png"
                 alt="Wordmark"
@@ -52,7 +55,10 @@ const Navigation = () => {
               size="sm"
               className="w-full flex items-center justify-center gap-2 group"
               onClick={() => {
-                window.open("https://github.com/sponsors/AppSolves?o=esb", "_blank");
+                window.open(
+                  "https://github.com/sponsors/AppSolves?o=esb",
+                  "_blank",
+                );
               }}
             >
               <Icons.GithubSponsors className="h-4 w-4 text-pink-500 flex-none align-middle transition-transform transform group-hover:scale-125 translate-y-[1px]" />
@@ -65,7 +71,8 @@ const Navigation = () => {
               onClick={() => {
                 const section = document.getElementById("footer-section");
                 section?.scrollIntoView({ behavior: "smooth" });
-              }}>
+              }}
+            >
               Get in touch
             </Button>
           </div>
@@ -78,7 +85,11 @@ const Navigation = () => {
               className="w-full flex items-center justify-center group"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <Hamburger toggled={isMenuOpen} size={20} toggle={setIsMenuOpen} />
+              <Hamburger
+                toggled={isMenuOpen}
+                size={20}
+                toggle={setIsMenuOpen}
+              />
             </Button>
           </div>
         </div>
@@ -109,7 +120,10 @@ const Navigation = () => {
                     size="sm"
                     className="w-full flex items-center justify-center gap-2 group"
                     onClick={() => {
-                      window.open("https://github.com/sponsors/AppSolves?o=esb", "_blank");
+                      window.open(
+                        "https://github.com/sponsors/AppSolves?o=esb",
+                        "_blank",
+                      );
                     }}
                   >
                     <Icons.GithubSponsors className="h-4 w-4 text-pink-500 flex-none align-middle transition-transform transform group-hover:scale-125" />
@@ -122,7 +136,8 @@ const Navigation = () => {
                     onClick={() => {
                       const section = document.getElementById("footer-section");
                       section?.scrollIntoView({ behavior: "smooth" });
-                    }}>
+                    }}
+                  >
                     Get in touch
                   </Button>
                 </div>

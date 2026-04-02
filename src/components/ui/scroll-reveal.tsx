@@ -1,5 +1,5 @@
-import { useScrollTriggered } from '@/hooks/use-scroll-triggered';
-import { ReactNode, useEffect } from 'react';
+import { useScrollTriggered } from "@/hooks/use-scroll-triggered";
+import { ReactNode, useEffect } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -27,10 +27,9 @@ const ScrollReveal = ({
   return (
     <div
       ref={elementRef as React.RefObject<HTMLDivElement>}
-      className={`transition-all duration-700 ease-out ${isVisible
-        ? 'opacity-100 translate-y-0'
-        : 'opacity-0 translate-y-8'
-        } ${className}`}
+      className={`transition-all duration-700 ease-out ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

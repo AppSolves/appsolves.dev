@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 interface UseScrollTriggeredOptions {
   threshold?: number;
@@ -20,8 +20,8 @@ export const useScrollTriggered = (options: UseScrollTriggeredOptions = {}) => {
       },
       {
         threshold: options.threshold || 0.3,
-        rootMargin: options.rootMargin || '0px',
-      }
+        rootMargin: options.rootMargin || "0px",
+      },
     );
 
     const currentElement = elementRef.current;

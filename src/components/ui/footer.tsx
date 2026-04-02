@@ -42,7 +42,10 @@ const Footer = () => {
   ];
 
   return (
-    <footer id="footer-section" className="border-t border-border bg-background">
+    <footer
+      id="footer-section"
+      className="border-t border-border bg-background"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col items-center text-center gap-8">
           {/* Social Links */}
@@ -75,9 +78,18 @@ const Footer = () => {
               <a href="/terms_and_conditions">Terms & Conditions</a>
             </p>
             <br></br>
-            <p>© {new Date().getFullYear()} Kaan Gönüldinc (aka AppSolves). All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Kaan Gönüldinc (aka AppSolves). All
+              rights reserved.
+            </p>
             <br></br>
-            <p>You may find more information on the <a href="https://legacy.appsolves.dev" target="_blank">legacy version</a> of this site.</p>
+            <p>
+              You may find more information on the{" "}
+              <a href="https://legacy.appsolves.dev" target="_blank">
+                legacy version
+              </a>{" "}
+              of this site.
+            </p>
           </div>
         </div>
       </div>

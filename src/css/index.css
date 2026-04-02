@@ -6,36 +6,36 @@
   :root {
     --background: 220 13% 7%;
     --foreground: 210 20% 85%;
-    
+
     /* Card system - slightly lighter dark */
     --card: 220 13% 9%;
     --card-foreground: 210 20% 85%;
-    
+
     /* Popover system */
     --popover: 220 13% 9%;
     --popover-foreground: 210 20% 85%;
-    
+
     /* Primary brand colors - clean white/light */
     --primary: 210 20% 95%;
     --primary-foreground: 220 13% 7%;
-    
+
     /* Secondary colors - medium grays */
     --secondary: 220 13% 15%;
     --secondary-foreground: 210 20% 70%;
-    
+
     /* Muted colors for subtle text */
     --muted: 220 13% 12%;
     --muted-foreground: 210 15% 55%;
-    
+
     /* Accent colors */
     --accent: 220 13% 15%;
     --accent-foreground: 210 20% 85%;
-    
+
     /* Interactive states */
     --border: 220 13% 18%;
     --input: 220 13% 15%;
     --ring: 210 20% 85%;
-    
+
     /* Radius for clean look */
     --radius: 0.5rem;
 
@@ -44,12 +44,12 @@
     --nav-text: 210 15% 60%;
     --nav-text-hover: 210 20% 85%;
     --section-bg: 220 13% 8%;
-    
+
     /* Animation variables */
     --gradient-1: 243 71% 40%;
     --gradient-2: 243 71% 64%;
     --gradient-3: 243 71% 80%;
-    
+
     /* Sidebar system (keeping dark theme) */
     --sidebar-background: 220 13% 7%;
     --sidebar-foreground: 210 20% 85%;
@@ -84,7 +84,7 @@
   }
 
   a::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     transform: scaleX(0);
@@ -109,18 +109,20 @@
 
   /* Fluid gradient background */
   body::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg,
-        hsl(var(--gradient-1)) 0%,
-        hsl(var(--gradient-2)) 25%,
-        hsl(var(--gradient-3)) 50%,
-        hsl(var(--gradient-2)) 75%,
-        hsl(var(--gradient-1)) 100%);
+    background: linear-gradient(
+      45deg,
+      hsl(var(--gradient-1)) 0%,
+      hsl(var(--gradient-2)) 25%,
+      hsl(var(--gradient-3)) 50%,
+      hsl(var(--gradient-2)) 75%,
+      hsl(var(--gradient-1)) 100%
+    );
     background-size: 400% 400%;
     animation: gradientShift 30s ease infinite;
     z-index: 1;
@@ -130,8 +132,14 @@
   }
 
   @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }

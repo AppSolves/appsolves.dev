@@ -9,13 +9,13 @@ interface TypingTextProps {
   startTyping?: boolean;
 }
 
-const TypingText = ({ 
-  text, 
-  delay = 0, 
-  speed = 100, 
-  className = "", 
+const TypingText = ({
+  text,
+  delay = 0,
+  speed = 100,
+  className = "",
   onComplete,
-  startTyping = false 
+  startTyping = false,
 }: TypingTextProps) => {
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -56,7 +56,9 @@ const TypingText = ({
   return (
     <span className={className}>
       {displayText}
-      <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
+      <span
+        className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity`}
+      >
         |
       </span>
     </span>

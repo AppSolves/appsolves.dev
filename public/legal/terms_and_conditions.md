@@ -5,6 +5,7 @@
 These Terms and Conditions (the “Terms”) govern your access to and use of the websites, applications, products, and services provided by **AppSolves** (referred to below as “AppSolves”, “we”, “us” or “our”). By accessing or using any of our Services, you agree to be bound by these Terms. These Terms apply to all current and future products and services offered by AppSolves unless otherwise stated.
 
 **Controller / Provider:**
+
 - AppSolves
 - **Postal Address**: Riegelstraße 55, 73760 Ostfildern
 - Baden-Württemberg, Germany
@@ -40,12 +41,12 @@ Where account creation is required, you must provide accurate and complete infor
 
 You agree not to use the Services to:
 
-* Violate any applicable law or regulation.
-* Infringe any third party’s intellectual property or privacy rights.
-* Upload or distribute malware, viruses, or other harmful code.
-* Interfere with or disrupt the integrity or performance of the Services.
-* Attempt to gain unauthorized access to any parts of the Services, other accounts, or the systems or networks connected to the Services.
-* Use the Services in an abusive, harassing, or fraudulent manner.
+- Violate any applicable law or regulation.
+- Infringe any third party’s intellectual property or privacy rights.
+- Upload or distribute malware, viruses, or other harmful code.
+- Interfere with or disrupt the integrity or performance of the Services.
+- Attempt to gain unauthorized access to any parts of the Services, other accounts, or the systems or networks connected to the Services.
+- Use the Services in an abusive, harassing, or fraudulent manner.
 
 We reserve the right to suspend or terminate accounts and access for violations of these Terms or for conduct we reasonably believe is harmful to AppSolves, other users, or third parties.
 

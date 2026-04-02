@@ -1,6 +1,13 @@
 import { ExternalLink, LockIcon } from "lucide-react";
 import { Button } from "./button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./card";
 import { Icons } from "./icon";
 import ScrollReveal from "./scroll-reveal";
 
@@ -16,46 +23,92 @@ const ProjectsSection = () => {
   const projects: Project[] = [
     {
       title: "Fidan",
-      description: "Fidan is a next-generation programming language that lets you prototype like Python, run like C, and ship with Rust-level safety.",
-      tech: ["fidan", "programming", "language", "modern", "expressive", "fast", "safe", "native"],
+      description:
+        "Fidan is a next-generation programming language that lets you prototype like Python, run like C, and ship with Rust-level safety.",
+      tech: [
+        "fidan",
+        "programming",
+        "language",
+        "modern",
+        "expressive",
+        "fast",
+        "safe",
+        "native",
+      ],
       liveUrl: "https://fidan.dev",
-      githubUrl: "https://github.com/fidan-lang/fidan"
+      githubUrl: "https://github.com/fidan-lang/fidan",
     },
     {
       title: "LanePilot",
-      description: "The worlds first real-time AI-powered traffic management system, featuring automated vehicle detection, lane allocation optimization, and dynamic control for (autonomous) cars!",
-      tech: ["python", "pytorch", "docker", "opencv", "nvidia-jetson", "raspberrypi"],
+      description:
+        "The worlds first real-time AI-powered traffic management system, featuring automated vehicle detection, lane allocation optimization, and dynamic control for (autonomous) cars!",
+      tech: [
+        "python",
+        "pytorch",
+        "docker",
+        "opencv",
+        "nvidia-jetson",
+        "raspberrypi",
+      ],
       liveUrl: "https://github.com/AppSolves?tab=packages&repo_name=LanePilot",
-      githubUrl: "https://github.com/AppSolves/LanePilot"
+      githubUrl: "https://github.com/AppSolves/LanePilot",
     },
     {
       title: "TikTok-LIVE-Automation",
-      description: "A full-stack desktop application for TikTok Live Automation at scale. Features interactive gaming sessions and custom bots during TikTok Lives via our Plug & Play system.",
-      tech: ["python", "tk-inter", "fastapi", "stripe", "nuitka", "tiktok-live", "typescript"],
+      description:
+        "A full-stack desktop application for TikTok Live Automation at scale. Features interactive gaming sessions and custom bots during TikTok Lives via our Plug & Play system.",
+      tech: [
+        "python",
+        "tk-inter",
+        "fastapi",
+        "stripe",
+        "nuitka",
+        "tiktok-live",
+        "typescript",
+      ],
       liveUrl: "https://tiktok-live-automation.appsolves.dev",
       githubUrl: null,
     },
     {
       title: "FastAPI Users - DynamoDB Adapter",
-      description: "A ready-to-use database adapter for AWS DynamoDB, easy to use with FastAPI-Users!",
-      tech: ["python", "aws", "aiopynamodb", "async", "adapter", "databases", "fastapi"],
+      description:
+        "A ready-to-use database adapter for AWS DynamoDB, easy to use with FastAPI-Users!",
+      tech: [
+        "python",
+        "aws",
+        "aiopynamodb",
+        "async",
+        "adapter",
+        "databases",
+        "fastapi",
+      ],
       liveUrl: "https://pypi.org/project/fastapi-users-db-dynamodb",
-      githubUrl: "https://github.com/AppSolves/fastapi-users-db-dynamodb"
+      githubUrl: "https://github.com/AppSolves/fastapi-users-db-dynamodb",
     },
     {
       title: "pylocalauth",
-      description: "A cross-platform local authentication library for Python applications. Don't rely on multiple third-party services/packages, manage user authentication locally with ease!",
-      tech: ["python", "local-auth", "authentication", "bcrypt", "winrt", "cross-platform", "security"],
+      description:
+        "A cross-platform local authentication library for Python applications. Don't rely on multiple third-party services/packages, manage user authentication locally with ease!",
+      tech: [
+        "python",
+        "local-auth",
+        "authentication",
+        "bcrypt",
+        "winrt",
+        "cross-platform",
+        "security",
+      ],
       liveUrl: "https://pypi.org/project/pylocalauth",
-      githubUrl: "https://github.com/AppSolves/pylocalauth"
+      githubUrl: "https://github.com/AppSolves/pylocalauth",
     },
     {
       title: "QuickClipAI",
-      description: "A powerful tool to automatically generate AI-driven YouTube shorts, Instagram Reels and TikToks. Create engaging content in seconds with our AI-powered video generator!",
+      description:
+        "A powerful tool to automatically generate AI-driven YouTube shorts, Instagram Reels and TikToks. Create engaging content in seconds with our AI-powered video generator!",
       tech: ["python", "fooocus", "moviepy", "automation", "gpt4free"],
       liveUrl: "https://youtube.com/@curioburstz",
-      githubUrl: "https://github.com/AppSolves/QuickClipAI"
-    }
+      githubUrl: "https://github.com/AppSolves/QuickClipAI",
+    },
   ];
 
   return (
@@ -97,21 +150,48 @@ const ProjectsSection = () => {
                 </CardContent>
 
                 <CardFooter className="flex gap-2">
-                  <Button variant="outline" size="sm" asChild className="flex-1 transition-all hover:scale-105">
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="flex-1 transition-all hover:scale-105"
+                  >
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <ExternalLink className="mr-2 h-4 w-4" />
                       Live Demo
                     </a>
                   </Button>
-                  {project.githubUrl ? (<Button variant="outline" size="sm" asChild className="flex-1 transition-all hover:scale-105">
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Icons.Github className="mr-2 h-4 w-4" />
+                  {project.githubUrl ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      asChild
+                      className="flex-1 transition-all hover:scale-105"
+                    >
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icons.Github className="mr-2 h-4 w-4" />
+                        Source
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button
+                      disabled
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 cursor-not-allowed opacity-50"
+                    >
+                      <LockIcon className="mr-2 h-4 w-4" />
                       Source
-                    </a>
-                  </Button>) : <Button disabled variant="outline" size="sm" className="flex-1 cursor-not-allowed opacity-50">
-                    <LockIcon className="mr-2 h-4 w-4" />
-                    Source
-                  </Button>}
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             </ScrollReveal>

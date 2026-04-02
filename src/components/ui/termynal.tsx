@@ -1,329 +1,344 @@
 import React, { useEffect, useRef } from "react";
 
 const TERMYNAL_STYLE_LINKS = [
-    "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/termynal.css",
-    "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/custom.css",
+  "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/termynal.css",
+  "https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/custom.css",
 ];
 
 interface TermynalOptions {
-    prefix?: string;
-    startDelay?: number;
-    typeDelay?: number;
-    lineDelay?: number;
-    progressLength?: number;
-    progressChar?: string;
-    progressPercent?: number;
-    cursor?: string;
-    lineData?: LineData[];
-    noInit?: boolean;
+  prefix?: string;
+  startDelay?: number;
+  typeDelay?: number;
+  lineDelay?: number;
+  progressLength?: number;
+  progressChar?: string;
+  progressPercent?: number;
+  cursor?: string;
+  lineData?: LineData[];
+  noInit?: boolean;
 }
 
 interface LineData {
-    type?: string;
-    value?: string;
-    class?: string;
-    [key: string]: string | undefined;
+  type?: string;
+  value?: string;
+  class?: string;
+  [key: string]: string | undefined;
 }
 
 class Termynal {
-    container: HTMLElement;
-    pfx: string;
-    startDelay: number;
-    originalStartDelay: number;
-    typeDelay: number;
-    originalTypeDelay: number;
-    lineDelay: number;
-    originalLineDelay: number;
-    progressLength: number;
-    progressChar: string;
-    progressPercent: number;
-    cursor: string;
-    lineData: Element[];
-    lines: Element[] = [];
-    finishElement!: HTMLElement;
+  container: HTMLElement;
+  pfx: string;
+  startDelay: number;
+  originalStartDelay: number;
+  typeDelay: number;
+  originalTypeDelay: number;
+  lineDelay: number;
+  originalLineDelay: number;
+  progressLength: number;
+  progressChar: string;
+  progressPercent: number;
+  cursor: string;
+  lineData: Element[];
+  lines: Element[] = [];
+  finishElement!: HTMLElement;
 
-    constructor(container: HTMLElement, options: TermynalOptions = {}) {
-        this.container = container;
-        this.container.style.textAlign = "left";
-        this.pfx = `data-${options.prefix || "ty"}`;
-        this.originalStartDelay = this.startDelay =
-            options.startDelay ||
-            parseFloat(this.container.getAttribute(`${this.pfx}-startDelay`) || "0") ||
-            600;
-        this.originalTypeDelay = this.typeDelay =
-            options.typeDelay ||
-            parseFloat(this.container.getAttribute(`${this.pfx}-typeDelay`) || "0") ||
-            90;
-        this.originalLineDelay = this.lineDelay =
-            options.lineDelay ||
-            parseFloat(this.container.getAttribute(`${this.pfx}-lineDelay`) || "0") ||
-            1500;
-        this.progressLength =
-            options.progressLength ||
-            parseFloat(this.container.getAttribute(`${this.pfx}-progressLength`) || "0") ||
-            40;
-        this.progressChar =
-            options.progressChar ||
-            this.container.getAttribute(`${this.pfx}-progressChar`) ||
-            "█";
-        this.progressPercent =
-            options.progressPercent ||
-            parseFloat(this.container.getAttribute(`${this.pfx}-progressPercent`) || "0") ||
-            100;
-        this.cursor =
-            options.cursor ||
-            this.container.getAttribute(`${this.pfx}-cursor`) ||
-            "▋";
-        this.lineData = this.lineDataToElements(options.lineData || []);
-        this.loadLines();
-        if (!options.noInit) this.init();
+  constructor(container: HTMLElement, options: TermynalOptions = {}) {
+    this.container = container;
+    this.container.style.textAlign = "left";
+    this.pfx = `data-${options.prefix || "ty"}`;
+    this.originalStartDelay = this.startDelay =
+      options.startDelay ||
+      parseFloat(
+        this.container.getAttribute(`${this.pfx}-startDelay`) || "0",
+      ) ||
+      600;
+    this.originalTypeDelay = this.typeDelay =
+      options.typeDelay ||
+      parseFloat(this.container.getAttribute(`${this.pfx}-typeDelay`) || "0") ||
+      90;
+    this.originalLineDelay = this.lineDelay =
+      options.lineDelay ||
+      parseFloat(this.container.getAttribute(`${this.pfx}-lineDelay`) || "0") ||
+      1500;
+    this.progressLength =
+      options.progressLength ||
+      parseFloat(
+        this.container.getAttribute(`${this.pfx}-progressLength`) || "0",
+      ) ||
+      40;
+    this.progressChar =
+      options.progressChar ||
+      this.container.getAttribute(`${this.pfx}-progressChar`) ||
+      "█";
+    this.progressPercent =
+      options.progressPercent ||
+      parseFloat(
+        this.container.getAttribute(`${this.pfx}-progressPercent`) || "0",
+      ) ||
+      100;
+    this.cursor =
+      options.cursor ||
+      this.container.getAttribute(`${this.pfx}-cursor`) ||
+      "▋";
+    this.lineData = this.lineDataToElements(options.lineData || []);
+    this.loadLines();
+    if (!options.noInit) this.init();
+  }
+
+  loadLines() {
+    const finish = this.generateFinish();
+    finish.style.visibility = "hidden";
+    this.container.appendChild(finish);
+
+    // Only use lineData, not elements already in the container
+    this.lines = [...this.lineData];
+    for (const line of this.lines) {
+      (line as HTMLElement).style.visibility = "hidden";
     }
 
-    loadLines() {
-        const finish = this.generateFinish();
-        finish.style.visibility = "hidden";
-        this.container.appendChild(finish);
+    const restart = this.generateRestart();
+    restart.style.visibility = "hidden";
+    this.container.appendChild(restart);
 
-        // Only use lineData, not elements already in the container
-        this.lines = [...this.lineData];
-        for (const line of this.lines) {
-            (line as HTMLElement).style.visibility = "hidden";
-        }
+    this.container.setAttribute("data-termynal", "");
+  }
 
-        const restart = this.generateRestart();
-        restart.style.visibility = "hidden";
-        this.container.appendChild(restart);
+  init() {
+    const containerStyle = getComputedStyle(this.container);
+    this.container.style.width =
+      containerStyle.width !== "0px" ? containerStyle.width : "";
+    this.container.style.minHeight =
+      containerStyle.height !== "0px" ? containerStyle.height : "";
 
-        this.container.setAttribute("data-termynal", "");
+    this.container.setAttribute("data-termynal", "");
+    this.container.innerHTML = "";
+    for (const line of this.lines) {
+      (line as HTMLElement).style.visibility = "visible";
     }
+    this.start();
+  }
 
-    init() {
-        const containerStyle = getComputedStyle(this.container);
-        this.container.style.width = containerStyle.width !== "0px" ? containerStyle.width : "";
-        this.container.style.minHeight = containerStyle.height !== "0px" ? containerStyle.height : "";
+  async start() {
+    this.addFinish();
+    await this._wait(this.startDelay);
 
-        this.container.setAttribute("data-termynal", "");
-        this.container.innerHTML = "";
-        for (const line of this.lines) {
-            (line as HTMLElement).style.visibility = "visible";
-        }
-        this.start();
-    }
+    for (const line of this.lines) {
+      const type = line.getAttribute(this.pfx);
+      const delay =
+        parseFloat(line.getAttribute(`${this.pfx}-delay`) || "") ||
+        this.lineDelay;
 
-    async start() {
-        this.addFinish();
-        await this._wait(this.startDelay);
-
-        for (const line of this.lines) {
-            const type = line.getAttribute(this.pfx);
-            const delay = parseFloat(line.getAttribute(`${this.pfx}-delay`) || "") || this.lineDelay;
-
-            if (type === "input") {
-                line.setAttribute(`${this.pfx}-cursor`, this.cursor);
-                await this.type(line as HTMLElement);
-                await this._wait(delay);
-            } else if (type === "progress") {
-                await this.progress(line as HTMLElement);
-                await this._wait(delay);
-            } else if (type === "stats") {
-                await this.stats(line as HTMLElement, "AppSolves");
-                await this._wait(delay);
-            } else {
-                this.container.appendChild(line);
-                await this._wait(delay);
-            }
-
-            line.removeAttribute(`${this.pfx}-cursor`);
-        }
-        this.addRestart();
-        this.finishElement.style.visibility = "hidden";
-        this.lineDelay = this.originalLineDelay;
-        this.typeDelay = this.originalTypeDelay;
-        this.startDelay = this.originalStartDelay;
-    }
-
-    generateRestart(): HTMLElement {
-        const restart = document.createElement("a");
-        restart.onclick = (e) => {
-            e.preventDefault();
-            this.container.innerHTML = "";
-            this.init();
-        };
-        restart.href = "#";
-        restart.setAttribute("data-terminal-control", "");
-        restart.innerHTML = "restart ↻";
-        return restart;
-    }
-
-    generateFinish(): HTMLElement {
-        const finish = document.createElement("a");
-        finish.onclick = (e) => {
-            e.preventDefault();
-            this.lineDelay = 0;
-            this.typeDelay = 0;
-            this.startDelay = 0;
-        };
-        finish.href = "#";
-        finish.setAttribute("data-terminal-control", "");
-        finish.innerHTML = "fast →";
-        this.finishElement = finish;
-        return finish;
-    }
-
-    addRestart() {
-        const restart = this.generateRestart();
-        this.container.appendChild(restart);
-    }
-
-    addFinish() {
-        const finish = this.generateFinish();
-        this.container.appendChild(finish);
-    }
-
-    async type(line: HTMLElement) {
-        const chars = [...line.textContent || ""];
-        line.textContent = "";
+      if (type === "input") {
+        line.setAttribute(`${this.pfx}-cursor`, this.cursor);
+        await this.type(line as HTMLElement);
+        await this._wait(delay);
+      } else if (type === "progress") {
+        await this.progress(line as HTMLElement);
+        await this._wait(delay);
+      } else if (type === "stats") {
+        await this.stats(line as HTMLElement, "AppSolves");
+        await this._wait(delay);
+      } else {
         this.container.appendChild(line);
+        await this._wait(delay);
+      }
 
-        for (const char of chars) {
-            const delay = parseFloat(line.getAttribute(`${this.pfx}-typeDelay`) || "") || this.typeDelay;
-            await this._wait(delay);
-            line.textContent += char;
-        }
+      line.removeAttribute(`${this.pfx}-cursor`);
     }
+    this.addRestart();
+    this.finishElement.style.visibility = "hidden";
+    this.lineDelay = this.originalLineDelay;
+    this.typeDelay = this.originalTypeDelay;
+    this.startDelay = this.originalStartDelay;
+  }
 
-    async progress(line: HTMLElement) {
-        const progressLength =
-            parseFloat(line.getAttribute(`${this.pfx}-progressLength`) || "") || this.progressLength;
-        const progressChar = line.getAttribute(`${this.pfx}-progressChar`) || this.progressChar;
-        const chars = progressChar.repeat(progressLength);
-        const progressPercent =
-            parseFloat(line.getAttribute(`${this.pfx}-progressPercent`) || "") || this.progressPercent;
+  generateRestart(): HTMLElement {
+    const restart = document.createElement("a");
+    restart.onclick = (e) => {
+      e.preventDefault();
+      this.container.innerHTML = "";
+      this.init();
+    };
+    restart.href = "#";
+    restart.setAttribute("data-terminal-control", "");
+    restart.innerHTML = "restart ↻";
+    return restart;
+  }
 
-        line.innerHTML = ""; // instead of textContent
-        this.container.appendChild(line);
+  generateFinish(): HTMLElement {
+    const finish = document.createElement("a");
+    finish.onclick = (e) => {
+      e.preventDefault();
+      this.lineDelay = 0;
+      this.typeDelay = 0;
+      this.startDelay = 0;
+    };
+    finish.href = "#";
+    finish.setAttribute("data-terminal-control", "");
+    finish.innerHTML = "fast →";
+    this.finishElement = finish;
+    return finish;
+  }
 
-        const barSpan = document.createElement("span");
-        barSpan.style.whiteSpace = "pre-wrap"; // allow wrapping
-        barSpan.style.wordBreak = "break-all"; // force wrap on overflow
-        line.appendChild(barSpan);
+  addRestart() {
+    const restart = this.generateRestart();
+    this.container.appendChild(restart);
+  }
 
-        const percentSpan = document.createElement("span");
-        percentSpan.style.marginLeft = "8px";
-        line.appendChild(percentSpan);
+  addFinish() {
+    const finish = this.generateFinish();
+    this.container.appendChild(finish);
+  }
 
-        for (let i = 1; i < chars.length + 1; i++) {
-            await this._wait(this.typeDelay);
-            const percent = Math.round((i / chars.length) * 100);
+  async type(line: HTMLElement) {
+    const chars = [...(line.textContent || "")];
+    line.textContent = "";
+    this.container.appendChild(line);
 
-            barSpan.textContent = chars.slice(0, i);
-            percentSpan.textContent = `${percent}%`;
-
-            if (percent > progressPercent) break;
-        }
+    for (const char of chars) {
+      const delay =
+        parseFloat(line.getAttribute(`${this.pfx}-typeDelay`) || "") ||
+        this.typeDelay;
+      await this._wait(delay);
+      line.textContent += char;
     }
+  }
 
-    async stats(line: HTMLElement, username: string) {
-        const link = document.createElement("a");
-        link.href = `https://github.com/AppSolves#-github-stats`;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
+  async progress(line: HTMLElement) {
+    const progressLength =
+      parseFloat(line.getAttribute(`${this.pfx}-progressLength`) || "") ||
+      this.progressLength;
+    const progressChar =
+      line.getAttribute(`${this.pfx}-progressChar`) || this.progressChar;
+    const chars = progressChar.repeat(progressLength);
+    const progressPercent =
+      parseFloat(line.getAttribute(`${this.pfx}-progressPercent`) || "") ||
+      this.progressPercent;
 
-        const img = document.createElement("img");
-        img.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=tokyonight`;
-        img.alt = "GitHub Stats";
-        img.style.width = "100%";
-        img.style.maxWidth = "650px";
-        img.style.marginTop = "16px";
-        img.draggable = false;
+    line.innerHTML = ""; // instead of textContent
+    this.container.appendChild(line);
 
-        img.style.opacity = "0";
-        img.style.transform = "scale(0.5)";
-        img.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+    const barSpan = document.createElement("span");
+    barSpan.style.whiteSpace = "pre-wrap"; // allow wrapping
+    barSpan.style.wordBreak = "break-all"; // force wrap on overflow
+    line.appendChild(barSpan);
 
-        line.innerHTML = "";
-        link.appendChild(img);
-        line.appendChild(link);
+    const percentSpan = document.createElement("span");
+    percentSpan.style.marginLeft = "8px";
+    line.appendChild(percentSpan);
 
-        this.container.appendChild(line);
-        await new Promise((resolve) => {
-            img.onload = () => resolve(true);
-        });
+    for (let i = 1; i < chars.length + 1; i++) {
+      await this._wait(this.typeDelay);
+      const percent = Math.round((i / chars.length) * 100);
 
-        await this._wait(300);
-        img.style.opacity = "1";
-        img.style.transform = "scale(1)";
+      barSpan.textContent = chars.slice(0, i);
+      percentSpan.textContent = `${percent}%`;
 
-        await this._wait(300);
+      if (percent > progressPercent) break;
     }
+  }
 
-    _wait(time: number) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
+  async stats(line: HTMLElement, username: string) {
+    const link = document.createElement("a");
+    link.href = `https://github.com/AppSolves#-github-stats`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
 
-    lineDataToElements(lineData: LineData[]): Element[] {
-        return lineData.map((line) => {
-            const div = document.createElement("div");
-            div.innerHTML = `<span ${this._attributes(line)}>${line.value || ""}</span>`;
-            return div.firstElementChild as HTMLElement;
-        });
-    }
+    const img = document.createElement("img");
+    img.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=tokyonight`;
+    img.alt = "GitHub Stats";
+    img.style.width = "100%";
+    img.style.maxWidth = "650px";
+    img.style.marginTop = "16px";
+    img.draggable = false;
 
-    _attributes(line: LineData): string {
-        let attrs = "";
-        for (const prop in line) {
-            if (prop === "class") {
-                attrs += ` class=${line[prop]} `;
-                continue;
-            }
-            if (prop === "type") {
-                attrs += `${this.pfx}="${line[prop]}" `;
-            } else if (prop !== "value") {
-                attrs += `${this.pfx}-${prop}="${line[prop]}" `;
-            }
-        }
-        return attrs;
+    img.style.opacity = "0";
+    img.style.transform = "scale(0.5)";
+    img.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+
+    line.innerHTML = "";
+    link.appendChild(img);
+    line.appendChild(link);
+
+    this.container.appendChild(line);
+    await new Promise((resolve) => {
+      img.onload = () => resolve(true);
+    });
+
+    await this._wait(300);
+    img.style.opacity = "1";
+    img.style.transform = "scale(1)";
+
+    await this._wait(300);
+  }
+
+  _wait(time: number) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  lineDataToElements(lineData: LineData[]): Element[] {
+    return lineData.map((line) => {
+      const div = document.createElement("div");
+      div.innerHTML = `<span ${this._attributes(line)}>${line.value || ""}</span>`;
+      return div.firstElementChild as HTMLElement;
+    });
+  }
+
+  _attributes(line: LineData): string {
+    let attrs = "";
+    for (const prop in line) {
+      if (prop === "class") {
+        attrs += ` class=${line[prop]} `;
+        continue;
+      }
+      if (prop === "type") {
+        attrs += `${this.pfx}="${line[prop]}" `;
+      } else if (prop !== "value") {
+        attrs += `${this.pfx}-${prop}="${line[prop]}" `;
+      }
     }
+    return attrs;
+  }
 }
 
 // React wrapper
-const TermynalComponent: React.FC<{ options?: TermynalOptions }> = ({ options }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const shadowRef = useRef<ShadowRoot | null>(null);
+const TermynalComponent: React.FC<{ options?: TermynalOptions }> = ({
+  options,
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const shadowRef = useRef<ShadowRoot | null>(null);
 
-    const loadCSS = React.useCallback(async () => {
-        if (!shadowRef.current) return;
+  const loadCSS = React.useCallback(async () => {
+    if (!shadowRef.current) return;
 
-        for (const link of TERMYNAL_STYLE_LINKS) {
-            try {
-                const res = await fetch(link);
-                const cssText = await res.text();
-                const style = document.createElement("style");
-                style.textContent = cssText;
-                shadowRef.current.appendChild(style);
-            } catch (err) {
-                console.error("Fehler beim Laden der CSS:", err);
-            }
-        }
-    }, []);
+    for (const link of TERMYNAL_STYLE_LINKS) {
+      try {
+        const res = await fetch(link);
+        const cssText = await res.text();
+        const style = document.createElement("style");
+        style.textContent = cssText;
+        shadowRef.current.appendChild(style);
+      } catch (err) {
+        console.error("Fehler beim Laden der CSS:", err);
+      }
+    }
+  }, []);
 
-    useEffect(() => {
-        if (!containerRef.current) return;
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-        if (!shadowRef.current) {
-            shadowRef.current = containerRef.current.attachShadow({ mode: "open" });
-            loadCSS();
+    if (!shadowRef.current) {
+      shadowRef.current = containerRef.current.attachShadow({ mode: "open" });
+      loadCSS();
 
-            const div = document.createElement("div");
-            shadowRef.current.appendChild(div);
+      const div = document.createElement("div");
+      shadowRef.current.appendChild(div);
 
-            new Termynal(div, options);
-        }
-    }, [loadCSS, options]);
+      new Termynal(div, options);
+    }
+  }, [loadCSS, options]);
 
-    return (
-        <div className="items-center justify-center" ref={containerRef} />
-    );
+  return <div className="items-center justify-center" ref={containerRef} />;
 };
 
 export default TermynalComponent;

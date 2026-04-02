@@ -5,6 +5,7 @@
 This Privacy Policy explains how **AppSolves** (the “Controller”, “we”, “us” or “our”), operating from Baden-Württemberg, Germany, collects, uses, shares, and stores personal data in connection with our websites, applications, services, and products (collectively, the “Services”). This Privacy Policy applies to all current and future products and services provided by AppSolves unless otherwise stated.
 
 **Controller contact:**
+
 - AppSolves
 - **Postal Address**: Riegelstraße 55, 73760 Ostfildern, Germany
 - **Email**: [contact@appsolves.dev](mailto:contact@appsolves.dev)
@@ -23,21 +24,21 @@ We collect a variety of information in order to provide, improve, secure, and su
 
 **2.1 Personal and Account Information**
 
-* Full name, email address, phone number, postal address (where provided), and other contact or profile data.
-* Account credentials (username, hashed password), linked third-party account data and tokens, and account metadata.
+- Full name, email address, phone number, postal address (where provided), and other contact or profile data.
+- Account credentials (username, hashed password), linked third-party account data and tokens, and account metadata.
 
 **2.2 Device, Technical & Usage Data**
 
-* IP address, device identifiers, operating system, browser type and version, device model, network information, precise location data (where permission is granted), cookies, JSON Web Tokens (JWTs), and other tracking identifiers (including advertising IDs).
-* App and website usage data (pages viewed, features used, clicks, session duration), performance metrics, and crash logs.
+- IP address, device identifiers, operating system, browser type and version, device model, network information, precise location data (where permission is granted), cookies, JSON Web Tokens (JWTs), and other tracking identifiers (including advertising IDs).
+- App and website usage data (pages viewed, features used, clicks, session duration), performance metrics, and crash logs.
 
 **2.3 Payment & Billing Data**
 
-* Payment and billing data necessary for purchases and subscriptions (e.g., payment tokens, transaction metadata). AppSolves relies on third-party payment processors such as Stripe to store and process raw payment card details. We do **not** store raw credit card numbers or full payment credentials on our servers; where we receive payment tokens or truncated card information (e.g., last-4 digits), this will be retained as described below.
+- Payment and billing data necessary for purchases and subscriptions (e.g., payment tokens, transaction metadata). AppSolves relies on third-party payment processors such as Stripe to store and process raw payment card details. We do **not** store raw credit card numbers or full payment credentials on our servers; where we receive payment tokens or truncated card information (e.g., last-4 digits), this will be retained as described below.
 
 **2.4 Analytics and Advertising Data**
 
-* Aggregated analytics, advertising identifiers (ad-IDs), and profiling data used for analytics, advertising, and measurement.
+- Aggregated analytics, advertising identifiers (ad-IDs), and profiling data used for analytics, advertising, and measurement.
 
 ---
 
@@ -45,17 +46,17 @@ We collect a variety of information in order to provide, improve, secure, and su
 
 We process personal data for the following purposes and on the legal bases described below:
 
-* **3.1 To provide and maintain the Services** — performance of a contract (e.g., account management, subscriptions, payments).
+- **3.1 To provide and maintain the Services** — performance of a contract (e.g., account management, subscriptions, payments).
 
-* **3.2 To operate, improve and analyze the Services** — legitimate interests (product improvement, debugging, analytics, performance monitoring, crash reporting, fraud detection, and security).
+- **3.2 To operate, improve and analyze the Services** — legitimate interests (product improvement, debugging, analytics, performance monitoring, crash reporting, fraud detection, and security).
 
-* **3.3 For customer support and communication** — performance of a contract and/or legitimate interests.
+- **3.3 For customer support and communication** — performance of a contract and/or legitimate interests.
 
-* **3.4 For billing, invoicing and record-keeping** — legal obligation and performance of a contract.
+- **3.4 For billing, invoicing and record-keeping** — legal obligation and performance of a contract.
 
-* **3.5 For marketing and advertising** — consent where required; otherwise legitimate interests for non-personalized or limited communications. Note: personalized ads may be served and ad-IDs may be shared with advertising partners.
+- **3.5 For marketing and advertising** — consent where required; otherwise legitimate interests for non-personalized or limited communications. Note: personalized ads may be served and ad-IDs may be shared with advertising partners.
 
-* **3.6 For legal compliance and safety** — legal obligations, legitimate interests (preventing abuse, enforcement of our terms, protecting rights and property).
+- **3.6 For legal compliance and safety** — legal obligations, legitimate interests (preventing abuse, enforcement of our terms, protecting rights and property).
 
 ---
 
@@ -63,9 +64,9 @@ We process personal data for the following purposes and on the legal bases descr
 
 Where applicable under the GDPR, our legal bases for processing personal data include:
 
-* **Performance of a contract** (providing Services, billing, subscriptions).
-* **Legitimate interests** (product improvement, security, fraud detection, analytics), provided such interests do not override your fundamental rights.
-* **Consent** (for targeted advertising, marketing communications, or any processing where consent is required by law). When we rely on consent, you may withdraw it at any time as described below.
+- **Performance of a contract** (providing Services, billing, subscriptions).
+- **Legitimate interests** (product improvement, security, fraud detection, analytics), provided such interests do not override your fundamental rights.
+- **Consent** (for targeted advertising, marketing communications, or any processing where consent is required by law). When we rely on consent, you may withdraw it at any time as described below.
 
 ---
 
@@ -79,12 +80,12 @@ We use cookies, local storage, JWTs, and similar technologies for authentication
 
 We share personal data with third parties strictly as necessary to provide the Services or for legitimate business purposes. Typical categories of recipients include:
 
-* **Payment processors:** e.g., Stripe — for payment processing and billing. We do not store raw card numbers; payment processors handle card data.
-* **Analytics & crash reporting providers:** e.g., Firebase, Google Analytics, Sentry SDK — for product analytics and crash reporting.
-* **Advertising partners:** e.g., Google ad partners — for ad delivery, measurement, and targeting. Personalized ads may be served.
-* **Hosting and infrastructure providers:** cloud and hosting vendors used to operate the Services.
-* **Professional services providers:** auditors, lawyers, accountants, and other service providers.
-* **Legal and safety recipients:** when required to comply with legal processes, to protect rights, property, or safety, or to respond to lawful requests.
+- **Payment processors:** e.g., Stripe — for payment processing and billing. We do not store raw card numbers; payment processors handle card data.
+- **Analytics & crash reporting providers:** e.g., Firebase, Google Analytics, Sentry SDK — for product analytics and crash reporting.
+- **Advertising partners:** e.g., Google ad partners — for ad delivery, measurement, and targeting. Personalized ads may be served.
+- **Hosting and infrastructure providers:** cloud and hosting vendors used to operate the Services.
+- **Professional services providers:** auditors, lawyers, accountants, and other service providers.
+- **Legal and safety recipients:** when required to comply with legal processes, to protect rights, property, or safety, or to respond to lawful requests.
 
 Where transfers outside the European Economic Area (EEA) occur, data may be processed in countries with differing data protection laws. AppSolves will, where feasible, use appropriate safeguards (e.g., EU Standard Contractual Clauses) or rely on other lawful transfer mechanisms. By using the Services you consent to such transfers as described.
 
@@ -94,10 +95,10 @@ Where transfers outside the European Economic Area (EEA) occur, data may be proc
 
 We retain personal data only as long as necessary for the purposes listed above and in accordance with applicable law. Typical retention periods are:
 
-* **Account & profile data:** retained while the account exists and for **1 year** after a period of inactivity.
-* **Payment & billing records:** retained for **7 years** for accounting, tax, and legal purposes.
-* **Logs, IP addresses, crash reports:** retained for **12 months**.
-* **Analytics (aggregated):** retained for **24 months**.
+- **Account & profile data:** retained while the account exists and for **1 year** after a period of inactivity.
+- **Payment & billing records:** retained for **7 years** for accounting, tax, and legal purposes.
+- **Logs, IP addresses, crash reports:** retained for **12 months**.
+- **Analytics (aggregated):** retained for **24 months**.
 
 Please note: while we use these retention periods as a guideline, we cannot absolutely guarantee deletion within these windows in every case. Practical factors — including technical, administrative, or personnel limitations — may lead to longer retention in some circumstances.
 
@@ -107,13 +108,13 @@ Please note: while we use these retention periods as a guideline, we cannot abso
 
 Depending on your jurisdiction, you may have legal rights regarding your personal data, including the right to:
 
-* Access a copy of the personal data we hold about you.
-* Request correction of inaccurate or incomplete data.
-* Request deletion of your personal data (right to be forgotten) subject to legal exceptions.
-* Request restriction of processing.
-* Object to processing based on legitimate interests or direct marketing.
-* Request portability of certain personal data you provided.
-* Withdraw consent where processing is based on consent.
+- Access a copy of the personal data we hold about you.
+- Request correction of inaccurate or incomplete data.
+- Request deletion of your personal data (right to be forgotten) subject to legal exceptions.
+- Request restriction of processing.
+- Object to processing based on legitimate interests or direct marketing.
+- Request portability of certain personal data you provided.
+- Withdraw consent where processing is based on consent.
 
 **Important:** Although these rights exist under law (e.g., GDPR, CCPA), AppSolves currently does **not** provide fully automated self-service tools to access, update, or delete your data. If you wish to exercise any rights, please contact us at [contact@appsolves.dev](mailto:contact@appsolves.dev) with sufficient details and verification information. We will consider and respond to manual requests in good faith, but please be aware that manual processing may take time and we are not guaranteeing immediate fulfillment.
 

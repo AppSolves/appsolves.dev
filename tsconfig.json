@@ -10,9 +10,7 @@
   ],
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "noImplicitAny": true,
     "noUnusedParameters": true,
