@@ -1,4 +1,4 @@
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import path, { resolve } from "path";
 import { defineConfig, loadEnv } from "vite";
