@@ -1,6 +1,5 @@
 import react from "@vitejs/plugin-react-swc";
 import { readFileSync, writeFileSync } from "fs";
-import { componentTagger } from "lovable-tagger";
 import path, { resolve } from "path";
 import { defineConfig, loadEnv } from "vite";
 import sitemapPlugin from "vite-plugin-sitemap";
@@ -40,7 +39,6 @@ export default defineConfig(({ mode }) => {
           console.log("✅ 404.html generated automatically!");
         },
       },
-      mode === "development" && componentTagger(),
     ].filter(Boolean),
     resolve: {
       alias: {
