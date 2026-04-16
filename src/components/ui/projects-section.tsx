@@ -24,7 +24,7 @@ const ProjectsSection = () => {
     {
       title: "Fidan",
       description:
-        "Fidan is a next-generation programming language that lets you prototype like Python, run like C, and ship with Rust-level safety.",
+        "Fidan is the world's first AI-native next-generation programming language that lets you prototype like Python, run like C, and ship with Rust-level safety.",
       tech: [
         "fidan",
         "programming",
@@ -33,7 +33,7 @@ const ProjectsSection = () => {
         "expressive",
         "fast",
         "safe",
-        "native",
+        "ai-native",
       ],
       liveUrl: "https://fidan.dev",
       githubUrl: "https://github.com/fidan-lang/fidan",
