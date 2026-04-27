@@ -72,7 +72,7 @@ const ProjectsSection = () => {
       githubUrl: null,
     },
     {
-      title: "TikTok-LIVE-Automation",
+      title: "TikArcade Studio",
       description:
         "A full-stack desktop application for TikTok Live Automation at scale. Features interactive gaming sessions and custom bots during TikTok Lives via our Plug & Play system.",
       tech: [
@@ -81,10 +81,11 @@ const ProjectsSection = () => {
         "fastapi",
         "stripe",
         "nuitka",
-        "tiktok-live",
+        "tiktok",
+        "live",
         "typescript",
       ],
-      liveUrl: "https://tiktok-live-automation.appsolves.dev",
+      liveUrl: "https://tikarcade.appsolves.dev",
       githubUrl: null,
     },
     {
