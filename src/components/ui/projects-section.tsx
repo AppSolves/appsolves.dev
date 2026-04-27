@@ -54,6 +54,24 @@ const ProjectsSection = () => {
       githubUrl: "https://github.com/AppSolves/LanePilot",
     },
     {
+      title: "TagVault",
+      description:
+        "TagVault is a mobile application for Android that allows users to scan, store, manage, and automate their own RFID/NFC chips, cards, and tags securely.",
+      tech: [
+        "flutter",
+        "android",
+        "mobile",
+        "app",
+        "rfid",
+        "nfc",
+        "secure",
+        "management",
+        "tags",
+      ],
+      liveUrl: "https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault",
+      githubUrl: null,
+    },
+    {
       title: "TikTok-LIVE-Automation",
       description:
         "A full-stack desktop application for TikTok Live Automation at scale. Features interactive gaming sessions and custom bots during TikTok Lives via our Plug & Play system.",
