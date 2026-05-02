@@ -89,6 +89,40 @@ const ProjectsSection = () => {
       githubUrl: null,
     },
     {
+      title: "appscreen-mcp",
+      description:
+        "A MCP (Model Context Protocol) wrapper for YUZU-Hub's appscreen, enabling AI agents to create beautiful App Store optimized screenshots for your apps.",
+      tech: [
+        "typescript",
+        "nodejs",
+        "mcp",
+        "appscreen",
+        "ai-agents",
+        "automation",
+        "app-store-optimization",
+        "screenshots",
+      ],
+      liveUrl: "https://appsolves.github.io/appscreen-mcp",
+      githubUrl: "https://github.com/AppSolves/appscreen-mcp",
+    },
+    {
+      title: "carbonator",
+      description:
+        "An Engineering tool for calculating lay-up configurations of composite fiber materials and determining final component mass.",
+      tech: [
+        "flutter",
+        "android",
+        "mobile",
+        "carbon-fiber",
+        "composite-materials",
+        "engineering",
+        "layup-configurations",
+        "mass-calculation",
+      ],
+      liveUrl: "https://play.google.com/store/apps/details?id=dev.appsolves.carbonator",
+      githubUrl: null,
+    },
+    {
       title: "FastAPI Users - DynamoDB Adapter",
       description:
         "A ready-to-use database adapter for AWS DynamoDB, easy to use with FastAPI-Users!",
