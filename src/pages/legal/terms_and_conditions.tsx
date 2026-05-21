@@ -38,7 +38,9 @@ export default function TermsAndConditions() {
       .then(setTacText)
       .catch((error) => {
         console.error(error);
-        setTacText("# Terms and Conditions\n\nCould not load terms and conditions.");
+        setTacText(
+          "# Terms and Conditions\n\nCould not load terms and conditions.",
+        );
       });
   }, []);
 

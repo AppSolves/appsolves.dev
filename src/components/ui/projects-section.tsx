@@ -68,7 +68,8 @@ const ProjectsSection = () => {
         "management",
         "tags",
       ],
-      liveUrl: "https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault",
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault",
       githubUrl: null,
     },
     {
@@ -119,7 +120,8 @@ const ProjectsSection = () => {
         "layup-configurations",
         "mass-calculation",
       ],
-      liveUrl: "https://play.google.com/store/apps/details?id=dev.appsolves.carbonator",
+      liveUrl:
+        "https://play.google.com/store/apps/details?id=dev.appsolves.carbonator",
       githubUrl: null,
     },
     {
