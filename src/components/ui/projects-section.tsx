@@ -68,8 +68,7 @@ const ProjectsSection = () => {
         "management",
         "tags",
       ],
-      liveUrl:
-        "https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault",
+      liveUrl: "https://tagvault.appsolves.dev",
       githubUrl: null,
     },
     {
