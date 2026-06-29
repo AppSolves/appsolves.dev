@@ -32,7 +32,7 @@ const Footer = () => {
     {
       name: "YouTube",
       icon: Icons.YouTube,
-      url: "https://youtube.com/@curioburstz",
+      url: "https://youtube.com/@appsolvesdev",
     },
     {
       name: "Email",
