@@ -96,22 +96,38 @@ const secondary = [
 const ProjectVisual = ({ kind }: { kind: ProjectKind }) => {
   if (kind === "fidan") {
     return (
-      <div className="project-visual project-visual-fidan">
-        <div className="fidan-axis" />
-        <div className="fidan-plane fidan-plane-a" />
-        <div className="fidan-plane fidan-plane-b" />
-        <div className="fidan-plane fidan-plane-c" />
-        <div className="fidan-code">
-          <div>source</div>
-          <span>→</span>
-          <div>HIR</div>
-          <span>→</span>
-          <div>MIR</div>
-          <span>→</span>
-          <div>native</div>
-        </div>
-        <div className="visual-caption">
-          compiler pipeline / multi-backend execution
+      <div className="project-visual project-visual-fidan-clean">
+        <div className="fidan-scene">
+          <div className="fidan-panel fidan-panel-back" />
+          <div className="fidan-panel fidan-panel-mid" />
+          <div className="fidan-panel fidan-panel-front">
+            <div className="fidan-toolbar">
+              <span />
+              <span />
+              <span />
+            </div>
+
+            <div className="fidan-editor">
+              <span className="fidan-gutter">01</span>
+              <div className="fidan-token fidan-token-a" />
+              <span className="fidan-gutter">02</span>
+              <div className="fidan-token fidan-token-b" />
+              <span className="fidan-gutter">03</span>
+              <div className="fidan-token fidan-token-c" />
+              <span className="fidan-gutter">04</span>
+              <div className="fidan-token fidan-token-d" />
+            </div>
+
+            <div className="fidan-pipeline">
+              <span>source</span>
+              <i />
+              <span>HIR</span>
+              <i />
+              <span>MIR</span>
+              <i />
+              <span>native</span>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -119,31 +135,62 @@ const ProjectVisual = ({ kind }: { kind: ProjectKind }) => {
 
   if (kind === "lane") {
     return (
-      <div className="project-visual project-visual-lane">
-        <div className="lane-horizon" />
-        <div className="lane-line lane-line-a" />
-        <div className="lane-line lane-line-b" />
-        <div className="lane-line lane-line-c" />
-        <div className="lane-node lane-node-a" />
-        <div className="lane-node lane-node-b" />
-        <div className="lane-node lane-node-c" />
-        <div className="lane-node lane-node-d" />
-        <div className="lane-scan" />
-        <div className="visual-caption">perception / graph optimization / edge</div>
+      <div className="project-visual project-visual-lane-clean">
+        <div className="lane-scene">
+          <div className="lane-road">
+            <div className="lane-shoulder lane-shoulder-left" />
+            <div className="lane-shoulder lane-shoulder-right" />
+            <div className="lane-divider lane-divider-a" />
+            <div className="lane-divider lane-divider-b" />
+
+            <div className="lane-car lane-car-a">
+              <span className="lane-car-roof" />
+              <span className="lane-box" />
+            </div>
+            <div className="lane-car lane-car-b">
+              <span className="lane-car-roof" />
+              <span className="lane-box" />
+            </div>
+            <div className="lane-car lane-car-c">
+              <span className="lane-car-roof" />
+              <span className="lane-box" />
+            </div>
+
+            <div className="lane-route">
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="project-visual project-visual-tagvault">
-      <div className="tagvault-card">
-        <div className="tagvault-mark">TV</div>
-        <div className="tagvault-meta">NFC / SECURE / LOCAL</div>
+    <div className="project-visual project-visual-tagvault-clean">
+      <div className="tagvault-scene">
+        <div className="tagvault-phone">
+          <div className="tagvault-phone-screen">
+            <div className="tagvault-phone-icon">
+              <span />
+            </div>
+            <div className="tagvault-phone-line tagvault-phone-line-a" />
+            <div className="tagvault-phone-line tagvault-phone-line-b" />
+          </div>
+        </div>
+
+        <div className="tagvault-card-clean">
+          <div className="tagvault-chip" />
+          <div className="tagvault-card-brand">TV</div>
+          <div className="tagvault-card-line" />
+          <div className="tagvault-card-line short" />
+        </div>
+
+        <div className="tagvault-wave tagvault-wave-a" />
+        <div className="tagvault-wave tagvault-wave-b" />
+        <div className="tagvault-wave tagvault-wave-c" />
       </div>
-      <div className="nfc-wave nfc-wave-a" />
-      <div className="nfc-wave nfc-wave-b" />
-      <div className="nfc-wave nfc-wave-c" />
-      <div className="visual-caption">scan / store / automate</div>
     </div>
   );
 };
