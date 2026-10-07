@@ -48,7 +48,7 @@ export async function mountBrandScene(
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_DPR));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = dark ? 1.05 : 1;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.VSMShadowMap;
   const scene = new THREE.Scene();
@@ -72,10 +72,12 @@ export async function mountBrandScene(
   };
   const geometry = new THREE.ExtrudeGeometry(shapes, extrusion);
   geometry.translate(0, 0, -0.21);
-  const face = new THREE.MeshStandardMaterial({
-    color: dark ? "#53594f" : "#333831",
-    metalness: 0.87,
-    roughness: 0.24,
+  const face = new THREE.MeshPhysicalMaterial({
+    color: "#6a5ce3",
+    metalness: 0.42,
+    roughness: 0.28,
+    clearcoat: 0.8,
+    clearcoatRoughness: 0.2,
   });
   const edge = new THREE.MeshStandardMaterial({
     color: "#b5b6ab",
@@ -90,16 +92,11 @@ export async function mountBrandScene(
     extrusion,
   );
   signatureGeometry.translate(0, 0, -0.21);
-  const enamel = new THREE.MeshStandardMaterial({
-    color: "#6a5ce3",
-    metalness: 0.3,
-    roughness: 0.26,
-  });
-  const signature = new THREE.Mesh(signatureGeometry, [enamel, edge]);
+  const signature = new THREE.Mesh(signatureGeometry, [face, edge]);
   signature.castShadow = true;
   object.add(signature);
   scene.add(object);
-  const key = new THREE.DirectionalLight("#fff3df", 4);
+  const key = new THREE.DirectionalLight("#fff3df", 2.8);
   key.position.set(-3, 7, 5);
   key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024);
@@ -231,7 +228,6 @@ export async function mountBrandScene(
     canvas.removeEventListener("webglcontextlost", lostContext);
     geometry.dispose();
     signatureGeometry.dispose();
-    enamel.dispose();
     face.dispose();
     edge.dispose();
     floorGeometry.dispose();

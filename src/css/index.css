@@ -127,7 +127,7 @@
   background: var(--paper);
 }
 .header-inner {
-  height: 100px;
+  height: 88px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -171,8 +171,58 @@
 }
 .theme-option[data-highlighted] {
   background: var(--surface);
+  color: var(--accent);
+  box-shadow: inset 2px 0 var(--accent);
+  outline: none;
+}
+.theme-option:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: -2px;
+}
+.theme-reveal::view-transition-old(root),
+.theme-reveal::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.theme-reveal::view-transition-old(root) {
+  z-index: 1;
+}
+.theme-reveal::view-transition-new(root) {
+  z-index: 2;
+}
+.mobile-theme {
+  border: 0;
+  padding: 22px 0 0;
+  margin: 0;
+}
+.mobile-theme legend {
+  padding: 20px 0 0;
+  font-size: 13px;
+  color: var(--subtle);
+}
+.mobile-theme-options {
+  display: flex;
+  gap: 16px;
+}
+.mobile-theme-options label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.mobile-theme-options input {
+  accent-color: var(--brand);
+  width: 16px;
+  height: 16px;
+}
+.mobile-theme-options label:has(input:checked) {
+  color: var(--accent);
+}
+.mobile-theme-options label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 .theme-check {
   position: absolute;
@@ -190,9 +240,6 @@
 .brand img {
   width: 33px;
   height: 36px;
-}
-.brand-period {
-  color: var(--accent);
 }
 .desktop-nav {
   display: flex;
@@ -239,18 +286,18 @@
   transform: none;
 }
 .hero {
-  padding-top: 28px;
+  padding-top: 12px;
 }
 .hero-composition {
   display: grid;
-  grid-template-columns: 1.18fr 1fr;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
   align-items: center;
-  min-height: min(620px, 68svh);
+  min-height: min(540px, calc(100svh - 180px));
 }
 .hero-copy {
   position: relative;
   z-index: 1;
-  padding-block: 44px;
+  padding-block: 28px;
 }
 .hero-intro {
   font-size: 14px;
@@ -264,7 +311,7 @@
   font-weight: 400;
 }
 .hero h1 {
-  font-size: clamp(66px, 7.65vw, 136px);
+  font-size: clamp(60px, 7.1vw, 128px);
   font-weight: 500;
   line-height: 1.03;
   letter-spacing: -0.068em;
@@ -273,16 +320,16 @@
 .headline-mask {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.13em;
-  margin-bottom: -0.13em;
+  padding-bottom: 0.09em;
+  margin-bottom: 0;
 }
 .hero-line {
   display: block;
 }
 .hero h1 em {
   letter-spacing: -0.06em;
-  font-size: 1.13em;
-  line-height: 0.99;
+  font-size: 1.04em;
+  line-height: 1.08;
   padding-right: 0.12em;
   color: var(--brand);
 }
@@ -291,7 +338,7 @@
   line-height: 1.8;
   max-width: 545px;
   color: var(--subtle);
-  margin-top: var(--space-lg);
+  margin-top: 28px;
 }
 .hero-actions {
   display: flex;
@@ -333,9 +380,11 @@
 }
 .brand-scene {
   position: relative;
-  width: 112%;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100svh - 150px);
   aspect-ratio: 1;
-  margin-left: -5%;
+  margin-inline: auto;
 }
 .brand-poster {
   width: 100%;
@@ -633,27 +682,6 @@ figcaption {
   font-size: 13px;
   display: block;
 }
-.tag-screens {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 35px;
-}
-.tag-screen {
-  display: block;
-  overflow: hidden;
-  width: 42%;
-  height: auto;
-  border: 6px solid #242622;
-  border-radius: 22px;
-}
-.tag-screen-one {
-  margin-top: 40px;
-}
-.tag-screen-two {
-  margin-top: 0;
-}
 .about-section {
   background: var(--surface);
   margin-top: var(--space-display);
@@ -751,9 +779,6 @@ figcaption {
   font-weight: 500;
   margin-top: var(--space-lg);
 }
-.open-source-intro h2 em {
-  font-size: 1.1em;
-}
 .open-source-intro > p:last-of-type {
   color: var(--subtle);
   font-size: 15px;
@@ -806,6 +831,8 @@ figcaption {
   transform: translate(3px, -3px);
 }
 .site-footer {
+  --subtle: #b9bbae;
+  --accent: #a398ff;
   background: var(--footer);
   color: var(--footer-ink);
   padding-block: var(--space-2xl) var(--space-md);
@@ -957,7 +984,7 @@ figcaption {
 
 @media (min-width: 1800px) {
   .hero-composition {
-    min-height: 730px;
+    min-height: min(640px, calc(100svh - 210px));
   }
   .hero-description {
     max-width: 610px;
@@ -977,7 +1004,7 @@ figcaption {
     gap: 24px;
   }
   .hero h1 {
-    font-size: 7.55vw;
+    font-size: 7.1vw;
   }
   .hero-intro {
     gap: 14px;
@@ -1008,9 +1035,7 @@ figcaption {
     height: 440px;
     padding: 28px 22px 0;
   }
-  .tag-screens {
-    gap: 15px;
-  }
+
   .lane-stage {
     padding: 20px;
   }
@@ -1070,9 +1095,7 @@ figcaption {
   .tag-stage {
     height: 600px;
   }
-  .tag-screen {
-    width: 35%;
-  }
+
   .about-composition {
     grid-template-columns: 1fr 1.15fr;
   }
@@ -1132,7 +1155,7 @@ figcaption {
     gap: 20px;
   }
   .hero h1 {
-    font-size: clamp(60px, 8vw, 76px);
+    font-size: clamp(52px, 6.8vw, 65px);
   }
   .hero-copy {
     padding-block: 28px;
@@ -1150,8 +1173,8 @@ figcaption {
     margin-bottom: 60px;
   }
   .brand-scene {
-    width: 110%;
-    margin-left: -10%;
+    width: 100%;
+    margin-left: 0;
   }
   .header-actions {
     gap: 12px;
@@ -1181,6 +1204,9 @@ figcaption {
     height: 30px;
   }
   .desktop-nav {
+    display: none;
+  }
+  .desktop-theme {
     display: none;
   }
   .menu-toggle {
@@ -1218,7 +1244,7 @@ figcaption {
     margin-bottom: 30px;
   }
   .hero h1 {
-    font-size: clamp(45px, 13.1vw, 85px);
+    font-size: clamp(42px, 13vw, 85px);
     line-height: 1.05;
   }
   .hero-description {
@@ -1287,7 +1313,7 @@ figcaption {
     gap: 38px;
   }
   .fidan-wordmark {
-    font-size: 128px;
+    font-size: clamp(90px, 30vw, 128px);
     margin-top: 20px;
   }
   .fidan-identity p {
@@ -1368,18 +1394,7 @@ figcaption {
   .tag-stage-label {
     font-size: 12px;
   }
-  .tag-screens {
-    margin-top: 28px;
-    gap: 16px;
-  }
-  .tag-screen {
-    width: 44%;
-    border-width: 4px;
-    border-radius: 16px;
-  }
-  .tag-screen-one {
-    margin-top: 35px;
-  }
+
   .about-section {
     margin-top: var(--space-2xl);
     padding-block: var(--space-2xl) var(--space-lg);
@@ -1520,5 +1535,116 @@ figcaption {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* Project media shares one soft material edge; typography and rows stay square. */
+.fidan-stage,
+.lane-stage,
+.tag-stage {
+  border-radius: 24px;
+  overflow: hidden;
+}
+.phone-scene {
+  position: absolute;
+  inset: 56px 0 0;
+  touch-action: pan-y;
+}
+.phone-scene[data-rendered] {
+  cursor: grab;
+}
+.phone-scene[data-dragging] {
+  cursor: grabbing;
+}
+.phone-poster,
+.phone-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.phone-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.phone-scene[data-rendered] .phone-poster {
+  visibility: hidden;
+}
+.open-source-intro h2 {
+  font-size: clamp(40px, 3.6vw, 58px);
+}
+.contact-socials {
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.contact-socials a {
+  min-height: 44px;
+  font-size: 13px;
+  gap: 7px;
+}
+.contact-support {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  margin-top: 12px;
+  color: var(--subtle);
+  font-size: 12px;
+}
+.contact-support a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.contact-socials a:hover,
+.contact-support a:hover,
+.contact-socials a:focus-visible,
+.contact-support a:focus-visible {
+  color: var(--accent);
+}
+@media (min-width: 768px) and (max-width: 899px) {
+  .contact-support {
+    grid-column: 2;
+  }
+}
+@media (max-width: 767px) {
+  .brand-scene {
+    max-height: none;
+  }
+  .fidan-stage,
+  .lane-stage,
+  .tag-stage {
+    border-radius: 20px;
+  }
+  .phone-scene {
+    inset: 50px 0 0;
+  }
+  .contact-support {
+    margin-top: 10px;
+  }
+  .mobile-theme-options {
+    gap: 14px;
+  }
+  .mobile-theme-options label {
+    font-size: 13px;
+    gap: 6px;
+  }
+}
+@media (max-width: 480px) {
+  .hero-index a > span:nth-child(2) {
+    display: none;
+  }
+  .hero-index a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .hero-index {
+    padding-block: 12px;
+  }
+  .hero h1 {
+    font-size: clamp(42px, 13vw, 62px);
   }
 }

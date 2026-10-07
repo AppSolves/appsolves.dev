@@ -1,7 +1,8 @@
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ThemeControl from "@/components/ThemeControl";
+import { useThemeSelection } from "@/components/useThemeSelection";
 
 const links = [
   { name: "Work", href: "#work" },
@@ -11,6 +12,7 @@ const links = [
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const themeSelection = useThemeSelection();
   const toggle = useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   const home = import.meta.env.BASE_URL;
@@ -43,9 +45,7 @@ export default function Navigation() {
         <div className="page-width header-inner">
           <a className="brand" href={home} aria-label="AppSolves home">
             <img src={`${home}mark.svg`} alt="" width="32" height="34" />
-            <span>
-              AppSolves<span className="brand-period">.</span>
-            </span>
+            <span>AppSolves</span>
           </a>
           <div className="header-actions">
             <nav className="desktop-nav" aria-label="Main navigation">
@@ -54,11 +54,13 @@ export default function Navigation() {
                   {link.name}
                 </a>
               ))}
-              <a className="nav-contact" href={`${onHome ? "" : home}#contact`}>
+              <a className="nav-contact" href="mailto:contact@appsolves.dev">
                 Let’s talk <ArrowUpRight aria-hidden="true" size={16} />
               </a>
             </nav>
-            <ThemeControl />
+            <div className="desktop-theme">
+              <ThemeControl {...themeSelection} />
+            </div>
             <button
               className="menu-toggle"
               ref={toggle}
@@ -92,9 +94,10 @@ export default function Navigation() {
               }}
             >
               {link.name}
-              <ArrowUpRight size={22} aria-hidden="true" />
+              <ArrowDown size={22} aria-hidden="true" />
             </a>
           ))}
+          <ThemeControl {...themeSelection} mobile />
         </nav>
       </header>
     </>

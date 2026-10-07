@@ -84,8 +84,10 @@ for (const scheme of ["light", "dark"] as const) {
     await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
     await page.goto("/");
     await page.getByRole("button", { name: "Open navigation" }).click();
-    await page.getByRole("button", { name: "Choose color theme" }).click();
-    await expect(page.getByRole("menu", { name: "Color theme" })).toBeVisible();
+    await expect(page.getByRole("group", { name: "Appearance" })).toBeVisible();
+    await expect(page.getByRole("menu", { name: "Color theme" })).toHaveCount(
+      0,
+    );
     expect(
       (
         await new AxeBuilder({ page })
@@ -98,17 +100,18 @@ for (const scheme of ["light", "dark"] as const) {
     });
     await page.keyboard.press("Escape");
     await expect(
-      page.getByRole("button", { name: "Choose color theme" }),
+      page.getByRole("button", { name: "Open navigation" }),
     ).toBeFocused();
     await expect(
       page.getByRole("navigation", { name: "Mobile navigation" }),
-    ).toBeVisible();
-    await page.getByRole("button", { name: "Choose color theme" }).click();
+    ).toBeHidden();
+    await page.getByRole("button", { name: "Open navigation" }).click();
     await page
-      .getByRole("menuitemradio", {
+      .getByRole("radio", {
         name: scheme === "light" ? "Dark" : "Light",
+        exact: true,
       })
-      .click();
+      .check();
     await expect(page.locator("html")).toHaveAttribute(
       "data-theme",
       scheme === "light" ? "dark" : "light",

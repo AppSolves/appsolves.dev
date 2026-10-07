@@ -6,8 +6,8 @@
 
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5f3ed" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="canonical" href="https://appsolves.dev/" />
     <link
@@ -30,11 +30,11 @@
       http-equiv="Content-Security-Policy"
       content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline';
+      script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval';
       style-src 'self' 'unsafe-inline';
       font-src 'self' data:;
-      img-src 'self' data: https:;
-      connect-src 'self';
+      img-src 'self' data: blob: https:;
+      connect-src 'self' blob:;
       frame-src 'none';
       object-src 'none';
       base-uri 'self';
@@ -78,20 +78,16 @@
     <meta name="googlebot" content="index, follow" />
     <meta name="bingbot" content="index, follow" />
 
-    <title>Kaan Gönüldinc / AppSolves | AI Systems & Software</title>
+    <title>Kaan Gönüldinc / AppSolves | AI Systems, Compilers & Products</title>
     <meta
       name="description"
       content="Kaan Gönüldinc builds AI systems, developer infrastructure, and software products. Computer Science at TUM and creator of Fidan."
     />
     <meta name="author" content="Kaan Gönüldinc" />
-    <meta
-      name="keywords"
-      content="Kaan Gönüldinc, AppSolves, Fidan, AI systems, deep learning, compiler, software engineering, TUM, computer vision, edge AI"
-    />
 
     <meta
       property="og:title"
-      content="Kaan Gönüldinc / AppSolves | AI Systems & Software"
+      content="Kaan Gönüldinc / AppSolves | AI Systems, Compilers & Products"
     />
     <meta
       property="og:description"
@@ -109,13 +105,13 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="AppSolves — Kaan Gönüldinc. Deep thinking. Real things."
+      content="AppSolves — Kaan Gönüldinc. Think deeply. Build real things."
     />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Kaan Gönüldinc / AppSolves | AI Systems & Software"
+      content="Kaan Gönüldinc / AppSolves | AI Systems, Compilers & Products"
     />
     <meta
       name="twitter:description"

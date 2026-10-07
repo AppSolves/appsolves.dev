@@ -35,7 +35,7 @@ export default function OpenSourceSection() {
         <h2 id="open-source-title">
           Useful at
           <br />
-          <em>every scale.</em>
+          every scale.
         </h2>
         <p>
           Some problems need a whole system.

@@ -8,15 +8,33 @@ export default defineConfig({
   retries: 0,
   use: {
     baseURL: process.env.PREVIEW_URL || "http://127.0.0.1:4173",
-    browserName: "chromium",
-    launchOptions: {
-      executablePath: process.env.BROWSER_PATH || undefined,
-      args: process.env.CI
-        ? ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
-        : undefined,
-    },
     trace: "retain-on-failure",
   },
+  projects: [
+    {
+      name: "chromium",
+      testIgnore: "**/browser-smoke.spec.ts",
+      use: {
+        browserName: "chromium",
+        launchOptions: {
+          executablePath: process.env.BROWSER_PATH || undefined,
+          args: process.env.CI
+            ? ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
+            : undefined,
+        },
+      },
+    },
+    {
+      name: "firefox",
+      testMatch: "**/browser-smoke.spec.ts",
+      use: { browserName: "firefox" },
+    },
+    {
+      name: "webkit",
+      testMatch: "**/browser-smoke.spec.ts",
+      use: { browserName: "webkit" },
+    },
+  ],
   webServer: process.env.PREVIEW_URL
     ? undefined
     : {

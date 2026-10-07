@@ -48,7 +48,29 @@ export default defineConfig(({ mode }) => {
           }
 
           const html = readFileSync(indexPath, "utf-8");
-          writeFileSync(notFoundPath, html);
+          const notFound = html
+            .replace(
+              /<title>.*?<\/title>/,
+              "<title>Page not found | AppSolves</title>",
+            )
+            .replace(
+              /<meta\s+name="robots"[\s\S]*?\/>/,
+              '<meta name="robots" content="noindex, follow" />',
+            )
+            .replace(/<link\s+rel="canonical"[^>]*>/, "")
+            .replace(
+              /<meta\s+(?:property="og:url"|name="(?:googlebot|bingbot)")[^>]*>/g,
+              "",
+            )
+            .replace(
+              /<meta\s+(?:property="og:title"|name="twitter:title")[^>]*>/g,
+              "",
+            )
+            .replace(
+              /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
+              "",
+            );
+          writeFileSync(notFoundPath, notFound);
           for (const [route, title] of [
             ["privacy_policy", "Privacy policy"],
             ["terms_and_conditions", "Terms and conditions"],

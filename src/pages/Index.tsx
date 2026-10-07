@@ -42,18 +42,28 @@ const Index = () => {
             once: true,
           },
         });
-        for (const selector of [".lane-crop", ".tag-screens"])
-          gsap.from(selector, {
-            scale: 1.025,
-            duration: 1.1,
-            ease: "power2.out",
-            clearProps: "all",
-            scrollTrigger: { trigger: selector, start: "top 85%", once: true },
-          });
+        gsap.from(".lane-crop", {
+          scale: 1.025,
+          duration: 1.1,
+          ease: "power2.out",
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: ".lane-crop",
+            start: "top 85%",
+            once: true,
+          },
+        });
       });
       let active = true;
       document.fonts.ready.then(() => {
-        if (active) ScrollTrigger.refresh();
+        if (active) {
+          ScrollTrigger.refresh();
+          // Native hash navigation can run before the client-rendered targets exist.
+          if (location.hash)
+            document
+              .getElementById(location.hash.slice(1))
+              ?.scrollIntoView({ behavior: "instant" });
+        }
       });
       return () => {
         active = false;

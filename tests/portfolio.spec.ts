@@ -6,6 +6,7 @@ const sizes = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "wide", width: 1920, height: 1080 },
   { name: "laptop", width: 1280, height: 800 },
+  { name: "landscape-tablet", width: 960, height: 900 },
   { name: "tablet", width: 820, height: 1180 },
   { name: "mobile", width: 390, height: 844 },
   { name: "small-mobile", width: 320, height: 568 },
@@ -27,7 +28,7 @@ for (const theme of ["light", "dark"] as const) {
       await page.goto("/");
       await page.evaluate(() => document.fonts.ready);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-        "Deep thinking.Real things.",
+        "Think deeply.Build real things.",
       );
       await expect(page.locator("#fidan-title")).toHaveText("Fidan");
       await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
@@ -44,6 +45,17 @@ for (const theme of ["light", "dark"] as const) {
         () => document.documentElement.scrollWidth > innerWidth,
       );
       expect(overflow).toBe(false);
+      const wordmarkFits = await page
+        .locator(".fidan-wordmark")
+        .evaluate((element) => {
+          const text = document.createRange();
+          text.selectNodeContents(element);
+          return (
+            text.getBoundingClientRect().right <
+            element.closest(".fidan-stage")!.getBoundingClientRect().right - 12
+          );
+        });
+      expect(wordmarkFits).toBe(true);
       await expect(page.locator(".brand-poster")).toBeVisible();
       await expect(page.locator(".brand-canvas")).toHaveCount(0);
       expect(
@@ -343,6 +355,13 @@ for (const theme of ["light", "dark"] as const) {
     await page.goto("/does-not-exist");
     await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
     await expect(page.getByRole("heading", { name: "404" })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      "noindex, follow",
+    );
+    await expect(
+      page.locator('link[rel="canonical"],meta[property="og:url"]'),
+    ).toHaveCount(0);
     expect(
       (
         await new AxeBuilder({ page })

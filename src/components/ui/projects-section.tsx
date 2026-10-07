@@ -1,3 +1,4 @@
+import TagVaultScene from "@/components/tagvault/TagVaultScene";
 import { ArrowUpRight } from "lucide-react";
 
 const base = import.meta.env.BASE_URL;
@@ -57,13 +58,15 @@ export default function ProjectsSection() {
               </code>
             </pre>
             <span className="specimen-caption">
-              Explicit types. Native execution.
+              Static types. Native backends.
             </span>
           </div>
         </div>
         <div className="project-details">
           <div>
-            <p className="project-category">AI-native programming language</p>
+            <p className="project-category">
+              AI-native language & compiler toolchain
+            </p>
             <h3 id="fidan-title">Fidan</h3>
             <div className="project-links">
               <a
@@ -203,40 +206,7 @@ export default function ProjectsSection() {
         <figure className="tag-figure">
           <div className="tag-stage">
             <span className="tag-stage-label">TagVault / Android</span>
-            <div className="tag-screens">
-              {["tagvault-01", "tagvault-02"].map((name, index) => (
-                <picture
-                  key={name}
-                  className={`tag-screen tag-screen-${index === 0 ? "one" : "two"}`}
-                >
-                  {["avif", "webp"].map((format) => (
-                    <source
-                      key={format}
-                      type={`image/${format}`}
-                      srcSet={[320, 540, 800]
-                        .map(
-                          (width) =>
-                            `${base}images/${name}-${width}.${format} ${width}w`,
-                        )
-                        .join(", ")}
-                      sizes="(min-width: 1800px) 320px, (min-width: 900px) 22vw, (min-width: 768px) 32vw, 38vw"
-                    />
-                  ))}
-                  <img
-                    src={`${base}images/${name}-540.webp`}
-                    alt={
-                      index === 0
-                        ? "TagVault Android app showing the NFC vault and automation entry points"
-                        : "TagVault ready to scan an NFC tag using ISO 14443-A"
-                    }
-                    width="1080"
-                    height="2214"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-              ))}
-            </div>
+            <TagVaultScene />
           </div>
           <figcaption>
             The shipped Android app. Secure storage meets everyday NFC.

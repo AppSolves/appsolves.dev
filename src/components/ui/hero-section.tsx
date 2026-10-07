@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import BrandScene from "@/components/brand/BrandScene";
 
 export default function HeroSection() {
@@ -11,10 +11,10 @@ export default function HeroSection() {
           </p>
           <h1 id="hero-title">
             <span className="headline-mask">
-              <span className="hero-line">Deep thinking.</span>
+              <span className="hero-line">Think deeply.</span>
             </span>
             <span className="headline-mask">
-              <em className="hero-line">Real things.</em>
+              <em className="hero-line">Build real things.</em>
             </span>
           </h1>
           <p className="hero-description">
@@ -37,17 +37,17 @@ export default function HeroSection() {
         <a href="#fidan">
           <span>Fidan</span>
           <span>Language & compiler</span>
-          <ArrowUpRight size={17} aria-hidden="true" />
+          <ArrowDown size={17} aria-hidden="true" />
         </a>
         <a href="#lanepilot">
           <span>LanePilot</span>
           <span>Deep learning & edge AI</span>
-          <ArrowUpRight size={17} aria-hidden="true" />
+          <ArrowDown size={17} aria-hidden="true" />
         </a>
         <a href="#tagvault">
           <span>TagVault</span>
           <span>Shipped Android product</span>
-          <ArrowUpRight size={17} aria-hidden="true" />
+          <ArrowDown size={17} aria-hidden="true" />
         </a>
       </nav>
     </section>
