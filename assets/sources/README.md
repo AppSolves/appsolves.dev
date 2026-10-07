@@ -9,3 +9,5 @@ These files are inputs to asset generation, not publicly served files.
 - `tagvault-phone/`: original GLB, source license and pinned provenance from the TagVault repository. `node scripts/optimize-phone.mjs` reproduces the compressed public model.
 
 The mark and TagVault assets belong to AppSolves. LanePilot's repository license remains applicable. Run `npm run assets:optimize` to reproduce responsive AVIF / WebP files, the transparent mark, favicon and 180px touch icon. Run `npm run assets:render` against the local site to capture matching light / dark 3D posters and the social card. Generated production assets are committed under `public/`; originals remain here for reproducibility.
+
+- `fidan/`: the official high-resolution icon, pinned to Fidan commit `82a317178994785823368b213c873ba9492b91d8`, and its upstream license. The optimized derivative trims transparent margins and fits the original artwork into a transparent 256px square with lossless WebP.

@@ -1,5 +1,6 @@
 import {
   ArrowUp,
+  ArrowLeft,
   ArrowUpRight,
   Github,
   Linkedin,
@@ -30,7 +31,11 @@ const socials = [
     href: "https://play.google.com/store/apps/dev?id=6007461154397933888",
     icon: Play,
   },
-  { label: "YouTube", href: "https://youtube.com/@curioburstz", icon: Youtube },
+  {
+    label: "YouTube",
+    href: "https://youtube.com/@appsolvesdev",
+    icon: Youtube,
+  },
   { label: "Email", href: "mailto:contact@appsolves.dev", icon: Mail },
 ];
 
@@ -38,6 +43,7 @@ export default function Footer() {
   const { pathname } = useLocation();
   const home = import.meta.env.BASE_URL;
   const compact = pathname !== home;
+  const BackArrow = compact ? ArrowLeft : ArrowUp;
 
   return (
     <footer
@@ -63,7 +69,11 @@ export default function Footer() {
               </p>
               <a className="contact-email" href="mailto:contact@appsolves.dev">
                 contact@appsolves.dev{" "}
-                <ArrowUpRight size={25} aria-hidden="true" />
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={25}
+                  aria-hidden="true"
+                />
               </a>
               <div className="contact-socials">
                 {socials.map(({ label, href, icon: Icon }) => (
@@ -124,7 +134,11 @@ export default function Footer() {
           </div>
           <a className="back-top" href={compact ? home : "#main"}>
             {compact ? "Back home" : "Back to top"}{" "}
-            <ArrowUp size={16} aria-hidden="true" />
+            <BackArrow
+              data-arrow-motion={compact ? "left" : "up"}
+              size={16}
+              aria-hidden="true"
+            />
           </a>
         </div>
       </div>

@@ -1,6 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { readFile, stat, readdir } from "node:fs/promises";
 import sharp from "sharp";
+import { NodeIO } from "@gltf-transform/core";
+import { ALL_EXTENSIONS } from "@gltf-transform/extensions";
+import { MeshoptDecoder } from "meshoptimizer";
+import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 
 test("brand geometry is unchanged and the cutout is truly transparent", async () => {
   const original = await readFile("assets/sources/mark-original.svg", "utf8");
@@ -30,6 +35,76 @@ test("brand geometry is unchanged and the cutout is truly transparent", async ()
   expect(ico.length).toBeLessThan(5_000);
 });
 
+test("official Fidan derivative and full-resolution phone screen retain source detail", async () => {
+  const original = await readFile("assets/sources/fidan/icon-original.png");
+  const blob = Buffer.concat([
+    Buffer.from(`blob ${original.length}\0`),
+    original,
+  ]);
+  expect(createHash("sha1").update(blob).digest("hex")).toBe(
+    "78ad84b20fcc0010fd1a3e119397458e6c2dd8af",
+  );
+  const logo = await sharp("public/images/fidan-icon.webp").metadata();
+  expect([logo.width, logo.height, logo.hasAlpha]).toEqual([256, 256, true]);
+  const screen = await sharp("public/images/tagvault-01-1080.webp").metadata();
+  const source = await sharp("assets/sources/tagvault-01.jpg").metadata();
+  expect([screen.width, screen.height]).toEqual([1080, 2214]);
+  expect([screen.width, screen.height]).toEqual([source.width, source.height]);
+});
+
+test("phone optimization is reproducible with original geometry and 2048px material detail", async ({
+  request,
+}, testInfo) => {
+  const deployed = await request.get("/models/tagvault-phone.glb");
+  expect(deployed.ok()).toBe(true);
+  expect(await deployed.body()).toEqual(
+    await readFile("public/models/tagvault-phone.glb"),
+  );
+  const output = testInfo.outputPath("reproduced-phone.glb");
+  execFileSync(process.execPath, ["scripts/optimize-phone.mjs", output], {
+    timeout: 20000,
+  });
+  expect(await readFile(output)).toEqual(
+    await readFile("public/models/tagvault-phone.glb"),
+  );
+  const io = new NodeIO()
+    .registerExtensions(ALL_EXTENSIONS)
+    .registerDependencies({ "meshopt.decoder": MeshoptDecoder });
+  const original = await io.read("assets/sources/tagvault-phone/original.glb");
+  const optimized = await io.read(output);
+  expect(optimized.getRoot().listMeshes()).toHaveLength(21);
+  for (const mesh of original.getRoot().listMeshes()) {
+    const actual = optimized
+      .getRoot()
+      .listMeshes()
+      .find((value) => value.getName() === mesh.getName())!;
+    expect(actual).toBeDefined();
+    expect(actual.listPrimitives()).toHaveLength(mesh.listPrimitives().length);
+    for (const [index, primitive] of mesh.listPrimitives().entries()) {
+      const result = actual.listPrimitives()[index];
+      expect(result.getIndices()!.getCount()).toBe(
+        primitive.getIndices()!.getCount(),
+      );
+      for (const semantic of primitive.listSemantics()) {
+        const before = primitive.getAttribute(semantic)!;
+        const after = result.getAttribute(semantic)!;
+        // Reorder changes vertex order, not the exact attribute values.
+        expect(after.getCount()).toBe(before.getCount());
+        const rows = (accessor: typeof before) =>
+          Array.from({ length: accessor.getCount() }, (_, i) =>
+            accessor.getElement(i, []).join(","),
+          ).sort();
+        expect(rows(after)).toEqual(rows(before));
+      }
+    }
+  }
+  for (const texture of optimized.getRoot().listTextures()) {
+    expect(texture.getMimeType()).toBe("image/webp");
+    const meta = await sharp(texture.getImage()!).metadata();
+    expect([meta.width, meta.height]).toEqual([2048, 2048]);
+  }
+});
+
 test("responsive derivatives decode at their intended widths and retain bounded payloads", async () => {
   for (const [name, widths] of [["lanepilot", [640, 960, 1288]]] as const) {
     for (const width of widths)
@@ -40,23 +115,23 @@ test("responsive derivatives decode at their intended widths and retain bounded 
       }
   }
   expect(
-    (await sharp("public/images/tagvault-01-540.webp").metadata()).width,
-  ).toBe(540);
-  expect((await stat("public/images/tagvault-01-540.webp")).size).toBeLessThan(
-    40_000,
+    (await sharp("public/images/tagvault-01-1080.webp").metadata()).width,
+  ).toBe(1080);
+  expect((await stat("public/images/tagvault-01-1080.webp")).size).toBeLessThan(
+    180_000,
   );
   for (const format of ["avif", "webp"]) {
     const poster = await sharp(
       `public/images/tagvault-phone.${format}`,
     ).metadata();
     expect([poster.width, poster.height, poster.hasAlpha]).toEqual([
-      640,
-      640,
+      1600,
+      1600,
       true,
     ]);
     expect(
       (await stat(`public/images/tagvault-phone.${format}`)).size,
-    ).toBeLessThan(20_000);
+    ).toBeLessThan(220_000);
     const { channels } = await sharp(
       `public/images/tagvault-phone.${format}`,
     ).stats();
@@ -64,12 +139,18 @@ test("responsive derivatives decode at their intended widths and retain bounded 
     expect(channels[3].max).toBe(255);
   }
   for (const theme of ["", "-dark"]) {
-    const poster = sharp(`public/images/brand-object${theme}.png`);
-    const meta = await poster.metadata();
-    expect([meta.width, meta.height, meta.hasAlpha]).toEqual([900, 900, true]);
-    const { channels } = await poster.stats();
-    expect(channels[3].min).toBe(0);
-    expect(channels[3].max).toBe(255);
+    for (const format of ["avif", "webp"]) {
+      const poster = sharp(`public/images/brand-object${theme}.${format}`);
+      const meta = await poster.metadata();
+      expect([meta.width, meta.height, meta.hasAlpha]).toEqual([
+        1440,
+        1440,
+        true,
+      ]);
+      const { channels } = await poster.stats();
+      expect(channels[3].min).toBe(0);
+      expect(channels[3].max).toBe(255);
+    }
   }
 });
 
@@ -93,10 +174,13 @@ test("build artifact contains complete assets and legal entries without original
     "apple-touch-icon.png",
     "fonts/manrope-latin-variable.woff2",
     "fonts/newsreader-latin-italic-variable.woff2",
-    "images/brand-object.png",
-    "images/brand-object-dark.png",
+    "images/brand-object.avif",
+    "images/brand-object.webp",
+    "images/brand-object-dark.avif",
+    "images/brand-object-dark.webp",
+    "images/fidan-icon.webp",
     "images/lanepilot-1288.avif",
-    "images/tagvault-01-540.webp",
+    "images/tagvault-01-1080.webp",
     "images/tagvault-phone.avif",
     "images/tagvault-phone.webp",
     "models/tagvault-phone.glb",

@@ -14,7 +14,7 @@ The visitor understands: Kaan is the person, AppSolves is his long-term builder 
 
 ## 2. Fidan leads the evidence
 
-“Three projects. Different layers of the stack.” introduces the sequence. Fidan has the largest single project field: forest material, large serif name, **Readable source. Native execution.**, and a real language specimen captioned “Static types. Native backends.”. The project category is “AI-native language & compiler toolchain”. The field retains warm text in both themes.
+“Three projects. Different layers of the stack.” introduces the sequence. Fidan has the largest single project field: forest material, large serif name, **Readable source. Native execution.**, and a real language specimen captioned “Static types. Native backends.”. The project category is “AI-native language & compiler toolchain”. The field retains warm text in both themes. The official sprout icon sits beside the serif wordmark. The desktop grid gives code 1.35 shares against identity 0.65; below 1100px, both stack. An integrated forest inset presents the exact five-line greet example with a single-line signature, semantic syntax colors and a separate nonselectable line-number gutter. Narrow screens scroll source horizontally instead of changing its syntax.
 
 Below, a two-column editorial layout explains the Rust toolchain: typed HIR / MIR, static checking, interpreter, Cranelift JIT / AOT, optional LLVM AOT, native binaries, LSP, packages, concurrency and compiler-grounded AI workflows. Website and source are separate links. “A language is only as useful as the system around it. I’m building both.” gives the work its scope without superiority claims.
 

@@ -236,6 +236,32 @@ test("real project links, contact, metadata and Pages artifacts are preserved", 
       page.getByRole("link", { name: label, exact: true }),
     ).toHaveAttribute("rel", "noopener noreferrer");
   }
+  for (const [label, href] of [
+    ["GitHub", "https://github.com/AppSolves"],
+    ["LinkedIn", "https://linkedin.com/in/kaangoenueldinc"],
+    ["X", "https://x.com/AppSolves"],
+    ["Instagram", "https://instagram.com/appsolves.dev"],
+    ["YouTube", "https://youtube.com/@appsolvesdev"],
+    [
+      "Google Play",
+      "https://play.google.com/store/apps/dev?id=6007461154397933888",
+    ],
+    ["Email", "mailto:contact@appsolves.dev"],
+  ]) {
+    await expect(
+      page
+        .locator(".contact-socials")
+        .getByRole("link", { name: label, exact: true }),
+    ).toHaveAttribute("href", href);
+  }
+  for (const [label, href] of [
+    ["Sponsor the work", "https://github.com/sponsors/AppSolves"],
+    ["Buy me a coffee", "https://www.buymeacoffee.com/AppSolves"],
+  ]) {
+    await expect(
+      page.getByRole("link", { name: label, exact: true }),
+    ).toHaveAttribute("href", href);
+  }
   await expect(
     page.getByRole("link", { name: "contact@appsolves.dev" }),
   ).toHaveAttribute("href", "mailto:contact@appsolves.dev");

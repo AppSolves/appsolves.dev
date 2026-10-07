@@ -37,16 +37,19 @@ export default function OpenSourceSection() {
           <br />
           infrastructure.
         </h2>
-        <p>
-          Smaller projects for integration work and hardware research.
-        </p>
+        <p>Smaller projects for integration work and hardware research.</p>
         <a
           className="text-link"
           href="https://github.com/AppSolves"
           target="_blank"
           rel="noopener noreferrer"
         >
-          More on GitHub <ArrowUpRight size={17} aria-hidden="true" />
+          More on GitHub{" "}
+          <ArrowUpRight
+            data-arrow-motion="external"
+            size={17}
+            aria-hidden="true"
+          />
         </a>
       </div>
       <ul className="source-list">
@@ -62,7 +65,11 @@ export default function OpenSourceSection() {
                 <p>{description}</p>
                 <span>{technology}</span>
               </div>
-              <ArrowUpRight size={22} aria-hidden="true" />
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={22}
+                aria-hidden="true"
+              />
             </a>
           </li>
         ))}

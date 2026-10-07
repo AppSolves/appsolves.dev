@@ -55,7 +55,12 @@ export default function Navigation() {
                 </a>
               ))}
               <a className="nav-contact" href="mailto:contact@appsolves.dev">
-                Let’s talk <ArrowUpRight aria-hidden="true" size={16} />
+                Let’s talk{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  aria-hidden="true"
+                  size={16}
+                />
               </a>
             </nav>
             <div className="desktop-theme">
@@ -94,7 +99,11 @@ export default function Navigation() {
               }}
             >
               {link.name}
-              <ArrowDown size={22} aria-hidden="true" />
+              <ArrowDown
+                data-arrow-motion="down"
+                size={22}
+                aria-hidden="true"
+              />
             </a>
           ))}
           <ThemeControl {...themeSelection} mobile />

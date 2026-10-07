@@ -1,3 +1,4 @@
+import { scenePixelRatio } from "../scene-quality";
 import * as THREE from "three";
 import {
   Box3,
@@ -64,7 +65,7 @@ export async function mountPhoneScene(
     const generated = !screenGeometry.getAttribute("uv");
     if (generated) generatePlanarUVs(screenGeometry);
     const image = await fetch(
-      `${import.meta.env.BASE_URL}images/tagvault-01-540.webp`,
+      `${import.meta.env.BASE_URL}images/tagvault-01-1080.webp`,
       { signal },
     );
     if (!image.ok) throw new Error(`Phone screen: ${image.status}`);
@@ -76,8 +77,9 @@ export async function mountPhoneScene(
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.flipY = false; // ImageBitmap orientation is established at decode time.
     texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
-    texture.minFilter = texture.magFilter = THREE.LinearFilter;
-    texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = true;
     texture.needsUpdate = true;
     const screenMaterial = new THREE.MeshBasicMaterial({
       map: texture,
@@ -99,7 +101,6 @@ export async function mountPhoneScene(
     releaseModel();
     throw error;
   }
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   const scene = new THREE.Scene();
   // Slightly wider than TagVault's hero framing to leave breathing room in this media field.
   const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
@@ -168,6 +169,12 @@ export async function mountPhoneScene(
     if (!width || !height) return;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    renderer.setPixelRatio(
+      scenePixelRatio(
+        window.devicePixelRatio,
+        matchMedia("(pointer: coarse)").matches,
+      ),
+    );
     renderer.setSize(width, height);
     requestRender();
   };
@@ -234,11 +241,13 @@ export async function mountPhoneScene(
   container.addEventListener("lostpointercapture", end);
   canvas.addEventListener("webglcontextlost", lost);
   document.addEventListener("visibilitychange", visibility);
+  window.addEventListener("resize", resize);
   resize();
   return () => {
     disposed = true;
     end();
     cancelAnimationFrame(frame);
+    window.removeEventListener("resize", resize);
     observer.disconnect();
     intersection.disconnect();
     container.removeEventListener("pointerdown", down);

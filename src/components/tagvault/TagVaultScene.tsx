@@ -58,8 +58,8 @@ export default function TagVaultScene() {
         <img
           src={`${import.meta.env.BASE_URL}images/tagvault-phone.webp`}
           alt=""
-          width="640"
-          height="640"
+          width="1600"
+          height="1600"
           loading="lazy"
           decoding="async"
         />

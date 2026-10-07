@@ -1,6 +1,6 @@
 import { chromium } from "@playwright/test";
 import sharp from "sharp";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 
 // Capture the compositor, never retain the production WebGL drawing buffer.
 const baseURL = process.env.PREVIEW_URL || "http://127.0.0.1:8080";
@@ -13,7 +13,7 @@ try {
   for (const theme of ["light", "dark"]) {
     const page = await browser.newPage({
       viewport: { width: 1440, height: 1000 },
-      deviceScaleFactor: 1,
+      deviceScaleFactor: 2,
     });
     await page.addInitScript(
       (theme) => localStorage.setItem("appsolves-theme", theme),
@@ -23,10 +23,10 @@ try {
     await page.locator(`html[data-theme="${theme}"]`).waitFor();
     await page.locator(".brand-scene[data-rendered]").waitFor();
     await page.addStyleTag({
-      content: `html,body{background:transparent!important}body{visibility:hidden}.brand-scene{visibility:visible;position:fixed!important;inset:0!important;width:900px!important;height:900px!important;max-width:none!important;max-height:none!important;margin:0!important;z-index:1000}.brand-poster{visibility:hidden!important}`,
+      content: `html,body{background:transparent!important}body{visibility:hidden}.brand-scene{visibility:visible;position:fixed!important;inset:0!important;width:720px!important;height:720px!important;max-width:none!important;max-height:none!important;margin:0!important;z-index:1000}.brand-poster{visibility:hidden!important}`,
     });
     await page.waitForFunction(
-      () => document.querySelector(".brand-canvas")?.width === 900,
+      () => document.querySelector(".brand-canvas")?.width === 1440,
     );
     const render = await page
       .locator(".brand-canvas")
@@ -34,34 +34,35 @@ try {
     const { channels } = await sharp(render).metadata();
     if (channels !== 4)
       throw new Error("The brand poster must have a transparent background");
-    await writeFile(
-      `public/images/brand-object${theme === "dark" ? "-dark" : ""}.png`,
-      render,
-    );
+    const stem = `public/images/brand-object${theme === "dark" ? "-dark" : ""}`;
+    await sharp(render)
+      .avif({ quality: 82, effort: 6, chromaSubsampling: "4:4:4" })
+      .toFile(`${stem}.avif`);
+    await sharp(render).webp({ quality: 95, effort: 6 }).toFile(`${stem}.webp`);
     if (theme === "light") lightRender = render;
     await page.close();
   }
   const phonePage = await browser.newPage({
     viewport: { width: 1440, height: 900 },
-    deviceScaleFactor: 1,
+    deviceScaleFactor: 2,
   });
   await phonePage.goto(baseURL);
   await phonePage.locator("#tagvault").scrollIntoViewIfNeeded();
   await phonePage.locator(".phone-scene[data-rendered]").waitFor();
   await phonePage.addStyleTag({
-    content: `html,body{background:transparent!important}body{visibility:hidden}.phone-scene{visibility:visible;position:fixed!important;inset:0!important;width:640px!important;height:640px!important;margin:0!important;z-index:1000}.phone-poster{visibility:hidden!important}`,
+    content: `html,body{background:transparent!important}body{visibility:hidden}.phone-scene{visibility:visible;position:fixed!important;inset:0!important;width:800px!important;height:800px!important;margin:0!important;z-index:1000}.phone-poster{visibility:hidden!important}`,
   });
   await phonePage.waitForFunction(
-    () => document.querySelector(".phone-canvas")?.width === 640,
+    () => document.querySelector(".phone-canvas")?.width === 1600,
   );
   const phoneRender = await phonePage
     .locator(".phone-canvas")
     .screenshot({ omitBackground: true });
   await sharp(phoneRender)
-    .avif({ quality: 65, effort: 6 })
+    .avif({ quality: 82, effort: 6, chromaSubsampling: "4:4:4" })
     .toFile("public/images/tagvault-phone.avif");
   await sharp(phoneRender)
-    .webp({ quality: 88, effort: 6 })
+    .webp({ quality: 95, effort: 6 })
     .toFile("public/images/tagvault-phone.webp");
   await phonePage.close();
   const page = await browser.newPage({

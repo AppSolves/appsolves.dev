@@ -1,5 +1,13 @@
 # AppSolves — things with substance
 
+## Focused visual-quality pass
+
+Keep the editorial composition and all approved prose. Use a single semantic arrow system: outward 2.5px right/up, section links 3px down, return-to-top 3px up and home returns 3px left. All use 200ms ease-out on hover and keyboard focus; reduced motion keeps existing color/focus feedback without translation. Social/platform icons stay still.
+
+Both scenes spend more pixels while visible: minimum 2x backing density, desktop ceiling 2.25x, coarse-pointer ceiling 2x, recalculated on resize/zoom. Hero curves use 64 segments, bevels eight and a 2048px shadow map with equivalent world-space softness. Keep the official contours, materials and on-demand lifecycle. Render matching transparent 1440px hero and 1600px phone posters, with high-quality AVIF/WebP encoding. Preserve the original phone's 2048px material texture at WebP quality 95; its actual 1080px screenshot supplies the live screen with mipmaps and anisotropy.
+
+Fidan gains its official repository icon, locally optimized without changing artwork. A compact horizontal icon/wordmark identity sits beside a wider code area. At desktop, give the code about two thirds of the usable field so the real 61-character signature fits at a readable monospace size. At tablet/mobile, stack identity and specimen; keep source whitespace and allow horizontal scrolling. Five real source lines get a separate nonselectable number gutter. Orchid keywords, blue functions, coral identifiers/interpolation, gold types, green strings and warm neutral punctuation contrast against an integrated forest inset. No terminal chrome, fake window or new card treatment.
+
 ## Thesis
 
 An independent builder's body of work, presented with the precision of a technical publication and the material presence of an industrial design studio. The first impression is warm, quiet and physical. The second is specific: a Rust compiler, deployed computer vision, and a commercial Android product. AppSolves is Kaan Gönüldinc's umbrella brand, not an agency.
@@ -72,7 +80,7 @@ Theme defaults to System. A parser-time bootstrap applies the saved choice or OS
 
 Three.js directly, dynamically imported. Extrude the real SVG mark, including its cutout and secondary curve. Bevel the edges, use violet physical enamel with clearcoat on both front faces, chrome sides, a warm studio environment and soft directional light. Dark mode gently adjusts exposure while retaining the same material identity. Orthographic framing avoids exaggerated perspective. Pointer movement changes the viewing angle by only a few degrees; scroll turns the object modestly. No auto-spinning product, particles, nodes, wireframes or postprocessing pile-up.
 
-The scene renders only when its state changes, only while visible, and suspends in background tabs. DPR is capped at 1.5. Production uses the default `preserveDrawingBuffer: false`; asset generation and tests capture the browser compositor. Reduced motion, mobile and WebGL failure use a matching transparent light or dark poster. All essential content exists outside the canvas. Geometry, environment maps, renderer, observers and listeners are disposed on unmount or theme change.
+The scene renders only when its state changes, only while visible, and suspends in background tabs. Backing density stays between 2x and 2.25x on desktop, capped at 2x on coarse-pointer devices. Production uses the default `preserveDrawingBuffer: false`; asset generation and tests capture the browser compositor. Reduced motion, mobile and WebGL failure use a matching transparent light or dark poster. All essential content exists outside the canvas. Geometry, environment maps, renderer, observers and listeners are disposed on unmount or theme change.
 
 LanePilot imagery comes from its repository, cropped to the actual perception viewport. TagVault uses the original 21-mesh phone, its screen selection and bounded drag response, with an actual published Android screenshot mapped to the display. The perspective camera is slightly widened from 23 to 26 degrees so the model clears its media edge. Responsive AVIF / WebP derivatives are generated from preserved originals outside `public/`; provenance is recorded with both. Fidan syntax is sourced from its published documentation and labelled as a language specimen, not a live compiler. LanePilot's approximate −39% hard-braking / +29% average-speed figures are labelled twice as simulation results, with no public-road claim.
 

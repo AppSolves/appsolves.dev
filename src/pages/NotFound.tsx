@@ -31,7 +31,8 @@ export default function NotFound() {
         <h1>404</h1>
         <p>There’s no page at this address.</p>
         <a className="text-link" href={import.meta.env.BASE_URL}>
-          <ArrowLeft size={18} aria-hidden="true" /> Back to AppSolves
+          <ArrowLeft data-arrow-motion="left" size={18} aria-hidden="true" />{" "}
+          Back to AppSolves
         </a>
       </main>
       <Footer />

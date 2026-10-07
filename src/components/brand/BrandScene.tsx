@@ -51,14 +51,19 @@ export default function BrandScene() {
 
   return (
     <div className="brand-scene" ref={container} aria-hidden="true">
-      <img
-        className="brand-poster"
-        src={`${import.meta.env.BASE_URL}images/brand-object${dark ? "-dark" : ""}.png`}
-        alt=""
-        width="900"
-        height="900"
-        fetchPriority="high"
-      />
+      <picture className="brand-poster">
+        <source
+          srcSet={`${import.meta.env.BASE_URL}images/brand-object${dark ? "-dark" : ""}.avif`}
+          type="image/avif"
+        />
+        <img
+          src={`${import.meta.env.BASE_URL}images/brand-object${dark ? "-dark" : ""}.webp`}
+          alt=""
+          width="1440"
+          height="1440"
+          fetchPriority="high"
+        />
+      </picture>
     </div>
   );
 }

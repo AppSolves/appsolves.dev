@@ -24,7 +24,12 @@ export default function HeroSection() {
           </p>
           <div className="hero-actions">
             <a className="text-link" href="#work">
-              Explore the work <ArrowDown size={18} aria-hidden="true" />
+              Explore the work{" "}
+              <ArrowDown
+                data-arrow-motion="down"
+                size={18}
+                aria-hidden="true"
+              />
             </a>
             <span className="hero-context">Computer Science at TUM</span>
           </div>
@@ -37,17 +42,17 @@ export default function HeroSection() {
         <a href="#fidan">
           <span>Fidan</span>
           <span>Language & compiler</span>
-          <ArrowDown size={17} aria-hidden="true" />
+          <ArrowDown data-arrow-motion="down" size={17} aria-hidden="true" />
         </a>
         <a href="#lanepilot">
           <span>LanePilot</span>
           <span>Deep learning & edge AI</span>
-          <ArrowDown size={17} aria-hidden="true" />
+          <ArrowDown data-arrow-motion="down" size={17} aria-hidden="true" />
         </a>
         <a href="#tagvault">
           <span>TagVault</span>
           <span>Shipped Android product</span>
-          <ArrowDown size={17} aria-hidden="true" />
+          <ArrowDown data-arrow-motion="down" size={17} aria-hidden="true" />
         </a>
       </nav>
     </section>

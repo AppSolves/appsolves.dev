@@ -138,9 +138,9 @@ test("System responds to OS changes after an explicit choice", async ({
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.emulateMedia({ colorScheme: "dark" });
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-  await expect(page.locator(".brand-poster")).toHaveAttribute(
+  await expect(page.locator(".brand-poster img")).toHaveAttribute(
     "src",
-    "/images/brand-object-dark.png",
+    "/images/brand-object-dark.webp",
   );
   await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
     "content",

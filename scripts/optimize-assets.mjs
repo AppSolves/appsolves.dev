@@ -21,7 +21,7 @@ const projects = [
     // The original perception viewport: identical to the former CSS crop.
     crop: { left: 169, top: 225, width: 1288, height: 720 },
   },
-  { name: "tagvault-01", source: "tagvault-01.jpg", widths: [540] },
+  { name: "tagvault-01", source: "tagvault-01.jpg", widths: [1080] },
 ];
 for (const { name, source, widths, crop } of projects) {
   for (const width of widths) {
@@ -34,7 +34,7 @@ for (const { name, source, widths, crop } of projects) {
         .avif({ quality: 65, effort: 6, chromaSubsampling: "4:4:4" })
         .toFile(`public/images/${name}-${width}.avif`);
     await image
-      .webp({ quality: 88, effort: 6 })
+      .webp({ quality: name === "tagvault-01" ? 95 : 88, effort: 6 })
       .toFile(`public/images/${name}-${width}.webp`);
   }
 }
@@ -63,3 +63,16 @@ await writeFile("public/favicon.ico", Buffer.concat([ico, ...pngs]));
 console.log(
   "Generated responsive project images and transparent violet brand icons.",
 );
+
+// Official Fidan artwork; trim transparent margins without altering the mark.
+await sharp("assets/sources/fidan/icon-original.png")
+  .trim()
+  .resize({
+    width: 256,
+    height: 256,
+    fit: "contain",
+    background: "#00000000",
+    withoutEnlargement: true,
+  })
+  .webp({ lossless: true, effort: 6 })
+  .toFile("public/images/fidan-icon.webp");

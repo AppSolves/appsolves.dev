@@ -1,8 +1,8 @@
+import { scenePixelRatio } from "../scene-quality";
 import * as THREE from "three";
 import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-const MAX_DPR = 1.5;
 const SETTLE_THRESHOLD = 0.0001;
 
 export async function mountBrandScene(
@@ -46,7 +46,6 @@ export async function mountBrandScene(
     antialias: true,
     powerPreference: "low-power",
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_DPR));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = dark ? 1.05 : 1;
   renderer.shadowMap.enabled = true;
@@ -64,11 +63,11 @@ export async function mountBrandScene(
   const extrusion = {
     depth: 0.42,
     bevelEnabled: true,
-    bevelSegments: 5,
+    bevelSegments: 8,
     steps: 1,
     bevelSize: 0.055,
     bevelThickness: 0.055,
-    curveSegments: 24,
+    curveSegments: 64,
   };
   const geometry = new THREE.ExtrudeGeometry(shapes, extrusion);
   geometry.translate(0, 0, -0.21);
@@ -99,13 +98,13 @@ export async function mountBrandScene(
   const key = new THREE.DirectionalLight("#fff3df", 2.8);
   key.position.set(-3, 7, 5);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.mapSize.set(2048, 2048);
   key.shadow.camera.left = -5;
   key.shadow.camera.right = 5;
   key.shadow.camera.top = 5;
   key.shadow.camera.bottom = -5;
   key.shadow.normalBias = 0.03;
-  key.shadow.radius = 8;
+  key.shadow.radius = 16;
   key.shadow.blurSamples = 12;
   scene.add(key);
   const rim = new THREE.DirectionalLight("#ffffff", 2.5);
@@ -162,6 +161,12 @@ export async function mountBrandScene(
     camera.top = 2.65;
     camera.bottom = -2.65;
     camera.updateProjectionMatrix();
+    renderer.setPixelRatio(
+      scenePixelRatio(
+        window.devicePixelRatio,
+        matchMedia("(pointer: coarse)").matches,
+      ),
+    );
     renderer.setSize(width, height);
     requestRender();
   };
@@ -215,10 +220,12 @@ export async function mountBrandScene(
   window.addEventListener("scroll", scroll, { passive: true });
   document.addEventListener("visibilitychange", visibility);
   canvas.addEventListener("webglcontextlost", lostContext);
+  window.addEventListener("resize", resize);
   resize();
   return () => {
     disposed = true;
     cancelAnimationFrame(frame);
+    window.removeEventListener("resize", resize);
     observer.disconnect();
     intersection.disconnect();
     container.removeEventListener("pointermove", pointer);

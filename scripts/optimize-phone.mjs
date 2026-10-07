@@ -11,6 +11,7 @@ import {
 } from "@gltf-transform/functions";
 import { MeshoptEncoder, MeshoptDecoder } from "meshoptimizer";
 import sharp from "sharp";
+import { dirname } from "node:path";
 import { mkdir, stat } from "node:fs/promises";
 
 // Original TagVault geometry, lossless mesh compression; no simplification.
@@ -24,25 +25,26 @@ const io = new NodeIO()
 const document = await io.read("assets/sources/tagvault-phone/original.glb");
 const meshCount = document.getRoot().listMeshes().length;
 await document.transform(
-  prune(),
+  prune({ keepAttributes: true, keepIndices: true }),
   dedup(),
   reorder({ encoder: MeshoptEncoder, target: "size" }),
   textureCompress({
     encoder: sharp,
     targetFormat: "webp",
-    quality: 85,
-    resize: [1024, 1024],
+    quality: 95,
+    resize: [2048, 2048],
   }),
 );
 document
   .createExtension(EXTMeshoptCompression)
   .setRequired(true)
   .setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.QUANTIZE });
-await mkdir("public/models", { recursive: true });
-await io.write("public/models/tagvault-phone.glb", document);
+const output = process.argv[2] || "public/models/tagvault-phone.glb";
+await mkdir(dirname(output), { recursive: true });
+await io.write(output, document);
 if (document.getRoot().listMeshes().length !== meshCount)
   throw new Error("Phone mesh count changed");
 console.log({
   meshes: meshCount,
-  bytes: (await stat("public/models/tagvault-phone.glb")).size,
+  bytes: (await stat(output)).size,
 });

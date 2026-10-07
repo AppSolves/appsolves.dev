@@ -355,20 +355,13 @@
   min-height: 44px;
   text-underline-offset: 5px;
 }
-.text-link:hover {
+.text-link:is(:hover, :focus-visible) {
   text-decoration: underline;
 }
 .text-link svg,
 .contact-email svg,
 .contact-socials svg {
-  transition: transform 0.2s ease;
   flex-shrink: 0;
-}
-.text-link:hover svg {
-  transform: translate(2px, -2px);
-}
-.hero-actions .text-link:hover svg {
-  transform: translateY(3px);
 }
 .hero-context {
   color: var(--subtle);
@@ -387,6 +380,11 @@
   margin-inline: auto;
 }
 .brand-poster {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.brand-poster img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -429,7 +427,7 @@
   top: 5px;
   right: 0;
 }
-.hero-index a:hover {
+.hero-index a:is(:hover, :focus-visible) {
   color: var(--accent);
 }
 .selected-work {
@@ -462,11 +460,11 @@
   background: #203c32;
   color: #f5f3ed;
   min-height: 430px;
-  padding: 44px 58px;
+  padding: 44px 48px;
   display: grid;
-  grid-template-columns: 1.12fr 1fr;
+  grid-template-columns: 0.65fr 1.35fr;
   align-items: center;
-  gap: 45px;
+  gap: 32px;
   overflow: hidden;
 }
 .project-number {
@@ -476,11 +474,10 @@
 .fidan-wordmark {
   font-family: Newsreader, Georgia, serif;
   font-style: italic;
-  font-size: clamp(120px, 13vw, 220px);
+  font-size: clamp(120px, 10vw, 168px);
   line-height: 1;
   letter-spacing: -0.07em;
   display: block;
-  margin-top: 23px;
 }
 .fidan-identity p {
   font-size: 20px;
@@ -498,22 +495,66 @@
   color: #b9c8be;
   font-size: 12px;
 }
-.fidan-specimen pre {
-  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-  color: #f0f3ed;
-  font-size: clamp(13px, 1.15vw, 18px);
-  line-height: 1.9;
+.fidan-identity {
+  min-width: 0;
+}
+.fidan-lockup {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 23px;
+}
+.fidan-lockup img {
+  width: clamp(60px, 5.4vw, 84px);
+  height: auto;
+  flex-shrink: 0;
+}
+.fidan-editor {
+  display: flex;
+  gap: 18px;
+  padding: 20px 18px;
   margin-block: 27px;
+  background: #192f28;
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.9;
+}
+.fidan-specimen pre {
+  font: inherit;
+  color: #dddcd2;
+  margin: 0;
+  min-width: 0;
   overflow-x: auto;
+  white-space: pre;
+  scrollbar-color: #718c7c #192f28;
+  padding-bottom: 4px;
+}
+.code-line-numbers {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  color: #98a99e;
+  user-select: none;
+  text-align: right;
 }
 .syntax-keyword {
-  color: #b9c8be;
-}
-.syntax-string {
-  color: #e4c695;
+  color: #ddb6ee;
 }
 .syntax-function {
-  color: #eef2e7;
+  color: #9ecbff;
+}
+.syntax-identifier,
+.syntax-interpolation {
+  color: #f2b1a6;
+}
+.syntax-type {
+  color: #e5c18d;
+}
+.syntax-string {
+  color: #bfd6a2;
+}
+.syntax-punctuation {
+  color: #dddcd2;
 }
 .project-details {
   display: grid;
@@ -822,13 +863,9 @@ figcaption {
 .source-list svg {
   flex-shrink: 0;
   margin-top: 2px;
-  transition: transform 0.2s;
 }
-.source-list a:hover {
+.source-list a:is(:hover, :focus-visible) {
   color: var(--accent);
-}
-.source-list a:hover svg {
-  transform: translate(3px, -3px);
 }
 .site-footer {
   --subtle: #b9bbae;
@@ -871,12 +908,9 @@ figcaption {
   gap: 16px;
   overflow-wrap: anywhere;
 }
-.contact-email:hover {
+.contact-email:is(:hover, :focus-visible) {
   text-decoration: underline;
   text-underline-offset: 8px;
-}
-.contact-email:hover svg {
-  transform: translate(3px, -3px);
 }
 .contact-socials {
   display: flex;
@@ -1021,6 +1055,7 @@ figcaption {
     gap: 22px;
   }
   .fidan-stage {
+    grid-template-columns: 1fr;
     padding: 36px;
     gap: 24px;
     min-height: 360px;
@@ -1313,8 +1348,14 @@ figcaption {
     gap: 38px;
   }
   .fidan-wordmark {
-    font-size: clamp(90px, 30vw, 128px);
+    font-size: clamp(80px, 25vw, 112px);
+  }
+  .fidan-lockup {
     margin-top: 20px;
+    gap: 12px;
+  }
+  .fidan-lockup img {
+    width: 52px;
   }
   .fidan-identity p {
     font-size: 17px;
@@ -1323,9 +1364,10 @@ figcaption {
   .fidan-specimen {
     padding-top: 0;
   }
-  .fidan-specimen pre {
-    font-size: 13px;
-    line-height: 1.9;
+  .fidan-editor {
+    font-size: 12px;
+    gap: 12px;
+    padding: 16px 12px;
     margin-block: 22px;
   }
   .specimen-label,
@@ -1646,5 +1688,37 @@ figcaption {
   }
   .hero h1 {
     font-size: clamp(42px, 13vw, 62px);
+  }
+}
+
+/* Directional actions share motion; identity and utility icons stay still. */
+[data-arrow-motion] {
+  --arrow-x: 0px;
+  --arrow-y: 0px;
+  flex-shrink: 0;
+  transition: transform 200ms cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+[data-arrow-motion="external"] {
+  --arrow-x: 2.5px;
+  --arrow-y: -2.5px;
+}
+[data-arrow-motion="down"] {
+  --arrow-y: 3px;
+}
+[data-arrow-motion="up"] {
+  --arrow-y: -3px;
+}
+[data-arrow-motion="left"] {
+  --arrow-x: -3px;
+}
+a:is(:hover, :focus-visible) [data-arrow-motion] {
+  transform: translate(var(--arrow-x), var(--arrow-y));
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-arrow-motion] {
+    transition: none;
+  }
+  a:is(:hover, :focus-visible) [data-arrow-motion] {
+    transform: none;
   }
 }

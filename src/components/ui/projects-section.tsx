@@ -27,7 +27,17 @@ export default function ProjectsSection() {
         <div className="fidan-stage">
           <div className="fidan-identity">
             <span className="project-number">01 / Language & compiler</span>
-            <span className="fidan-wordmark">Fidan</span>
+            <div className="fidan-lockup">
+              <img
+                src={`${base}images/fidan-icon.webp`}
+                alt=""
+                width="256"
+                height="256"
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="fidan-wordmark">Fidan</span>
+            </div>
             <p>
               Readable source.
               <br />
@@ -38,25 +48,47 @@ export default function ProjectsSection() {
             <span className="specimen-label">
               A small piece of the language
             </span>
-            <pre tabIndex={0} aria-label="Fidan language example">
-              <code>
-                <span className="syntax-keyword">action</span>
-                {" greet with (\n  "}
-                <span className="syntax-keyword">certain</span>
-                {" name "}
-                <span className="syntax-keyword">oftype</span>
-                {" string\n) "}
-                <span className="syntax-keyword">returns</span>
-                {" string {\n  "}
-                <span className="syntax-keyword">return</span>{" "}
-                <span className="syntax-string">{'"Hello, {name}!"'}</span>
-                {"\n}\n\n"}
-                <span className="syntax-function">print</span>
-                {"(greet("}
-                <span className="syntax-string">{'"Fidan"'}</span>
-                {"))"}
-              </code>
-            </pre>
+            <div className="fidan-editor">
+              <div className="code-line-numbers" aria-hidden="true">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+              </div>
+              <pre tabIndex={0} aria-label="Fidan language example">
+                <code>
+                  <span className="syntax-keyword">action</span>{" "}
+                  <span className="syntax-function">greet</span>{" "}
+                  <span className="syntax-keyword">with</span>{" "}
+                  <span className="syntax-punctuation">(</span>
+                  <span className="syntax-keyword">certain</span>{" "}
+                  <span className="syntax-identifier">name</span>{" "}
+                  <span className="syntax-keyword">oftype</span>{" "}
+                  <span className="syntax-type">string</span>
+                  <span className="syntax-punctuation">)</span>{" "}
+                  <span className="syntax-keyword">returns</span>{" "}
+                  <span className="syntax-type">string</span>{" "}
+                  <span className="syntax-punctuation">{"{"}</span>
+                  {"\n    "}
+                  <span className="syntax-keyword">return</span>{" "}
+                  <span className="syntax-string">
+                    {'"Hello, '}
+                    <span className="syntax-interpolation">{"{name}"}</span>
+                    {'!"'}
+                  </span>
+                  {"\n"}
+                  <span className="syntax-punctuation">{"}"}</span>
+                  {"\n\n"}
+                  <span className="syntax-function">print</span>
+                  <span className="syntax-punctuation">(</span>
+                  <span className="syntax-function">greet</span>
+                  <span className="syntax-punctuation">(</span>
+                  <span className="syntax-string">{'"Fidan"'}</span>
+                  <span className="syntax-punctuation">))</span>
+                </code>
+              </pre>
+            </div>
             <span className="specimen-caption">
               Static types. Native backends.
             </span>
@@ -75,7 +107,12 @@ export default function ProjectsSection() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Explore Fidan <ArrowUpRight size={17} aria-hidden="true" />
+                Explore Fidan{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={17}
+                  aria-hidden="true"
+                />
               </a>
               <a
                 className="text-link secondary-link"
@@ -83,7 +120,12 @@ export default function ProjectsSection() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Source code <ArrowUpRight size={17} aria-hidden="true" />
+                Source code{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={17}
+                  aria-hidden="true"
+                />
               </a>
             </div>
           </div>
@@ -152,7 +194,12 @@ export default function ProjectsSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Explore the system <ArrowUpRight size={17} aria-hidden="true" />
+            Explore the system{" "}
+            <ArrowUpRight
+              data-arrow-motion="external"
+              size={17}
+              aria-hidden="true"
+            />
           </a>
         </div>
         <figure className="lane-figure">
@@ -236,7 +283,12 @@ export default function ProjectsSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Meet TagVault <ArrowUpRight size={17} aria-hidden="true" />
+            Meet TagVault{" "}
+            <ArrowUpRight
+              data-arrow-motion="external"
+              size={17}
+              aria-hidden="true"
+            />
           </a>
         </div>
       </article>

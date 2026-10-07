@@ -14,7 +14,7 @@ npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **58 browser / asset checks**: comprehensive Chromium regression at seven sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Results and captures go to ignored `test-results/`.
+Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **69 browser / asset checks**: comprehensive Chromium regression at seven sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Results and captures go to ignored `test-results/`.
 
 `BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173.
 
@@ -41,9 +41,9 @@ npm run assets:render
 npm run build
 ```
 
-Optimization produces responsive LanePilot imagery, the phone's actual screen texture, and all transparent icons from the same canonical SVG. Phone compression keeps all 21 original meshes without simplification. Render generation needs a running development site (default 8080; accepts `PREVIEW_URL` / `BROWSER_PATH`). It captures both hero posters, the phone poster and the 1200 × 630 social card through Chromium's compositor. These generated public assets are committed.
+Optimization produces responsive LanePilot imagery, the phone's actual screen texture, and the official Fidan icon and transparent AppSolves icons from the canonical SVG. Phone compression keeps all 21 original meshes without simplification. Render generation needs a running development site (default 8080; accepts `PREVIEW_URL` / `BROWSER_PATH`). It captures both hero posters, the phone poster and the 1200 × 630 social card through Chromium's compositor. These generated public assets are committed.
 
-Hero WebGL is limited to a fine pointer, ≥900px and no reduced motion. TagVault loads its code / 2.1 MB model only near its section, with bounded pointer drag and on-demand rendering. Both scenes cap DPR at 1.5, pause offscreen / hidden and preserve no drawing buffer. Mobile hero, reduced motion and WebGL failure use authored posters. The phone preserves vertical touch scrolling. No runtime dependencies were added; four glTF / meshopt development dependencies make model optimization reproducible.
+Hero WebGL is limited to a fine pointer, ≥900px and no reduced motion. TagVault loads its code / 3.09 MB model only near its section, with bounded pointer drag and on-demand rendering. Both scenes use a 2x backing-density floor, with a 2.25x desktop / 2x coarse-pointer ceiling, pause offscreen / hidden and preserve no drawing buffer. Mobile hero, reduced motion and WebGL failure use authored posters. The phone preserves vertical touch scrolling. No runtime dependencies were added; four glTF / meshopt development dependencies make model optimization reproducible.
 
 ## Review without a checkout
 
@@ -52,7 +52,7 @@ A push to the redesign branch starts [Redesign preview artifact](https://github.
 A successful run provides two artifacts, retained seven days:
 
 - `appsolves-preview-<full SHA>`: complete `dist/`, including fonts, imagery, model, JS/CSS, CNAME, app-ads and legal entries.
-- `appsolves-visual-review-<full SHA>`: actual rendered screenshots at seven sizes, both themes, full-page desktop / tablet / mobile, seven scroll stages, menus and interaction captures.
+- `appsolves-visual-review-<full SHA>`: actual rendered screenshots at seven sizes, both themes, full-page desktop / tablet / mobile, seven scroll stages, menus and interaction captures, plus DPR 1 / 2 close-ups of the hero, Fidan syntax, phone front and dragged view.
 
 Download and extract the preview ZIP. Serve the directory containing `index.html` with Python's standard library; no repository or npm dependencies are needed:
 

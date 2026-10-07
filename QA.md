@@ -61,3 +61,42 @@ Also retained: `≈` and the mathematical minus `−` in approximate simulation 
 `tests/copy.spec.ts` checks rendered homepage/404 text, accessible labels and social metadata, plus every production HTML shell including the no-JavaScript fallback. It excludes scripts, styles and code examples and does not enforce a punctuation ban on legal documents.
 
 Copy-pass validation: typecheck, lint and production build passed; all 59 local browser checks passed (Chromium, Firefox and WebKit). Fresh desktop/mobile captures were inspected for headline/description wrapping, the longer open-source heading at 320px, LanePilot captions, recognition and footer copy. The unchanged social image was inspected directly. No layout/style or dependency change was needed.
+
+## Focused visual / interaction quality pass
+
+Baseline: `ec65ba35b3bea3d63be4305951a29d6d6f12becf`, synced from origin with a fast-forward-only pull. This pass preserves all approved prose and the existing PR. YouTube now points to `https://youtube.com/@appsolvesdev`; exact regression assertions cover all seven social destinations and both support links.
+
+### Signature rendering changes
+
+| Setting                | Before                        | After                                                                                     |
+| ---------------------- | ----------------------------- | ----------------------------------------------------------------------------------------- |
+| Both canvases          | Native DPR capped at 1.5      | Shared 2x floor; 2.25x desktop / 2x coarse-pointer ceiling, refreshed on resize           |
+| Hero curves / bevels   | 24 / 5 segments               | 64 / 8, unchanged official contours and bevel dimensions                                  |
+| Hero shadow            | 1024 square, radius 8         | 2048 square, radius 16 to retain softness                                                 |
+| Hero posters           | 900 square PNG                | 1440 square transparent AVIF / WebP, quality 82 / 95                                      |
+| Phone material texture | 1024 square, WebP 85          | Original 2048 square, WebP 95, no upscaling                                               |
+| Phone live screen      | 540 × 1107, WebP 88           | Original 1080 × 2214, WebP 95; trilinear mipmaps and device-supported anisotropy up to 16 |
+| Phone poster           | 640 square, AVIF 65 / WebP 88 | 1600 square, AVIF 82 / WebP 95                                                            |
+| Phone GLB              | 2,096,792 bytes               | 3,086,584 bytes; all 21 meshes and original vertex attributes retained                    |
+
+Actual backing measurements at 1440 × 900, CSS hero 560 square / phone 677 × 492: DPR 1 changes 560 square / 677 × 492 to **1120 square / 1354 × 984**. DPR 2 changes 840 square / 1015 × 738 to the same **1120 square / 1354 × 984**. Additional actual browser contexts at DPR .75 preserve the 2x floor; DPR 2.5 / 3 reach the 2.25x ceiling (hero 1260 square / phone 1523 × 1107). Resize tests simulate a zoom-driven DPR change and assert the live backing floor. Physical Retina hardware and browser chrome zoom were not separately tested.
+
+Original and optimized phone models were rendered at DPR 2, front and bounded rotation. Frame, buttons, glass and screen were compared directly. A reproducibility regression regenerates the entire GLB and compares bytes. It also checks exact original attribute values after vertex reordering, index counts, mesh count and embedded texture dimensions. The old optimizer pruned unused UVs; this pass explicitly preserves them instead of weakening the geometry check. No simplify or quantize transform is used.
+
+Higher density costs 4x the former canvas pixels at DPR 1 and about 1.78x at DPR 2. The shadow map and material texture each have 4x as many pixels. Screen pixels increase 4x, with mipmaps adding roughly one third to texture storage. The lazy model gains about 0.99 MB, the screen about 87 KB, and the AVIF phone poster about 29 KB. Hero AVIFs are about 43 KB each versus 52–53 KB PNGs previously. No dependency or postprocessing was added. On-demand rendering, proximity loading, offscreen / hidden suspension, default non-preserved buffers, context-loss fallback and full disposal remain intact. Instrumented 30-frame samples at DPR 2 in both themes recorded **zero draw submissions** while idle, offscreen and under a simulated hidden-tab signal. This is lifecycle evidence, not a hardware power benchmark.
+
+### Interaction and Fidan
+
+Only actual directional SVG arrows receive `data-arrow-motion`: external (+2.5, -2.5), down (0, 3), up (0, -3), return/home (-3, 0). One CSS rule uses 200ms cubic-bezier(.2,.65,.3,1) for hover and focus-visible. Reduced motion removes translation while retaining existing underline/color/focus feedback. Platform, mail, support, menu and theme icons stay still. Compact footer home actions use a left arrow. Regression checks cover all directional SVG annotations and representative hover/focus actions, including the mobile menu and legal/404 returns. Tests wait for real fonts and the hero entrance to settle before positioning the pointer.
+
+The official [Fidan icon](https://github.com/fidan-lang/fidan/blob/82a317178994785823368b213c873ba9492b91d8/assets/icons/icon.png) is preserved at its pinned commit, with its license, and locally derived to a 256px lossless WebP. The desktop field changes from 1.12fr / 1fr to **0.65fr / 1.35fr**, with 48px horizontal padding and a 32px gap. Code is sized between 13px and 16px, with a defined forest inset. At <=1100px the identity/specimen stack. The 320px lockup was optically resized after its original large wordmark failed the existing clipping assertion.
+
+Keywords are orchid, functions blue, identifiers/interpolation coral, types gold, strings soft green, punctuation warm neutral and numbers muted neutral. The exact requested greet example has five source lines and an unbroken desktop signature. A separate aria-hidden, nonselectable number gutter does not contaminate copied code. Narrow screens retain preformatted source and horizontal keyboard-accessible scrolling. No fake title bar or terminal controls were added.
+
+### Validation and review evidence
+
+TypeScript, ESLint, production build, actionlint and `git diff --check` pass. **69 browser / asset checks pass locally**, up from 59: Chromium comprehensive suite and four smoke cases each in Firefox/WebKit. Existing assertions remain intact; asset dimension/budget assertions now describe the deliberately higher-resolution outputs. New checks cover social destinations, arrow semantics/focus/reduced motion, both actual canvas ratios at DPR 1/2, resize density policy, full-resolution assets, official Fidan source hash, five-line code and desktop/mobile layout, and model geometry/reproducibility. Axe reports zero violations across both themes at all seven widths and existing legal/menu/404 checks. One local WebKit font-check timing failure passed unchanged on the focused and final full runs.
+
+Visual review covers **1920 × 1080, 1440 × 900, 1280 × 800, 960 × 900, 820 × 1180, 390 × 844 and 320 × 568**, both themes. DPR 1/2 close-ups show the hero cutout, secondary curve, silhouette/bevels/shadow, phone front/held drag, and Fidan stage/syntax. High-resolution poster fallbacks were reviewed separately. Lazy posters are awaited before screenshots; full-page crops avoid sticky-header overlap on elements taller than the viewport. Local comparison, density and lifecycle evidence stays ignored in `.cache/quality-pass/`.
+
+The existing CI workflow is unchanged and uploads `appsolves-preview-<SHA>` and `appsolves-visual-review-<SHA>`. Added browser captures put high-DPI hero, Fidan stage/syntax, phone front and rotated close-ups in the visual artifact. No merge or deployment is part of this workflow.
