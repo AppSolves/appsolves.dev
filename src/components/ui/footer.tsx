@@ -13,12 +13,14 @@ const Footer = () => {
       <div className="mx-auto max-w-[1480px] px-5 pb-10 pt-24 sm:px-8 sm:pt-32 lg:px-10">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.34fr_0.66fr]">
           <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            <span className="mr-4 text-foreground">04</span>
+            <span className="mr-4 text-foreground">05</span>
             Contact
           </div>
 
           <div>
-            <p className="text-sm text-muted-foreground">Have something worth building?</p>
+            <p className="text-sm text-muted-foreground">
+              Have something worth building?
+            </p>
             <a
               href="mailto:contact@appsolves.dev"
               className="group mt-4 inline-flex max-w-full items-end gap-3 text-[clamp(2.2rem,5.6vw,6.7rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground"
