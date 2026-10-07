@@ -1,59 +1,51 @@
-# AppSolves — scroll storyboard
+# AppSolves — final scroll storyboard
 
-## 1. First viewport: the builder and the mark
+## 1. The builder and the mark
 
-Quiet full-width navigation: monochrome AppSolves identity left; Work, About, Open source and Contact right. A normal header remains available as the visitor scrolls, with an opaque paper surface and no glass container. Mobile uses a native disclosure menu; Escape closes it and links return focus predictably.
+Sticky, opaque navigation: official transparent violet mark and AppSolves left; Work, About, Open source, contact and a small theme control right. At mobile widths, links become an accessible disclosure. The separate System / Light / Dark radio menu works with either navigation state.
 
-Left: Kaan / independent builder / Computer Science at TUM; **Deep thinking. / Real things.** in sans then italic serif; one specific sentence describing AI systems, compilers and products. One clear text link to selected work. Right: a real studio-lit extrusion of the AppSolves mark, sized as a sculptural object rather than a small icon. The mark is the visual focal point, but never sits behind text. Bottom: a compact preview of the three disciplines / projects.
+Left: **Kaan Gönüldinc / AppSolves**, **Deep thinking. / Real things.**, and “I build AI systems, compilers, and software products. From underlying architecture to systems people can actually use.” A text link to work and Computer Science at TUM complete the first viewport. Right: the real graphite / chrome extrusion, with one violet enamel curve. This identifies the brand without pretending to diagram a system.
 
-What the viewer knows: this is Kaan, AppSolves is his independent brand, and his work spans difficult systems and shipped products. No availability claim, metrics or agency pitch.
+A simple three-link project index closes the hero. Its repeated introductory sentence has been removed. It provides direct access to Fidan, LanePilot and TagVault; their categories establish the range of work.
 
-Desktop composition is asymmetrical and fills roughly one viewport. At 390px the name and positioning come first, object poster follows at a deliberate smaller size, then the work link / project preview. No hidden projects or horizontal interaction.
+Desktop keeps the asymmetric 7/5 composition. Between 768 and 959px, copy gets a larger share, the headline uses a dedicated scale, and the object sits lower. At 390 and 320px, text and TUM context come first, a maximum 320px poster follows, then the project index. Nothing sits behind the headline. Fine-pointer WebGL begins at 900px; small screens use the same authored object as a static render.
 
-## 2. Selected work: Fidan leads
+The visitor understands: Kaan is the person, AppSolves is his long-term builder brand, and the work spans AI, compilers and products.
 
-Section title **Selected work**, brief framing **Three projects. / Different layers of the stack.** Then a single wide forest-green Fidan composition: large serif project name left, real source language specimen right. This is typeset content with no fake window frame. A small caption identifies its role as an AI-native language.
+## 2. Fidan leads the evidence
 
-Below, an editorial details layout gives the project name, category, one concise explanation, and native-backend / toolchain depth. Website and source links are separate, labelled links. Rust, HIR/MIR, Cranelift/LLVM, LSP and compiler-grounded AI appear in prose or a concise technology line, not dozens of pills.
+“Three projects. Different layers of the stack.” introduces the sequence. Fidan has the largest single project field: forest material, large serif name, **Readable source. Native execution.**, and a real language specimen. The field retains warm text in both themes.
 
-What the viewer knows: Kaan built a language and the compiler infrastructure around it. This is the primary technical proof, not just an idea or a logo.
+Below, a two-column editorial layout explains the Rust toolchain: typed HIR / MIR, static checking, interpreter, Cranelift JIT / AOT, optional LLVM AOT, native binaries, LSP, packages, concurrency and compiler-grounded AI workflows. Website and source are separate links. “A language is only as useful as the system around it. I’m building both.” gives the work its scope without superiority claims.
 
-Mobile stacks logotype and source, preserves readable syntax with contained horizontal scroll only if needed, and presents descriptions / links underneath. No tiny scaled desktop canvas.
+Mobile stacks identity, readable source and details; only the code specimen can scroll horizontally. The visitor understands that the compiler and surrounding infrastructure are the primary technical proof.
 
-## 3. LanePilot: intelligence meets the physical world
+## 3. LanePilot moves AI onto edge hardware
 
-A second project composition uses the actual vehicle-perception screenshot from LanePilot's repository. Keep the source image intact and caption it honestly. No invented graph network or overlays. The image dominates one side; the opposite side explains computer vision, graph attention and edge deployment. Recognition is tied directly to this work: Jugend forscht, 2nd Prize.
+A pale mineral field in light mode and subdued mineral field in dark mode frame the actual vehicle-perception image. The crop removes editor chrome while preserving the real physical test environment and detection output. No overlay is invented.
 
-What the viewer knows: AI work extends beyond API calls to models, acceleration and hardware. Use YOLO11n-seg, PyTorch / GATv2, TensorRT and Jetson as concrete evidence, not decoration.
+Details connect traffic perception, graph attention and dynamic lane allocation to YOLO11n-seg, PyTorch / PyTorch Geometric / GATv2, TensorRT / CUDA, NVIDIA Jetson and Raspberry Pi. Jugend forscht, 2nd Prize belongs here. Two plain typographic figures show approximately **−39% hard-braking events** and **+29% average traffic speed**, explicitly titled “Simulation results” and qualified “Measured in simulation, not on public roads.” They are integrated into prose, without KPI cards.
 
-Mobile keeps the screenshot's full aspect ratio, text below, and clear source access. Tablet collapses before either column becomes cramped.
+The perception field and explanatory panel stack before either becomes cramped. The same 1288 × 720 source crop is preserved on mobile. The visitor understands that this work includes models, optimization, acceleration and physical deployment, with a carefully scoped outcome claim.
 
-## 4. TagVault: a product in people's hands
+## 4. TagVault proves product execution
 
-Warm sand image field with real Android product screenshots. No invented dashboard, fake notifications, inflated customer counts or generic phone art. Product name and copy explain encrypted storage, biometric access, NFC workflows and commercial Pro tier. A labelled product link completes the story.
+Warm sand, darker warm material in dark mode, and two actual Android screenshots give this project a distinct product composition. The interface remains legible at phone widths; both screens stay visible. Responsive derivatives preserve the source screens without fabricating content.
 
-What the viewer knows: Kaan can deliver the interface, security, platform integration and monetization around a technical product. This composition is visually smaller than Fidan and complements LanePilot.
+Copy is NFC-specific: Flutter, encrypted local storage, biometrics, automations, webhooks, widgets and backups. “Available on Android with a paid Pro tier.” states commercial execution directly. A product link completes the section. This supports Fidan and LanePilot rather than competing with their technical scale.
 
-Mobile uses fewer visible screens if necessary, at readable scale, rather than shrinking a wide montage.
+## 5. The person behind the systems
 
-## 5. About: the person behind the systems
+A quieter neutral field pairs **Understand the system. Build the whole thing.** with Kaan's engineering philosophy: compiler representation, edge-model behavior and a product's place in someone's day. AppSolves is the umbrella for these outputs. The unnamed SME venture sentence is removed; no services pitch replaces it.
 
-Large, restrained statement: **Understand the system. / Build the whole thing.** Text gives the name, TUM context, AppSolves umbrella and engineering approach. A short, secondary sentence acknowledges the cofounder / SME automation venture without creating a services pitch.
+Three restrained recognition entries: Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / STEM distinction · Baden-Württemberg; Jugend forscht / 2nd Prize · LanePilot. The focus line connects AI / deep learning, compilers / developer infrastructure, edge AI and product engineering. Tablet and mobile stack reading columns and recognition entries deliberately.
 
-Below, three plain recognition rows: TUM, Ferry Porsche Prize 2026, Jugend forscht 2nd Prize. A short focus line connects AI, compilers / developer infrastructure, physical AI and product engineering. No skill logo wall, CV timeline or fabricated biography.
+## 6. Useful work at a smaller scale
 
-What the viewer knows: one coherent approach connects these projects, and there is real institutional / competition context.
+Four linked rows: fastapi-users-db-dynamodb, pylocalauth, rc522-mfc-recovery and flutter_event_log. Each has one concise purpose and a source destination. The derivative appscreen-mcp is removed. Thin row separators organize actual links; there are no project cards, badges or logo wall. Long repository names wrap on narrow screens. The section stays visually quieter than selected work.
 
-## 6. Open source: useful supporting evidence
+## 7. A strong, direct ending
 
-A clean linked index with fastapi-users-db-dynamodb, pylocalauth, rc522-mfc-recovery, flutter_event_log and appscreen-mcp. Each has one meaningful description and a source destination. No equal visual weight with flagship projects. Hover makes the active row clear without moving layout.
+Deep graphite in light mode, a subtly separated graphite surface in dark mode, warm type and one violet serif gesture: **Good problems / welcome.** Email, GitHub and LinkedIn give direct next steps. Copyright, legal links and Back to top close the page. The ending relies on scale and contrast, with no competing orange identity or agency funnel.
 
-What the viewer knows: the work includes reusable infrastructure and contributions at narrower technical boundaries. On mobile, repository names wrap rather than overflow.
-
-## 7. Contact: a confident closing
-
-Vermilion field, paper type, large **Good problems / welcome.** Direct email underneath. A concise line invites technical work, research and product conversations. GitHub / LinkedIn are explicit public destinations. Footer includes copyright, both legal routes and a normal back-to-top link.
-
-What the viewer can do: inspect code, follow the professional profile, or email Kaan. No generic agency booking funnel.
-
-The footer has the same quality on mobile: large but contained type, email wraps safely, utilities stack naturally. Legal pages use a compact version of the footer so long documents do not end in another enormous hero.
+Mobile retains large contained type, safe email wrapping and stacked utilities. Legal and 404 pages use the same navigation, theme control and a compact footer. Legal documents remain unchanged and accessible by direct static entry.

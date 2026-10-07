@@ -1,29 +1,24 @@
 # AppSolves
 
-Kaan Gönüldinc's builder / founder portfolio. React, TypeScript, Vite and Tailwind, with GSAP motion and one lazily loaded Three.js brand object.
+Kaan Gönüldinc's builder / founder portfolio. React, TypeScript, Vite and Tailwind, with Manrope / Newsreader, restrained GSAP motion and one lazy Three.js brand object. Warm paper and graphite themes share the official AppSolves violet identity.
 
-The redesign lives on `redesign/portfolio-2026`. Review it locally; this work does not deploy or merge into `main`.
+Review branch: `redesign/portfolio-2026`. This work does not merge into main or deploy.
 
-## Development and review
+## Development and verification
 
-Use Node 22.12+ (or 20.19+) and npm. The recorded verification used Node 26.5.0.
+Use Node 22 (22.23.3 was verified) and npm.
 
 ```sh
 npm ci
 npm run dev
-```
-
-Vite serves the development site on port 8080. Review the opening, all three projects, about, open source, contact, and both legal routes. The design decisions are in [DESIGN.md](DESIGN.md), the page sequence in [STORYBOARD.md](STORYBOARD.md), and motion / fallback behavior in [MOTION.md](MOTION.md). See [QA.md](QA.md) for the verification record and remaining limits.
-
-```sh
 npm run check
 npx playwright install chromium
 npm test
 ```
 
-`check` runs the application, build-config and test TypeScript checks, ESLint, and the production build. Browser tests build the site and start a local production preview on port 4173. They verify content, responsive layout, accessibility, navigation, legal entries, metadata, deployment artifacts and WebGL fallbacks. Five viewport sizes produce section screenshots under ignored `test-results/`.
+Development defaults to port 8080. `check` runs application / config / test TypeScript checks, ESLint and a production build. `npm test` builds first, then runs 43 checks against a production preview. Tests cover six viewport sizes in both themes, Axe, navigation, legal / 404 routes, metadata, assets, themes and WebGL lifecycle. Screenshots are saved under ignored `test-results/`.
 
-If using an existing Chromium installation, set `BROWSER_PATH` to its executable. To test an already running production preview, set `PREVIEW_URL`; otherwise the runner manages its own preview. For example, in PowerShell:
+An existing Chromium can be selected with `BROWSER_PATH`. Use `PREVIEW_URL` for an independently running production preview; otherwise Playwright starts port 4173. PowerShell example:
 
 ```powershell
 $env:BROWSER_PATH = 'C:/path/to/chrome.exe'
@@ -31,14 +26,36 @@ $env:PREVIEW_URL = 'http://127.0.0.1:4173'
 npm test
 ```
 
-## Assets and rendering
+The actual direction, sequence and motion are documented in [DESIGN.md](DESIGN.md), [STORYBOARD.md](STORYBOARD.md) and [MOTION.md](MOTION.md). [QA.md](QA.md) records validation and limits.
 
-Fonts are self-hosted with their SIL Open Font License files. Project images are actual AppSolves project / product captures; provenance is in [public/images/README.md](public/images/README.md).
+## Themes and assets
 
-`npm run assets:render` uses a running development site to regenerate the static 900 × 900 brand poster, monochrome mark, SVG favicon and 1200 × 630 social image from the production scene. It uses Playwright Chromium and accepts the same `BROWSER_PATH` / `PREVIEW_URL` variables. Run it after changing the mark, camera, materials or lighting, then rebuild. Generated assets are committed; visitors never need a render service.
+System is the default. A parser-time bootstrap sets the initial background before React; next-themes handles persistence and OS changes. A small accessible radio menu offers System / Light / Dark on every route.
 
-The scene loads only on fine-pointer screens at least 900px wide without reduced motion. Mobile, reduced motion, unavailable WebGL and context loss use the same rendered poster. All content remains independent of the canvas.
+Fonts are self-hosted with OFL licenses. Project imagery is actual AppSolves work. Preserved originals live outside the served directory in [assets/sources](assets/sources/README.md); published provenance is in [public/images/README.md](public/images/README.md).
+
+```sh
+npm run assets:optimize
+npm run assets:render
+npm run build
+```
+
+`assets:optimize` uses Sharp to produce responsive AVIF / WebP derivatives and transparent violet brand icons. `assets:render` needs a running development site (default port 8080; accepts `PREVIEW_URL` / `BROWSER_PATH`) and captures the production scene through Chromium's compositor. It generates separate transparent 900 × 900 posters and the 1200 × 630 social card. Generated production assets are committed; visitors need no render service.
+
+The scene loads only with a fine pointer, width ≥900px and no reduced-motion preference. Mobile, reduced motion and WebGL failure use the matching theme poster. Production does not preserve its drawing buffer.
+
+## Downloadable review artifact
+
+[preview-artifact.yml](.github/workflows/preview-artifact.yml) runs on pushes to the redesign branch, PRs from that branch targeting main, and manual dispatch on the redesign branch. Node 22 runs clean installation, typecheck, lint and build. `actions/upload-artifact@v4` uploads all of `dist/` as `appsolves-preview-<full commit SHA>`, retained for seven days. Permissions are `contents: read`; there is no deployment step.
+
+After an authorized branch push, open GitHub Actions → **Redesign preview artifact** → successful run → artifact. Extract its ZIP and serve the directory containing `index.html` with a local HTTP static server. For example, from this checkout:
+
+```sh
+npm run preview -- --outDir /path/to/extracted-artifact --host 127.0.0.1
+```
+
+Review both themes, project sections, menus and legal routes. Opening HTML with `file://` will not load the module application correctly. The workflow has been validated locally with actionlint; it has not run on GitHub as part of this local refinement.
 
 ## Deployment compatibility
 
-The existing GitHub Pages configuration and deployment command are retained. A production build creates `404.html`, `privacy_policy/index.html` and `terms_and_conditions/index.html`, preserves `CNAME` and `app-ads.txt`, and emits the sitemap. Legal Markdown in `public/legal/` remains the source of truth and is bundled into the legal routes. No deployment is part of the redesign review.
+The existing GitHub Pages deployment command is retained. Production builds create `404.html`, `privacy_policy/index.html` and `terms_and_conditions/index.html`, preserve CNAME / app-ads, and emit the sitemap. Legal Markdown remains the unchanged source of truth. Downloading a preview artifact does not deploy the site.
