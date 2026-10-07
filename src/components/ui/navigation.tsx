@@ -1,107 +1,98 @@
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const navLinks = [
+const links = [
   { name: "Work", href: "#work" },
   { name: "About", href: "#about" },
-  { name: "Stack", href: "#stack" },
+  { name: "Open source", href: "#open-source" },
 ];
 
-const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Navigation() {
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const { pathname } = useLocation();
+  const home = import.meta.env.BASE_URL;
+  const onHome = pathname === home;
+
+  useEffect(() => {
+    if (!open) return;
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = () => setOpen(false);
+    document.addEventListener("keydown", escape);
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      document.removeEventListener("keydown", escape);
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
+  }, [open]);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.065] bg-[#09090b]/78 backdrop-blur-2xl">
-      <div className="mx-auto flex h-20 max-w-[1480px] items-center justify-between px-5 sm:px-8 lg:px-10">
-        <a href="/" className="flex items-center gap-3" aria-label="AppSolves home">
-          <img src="/mark.svg" alt="" className="h-8 w-8" draggable={false} />
-          <span className="text-[15px] font-semibold tracking-[-0.02em] text-foreground">
-            AppSolves
-          </span>
-        </a>
-
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header className="site-header">
+        <div className="page-width header-inner">
+          <a className="brand" href={home} aria-label="AppSolves home">
+            <img src={`${home}mark-mono.svg`} alt="" width="32" height="34" />
+            <span>
+              AppSolves<span className="brand-period">.</span>
+            </span>
+          </a>
+          <nav className="desktop-nav" aria-label="Main navigation">
+            {links.map((link) => (
+              <a key={link.name} href={`${onHome ? "" : home}${link.href}`}>
+                {link.name}
+              </a>
+            ))}
+            <a className="nav-contact" href={`${onHome ? "" : home}#contact`}>
+              Let’s talk <ArrowUpRight aria-hidden="true" size={16} />
+            </a>
+          </nav>
+          <button
+            className="menu-toggle"
+            ref={toggle}
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? (
+              <X size={23} aria-hidden="true" />
+            ) : (
+              <Menu size={23} aria-hidden="true" />
+            )}
+          </button>
+        </div>
+        <nav
+          id="mobile-navigation"
+          className="mobile-nav page-width"
+          aria-label="Mobile navigation"
+          hidden={!open}
+        >
+          {[...links, { name: "Contact", href: "#contact" }].map((link) => (
             <a
               key={link.name}
-              href={link.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              href={`${onHome ? "" : home}${link.href}`}
+              onClick={() => {
+                setOpen(false);
+                toggle.current?.focus();
+              }}
             >
               {link.name}
+              <ArrowUpRight size={22} aria-hidden="true" />
             </a>
           ))}
-        </div>
-
-        <div className="hidden items-center gap-6 md:flex">
-          <a
-            href="https://github.com/AppSolves"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            GitHub
-          </a>
-          <a
-            href="mailto:contact@appsolves.dev"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-foreground"
-          >
-            Contact
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </a>
-        </div>
-
-        <button
-          type="button"
-          className="grid h-10 w-10 place-items-center text-foreground md:hidden"
-          onClick={() => setIsMenuOpen((value) => !value)}
-          aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
-        >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="border-t border-white/[0.065] bg-[#09090b] md:hidden"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="mx-auto flex max-w-[1480px] flex-col px-5 py-6 sm:px-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="border-b border-white/[0.07] py-4 text-lg text-foreground"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <a
-                href="https://github.com/AppSolves"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-b border-white/[0.07] py-4 text-lg text-foreground"
-              >
-                GitHub
-              </a>
-              <a
-                href="mailto:contact@appsolves.dev"
-                className="mt-6 inline-flex items-center gap-2 text-lg font-medium text-foreground"
-              >
-                Contact <ArrowUpRight className="h-5 w-5" />
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+        </nav>
+      </header>
+    </>
   );
-};
-
-export default Navigation;
+}

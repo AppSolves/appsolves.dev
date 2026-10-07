@@ -1,13 +1,30 @@
 <!doctype html>
-<html lang="en" class="dark" style="background-color: #09090b">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f5f3ed" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="canonical" href="https://appsolves.dev/" />
+    <link
+      rel="preload"
+      href="/fonts/manrope-latin-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/newsreader-latin-italic-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta
       http-equiv="Referrer-Policy"
       content="strict-origin-when-cross-origin"
@@ -58,7 +75,18 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://appsolves.dev/" />
-    <meta property="og:image" content="https://appsolves.dev/wordmark.png" />
+    <meta property="og:site_name" content="AppSolves" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://appsolves.dev/social-preview.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="AppSolves — Kaan Gönüldinc. Deep thinking. Real things."
+    />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@AppSolves" />
@@ -70,10 +98,52 @@
       name="twitter:description"
       content="AI systems, developer infrastructure, and software products."
     />
-    <meta name="twitter:image" content="https://appsolves.dev/wordmark.png" />
+    <meta
+      name="twitter:image"
+      content="https://appsolves.dev/social-preview.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Kaan Gönüldinc / AppSolves — AI systems, compilers and software products"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Kaan Gönüldinc",
+        "url": "https://appsolves.dev/",
+        "alternateName": "AppSolves",
+        "sameAs": [
+          "https://github.com/AppSolves",
+          "https://linkedin.com/in/kaangoenueldinc"
+        ],
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Deep Learning",
+          "Compilers",
+          "Edge AI",
+          "Software Engineering"
+        ],
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Technical University of Munich"
+        }
+      }
+    </script>
   </head>
 
-  <body style="background-color: #09090b">
+  <body>
+    <noscript
+      ><p>
+        Kaan Gönüldinc / AppSolves — AI systems, compilers and software
+        products. Explore <a href="https://fidan.dev">Fidan</a>,
+        <a href="https://github.com/AppSolves/LanePilot">LanePilot</a> and
+        <a href="https://tagvault.appsolves.dev">TagVault</a>. Contact
+        <a href="mailto:contact@appsolves.dev">contact@appsolves.dev</a>.
+        <a href="/legal/privacy_policy.md">Privacy policy</a> ·
+        <a href="/legal/terms_and_conditions.md">Terms and conditions</a>.
+      </p></noscript
+    >
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

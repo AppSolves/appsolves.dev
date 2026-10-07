@@ -14,7 +14,7 @@ The mark appears as soon as a poster can paint. Desktop WebGL replaces that same
 
 Desktop mark turns approximately 0.15 radians across the hero's scroll distance. This is camera / object orientation, not a rotating UI stack. No pinning. Frame updates happen only after pointer or scroll input and stop once the interpolation settles.
 
-Fidan's source specimen gets one short horizontal settle / opacity entrance at the work stage. LanePilot and TagVault images receive at most a modest 1.025 → 1 scale settle as their frame enters. Text beneath remains readable immediately. About's statement gets a one-time clipped reveal. Open-source rows and legal text stay static. This avoids the repetitive whole-page fade-up pattern.
+Fidan's source specimen gets one short horizontal settle / opacity entrance at the work stage. LanePilot and TagVault images receive at most a modest 1.025 → 1 scale settle as their frame enters. Text beneath remains readable immediately. About, open-source rows and legal text stay static. This avoids the repetitive whole-page fade-up pattern.
 
 ScrollTriggers use once-only entrances. Refresh after font loading because typography changes layout. React `useGSAP` / matchMedia scopes and reverts all animations on unmount or when preferences change.
 

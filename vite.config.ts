@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path, { resolve } from "path";
 import { defineConfig, loadEnv } from "vite";
 import sitemapPlugin from "vite-plugin-sitemap";
@@ -40,9 +40,10 @@ export default defineConfig(({ mode }) => {
       sitemapPlugin({
         hostname: "https://appsolves.dev/",
         generateRobotsTxt: false,
+        exclude: ["/404"],
       }),
       {
-        name: "copy-404",
+        name: "static-route-entries",
         writeBundle() {
           const indexPath = resolve(__dirname, "dist/index.html");
           const notFoundPath = resolve(__dirname, "dist/404.html");
@@ -53,7 +54,27 @@ export default defineConfig(({ mode }) => {
 
           const html = readFileSync(indexPath, "utf-8");
           writeFileSync(notFoundPath, html);
-          console.log("✅ 404.html generated automatically!");
+          for (const [route, title] of [
+            ["privacy_policy", "Privacy policy"],
+            ["terms_and_conditions", "Terms and conditions"],
+          ]) {
+            const directory = resolve(__dirname, "dist", route);
+            mkdirSync(directory, { recursive: true });
+            const page = html
+              .replace(
+                /<title>.*?<\/title>/,
+                `<title>${title} | AppSolves</title>`,
+              )
+              .replace(
+                'href="https://appsolves.dev/"',
+                `href="https://appsolves.dev/${route}"`,
+              )
+              .replace(
+                'property="og:url" content="https://appsolves.dev/"',
+                `property="og:url" content="https://appsolves.dev/${route}"`,
+              );
+            writeFileSync(resolve(directory, "index.html"), page);
+          }
         },
       },
     ].filter(Boolean),
