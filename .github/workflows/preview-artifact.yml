@@ -17,6 +17,11 @@ jobs:
     if: github.ref == 'refs/heads/redesign/portfolio-2026'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Match the locked Playwright version. Preinstalled browser dependencies avoid
+    # runner apt-mirror outages during review builds.
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --ipc=host
     steps:
       - uses: actions/checkout@v7
         with:
@@ -38,8 +43,6 @@ jobs:
 
       # Render the same production build in Chromium so external reviewers can
       # inspect real pixels without needing access to the developer's localhost.
-      - name: Install browser engines for visual review
-        run: npx playwright install --with-deps chromium firefox webkit
       - name: Run browser regression and visual captures
         run: npx playwright test
       - name: Upload visual review captures

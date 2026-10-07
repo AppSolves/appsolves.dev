@@ -44,6 +44,8 @@ Launch implementation `ebd9a71a012c80fcf87b1ee11406c5240cd2fd06` has a [successf
 
 The updated workflow runs only on redesign pushes and manual dispatch on that branch. It uploads `appsolves-preview-<full SHA>` (complete dist) and `appsolves-visual-review-<full SHA>` (real captures), retains seven days, uses read-only contents permissions and never deploys. README documents downloading and serving the extracted artifact with Python's standard library independently of the checkout.
 
+The final pointer-hover commit `f20cda5` passed build checks and produced a standalone preview that was downloaded and verified with both real WebGL scenes, legal routes, 404 metadata and zero page errors. Its [CI run](https://github.com/AppSolves/appsolves.dev/actions/runs/37676999528) timed out before tests because `azure.archive.ubuntu.com` stalled during Playwright's apt dependency installation. The workflow now uses the official version-matched Playwright container, with browsers and OS dependencies already installed, instead of weakening checks or extending the timeout. All 58 checks also passed locally on that exact commit with one worker; a two-worker local run had a traced Chromium `ERR_NO_BUFFER_SPACE` resource failure, and its two affected checks passed separately. Assertions and application behavior were unchanged.
+
 ## Limits
 
 Playwright WebKit / Firefox checks were run; physical Safari / iOS / Android devices, real field Core Web Vitals, production server headers, search indexing and social-platform caches were not verified. No Lighthouse score, GPU energy-consumption claim or full security-audit claim is made. The model's source license is preserved; its original GLB header contains no additional author/license attribution to invent.
