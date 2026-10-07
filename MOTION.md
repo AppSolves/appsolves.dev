@@ -26,6 +26,8 @@ Links keep underline / color and focus feedback. Only directional arrows move: e
 
 Mobile menu opens as a straightforward disclosure without animated layout height. It remains a real keyboard-operable disclosure. Navigation is usable before animation initialization.
 
+The final editorial pass adds no new motion. Fidan’s overflowing source keeps native horizontal scrolling, keyboard access and selection; a static narrow-screen cue appears only when needed. Controlled footer rows and the official Google Play icon stay static. Phone camera/scale/posters remain unchanged after size comparisons.
+
 ## Theme changes
 
 System is the default; explicit choices persist. A parser-time script sets `data-theme`, `color-scheme` and theme-color before React, so even a delayed application does not paint the wrong background. next-themes owns runtime OS / persistence behavior. Only an explicit selection that changes the resolved color starts a View Transition. The new root reveals in a circle from the control to the farthest viewport corner over 480ms, easing cubic-bezier(.22,1,.36,1). Root snapshot blending is disabled. Initialization, OS changes, same-color choices, unsupported browsers and reduced motion apply immediately. Entrances do not replay.

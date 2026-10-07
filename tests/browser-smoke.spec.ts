@@ -80,7 +80,7 @@ for (const theme of ["light", "dark"] as const) {
           .evaluate((image) => (image as HTMLImageElement).naturalWidth),
       ).toBeGreaterThan(0);
       await expect(
-        page.getByRole("link", { name: "Meet TagVault" }),
+        page.getByRole("link", { name: "TagVault website" }),
       ).toHaveAttribute("href", "https://tagvault.appsolves.dev");
       expect(
         (

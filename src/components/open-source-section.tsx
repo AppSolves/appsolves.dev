@@ -13,7 +13,7 @@ const projects = [
   ],
   [
     "rc522-mfc-recovery",
-    "MIFARE Classic key-recovery research with MFRC522 hardware.",
+    "Read-only MIFARE Classic research using RC522 hardware and established recovery tools.",
     "Python / Hardware security",
   ],
   [
@@ -37,7 +37,10 @@ export default function OpenSourceSection() {
           <br />
           infrastructure.
         </h2>
-        <p>Smaller projects for integration work and hardware research.</p>
+        <p>
+          Libraries and tools I’ve published for Python, Flutter, and hardware
+          research.
+        </p>
         <a
           className="text-link"
           href="https://github.com/AppSolves"

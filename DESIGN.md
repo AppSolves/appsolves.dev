@@ -2,11 +2,13 @@
 
 ## Focused visual-quality pass
 
-Keep the editorial composition and all approved prose. Use a single semantic arrow system: outward 2.5px right/up, section links 3px down, return-to-top 3px up and home returns 3px left. All use 200ms ease-out on hover and keyboard focus; reduced motion keeps existing color/focus feedback without translation. Social/platform icons stay still.
+Keep the editorial composition and approved hero headline. The final prose review is recorded in [EDITORIAL.md](EDITORIAL.md): remove repetitive slogans, explain projects with verified facts, and identify Kaan and the long-running AppSolves brand directly. Use a single semantic arrow system: outward 2.5px right/up, section links 3px down, return-to-top 3px up and home returns 3px left. All use 200ms ease-out on hover and keyboard focus; reduced motion keeps existing color/focus feedback without translation. Social/platform icons stay still.
 
 Both scenes spend more pixels while visible: minimum 2x backing density, desktop ceiling 2.25x, coarse-pointer ceiling 2x, recalculated on resize/zoom. Hero curves use 64 segments, bevels eight and a 2048px shadow map with equivalent world-space softness. Keep the official contours, materials and on-demand lifecycle. Render matching transparent 1440px hero and 1600px phone posters, with high-quality AVIF/WebP encoding. Preserve the original phone's 2048px material texture at WebP quality 95; its actual 1080px screenshot supplies the live screen with mipmaps and anisotropy.
 
 Fidan gains its official repository icon, locally optimized without changing artwork. A compact horizontal icon/wordmark identity sits beside a wider code area. At desktop, give the code about two thirds of the usable field so the real 61-character signature fits at a readable monospace size. At tablet/mobile, stack identity and specimen; keep source whitespace and allow horizontal scrolling. Five real source lines get a separate nonselectable number gutter. Orchid keywords, blue functions, coral identifiers/interpolation, gold types, green strings and warm neutral punctuation contrast against an integrated forest inset. No terminal chrome, fake window or new card treatment.
+
+The stage now uses only the identity, source and simple “Fidan source” label. Miniature technical slogans are removed. Real code overflow gets a small narrow-screen scroll hint, without covering the source. The footer balances seven social links in 4 + 3 desktop rows and 2 + 2 + 3 compact rows; its Google Play prism is the original storefront artwork at icon size. The phone’s current framing is retained after +15%/+25% comparisons showed less breathing room and bottom clipping. LanePilot retains the physical detection output over weaker promotional/concept alternatives. Neither scene’s quality or lifecycle changes.
 
 ## Thesis
 

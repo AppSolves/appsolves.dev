@@ -227,7 +227,7 @@ test("real project links, contact, metadata and Pages artifacts are preserved", 
     ["Explore Fidan", "https://fidan.dev"],
     ["Source code", "https://github.com/fidan-lang/fidan"],
     ["Explore the system", "https://github.com/AppSolves/LanePilot"],
-    ["Meet TagVault", "https://tagvault.appsolves.dev"],
+    ["TagVault website", "https://tagvault.appsolves.dev"],
   ]) {
     await expect(
       page.getByRole("link", { name: label, exact: true }),

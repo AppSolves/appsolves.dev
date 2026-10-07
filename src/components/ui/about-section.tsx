@@ -3,7 +3,7 @@ const recognition = [
   [
     "Recognition",
     "Ferry Porsche Prize 2026",
-    "STEM distinction in Baden-Württemberg",
+    "Porsche award for STEM achievement at school",
   ],
   ["Competition", "Jugend forscht", "2nd Prize for LanePilot"],
 ];
@@ -14,38 +14,27 @@ export default function AboutSection() {
       <div className="page-width">
         <div className="about-composition">
           <div>
-            <p className="section-label">The builder behind it</p>
+            <p className="section-label">About</p>
             <h2 id="about-title" className="about-title">
-              Understand
+              Behind
               <br />
-              the system.
-              <br />
-              <em>
-                Build the
-                <br />
-                whole thing.
-              </em>
+              <em>AppSolves.</em>
             </h2>
           </div>
           <div className="about-copy">
             <p className="about-introduction">
-              I’m Kaan Gönüldinc.
-              <br />
-              AppSolves is where I build.
+              I’m Kaan Gönüldinc, a Computer Science student at TUM.
             </p>
             <p>
-              I study Computer Science at TUM and work across machine
-              intelligence, systems engineering and products. I’m interested in
-              the parts that need real understanding: how a compiler represents
-              a program, how a model behaves on edge hardware, how a product
-              earns a place in someone’s day.
+              I want to understand the internals well enough to make useful
+              decisions: how a compiler represents a program, how a model
+              behaves on edge hardware, and what an app needs before someone can
+              rely on it.
             </p>
             <p>
-              AppSolves is the umbrella for that work: open-source tools, AI
-              systems, software products, experiments and commercial ventures.
-              Different outputs, the same approach. Understand the constraints,
-              build the difficult parts, and carry the work through to something
-              usable.
+              AppSolves is my long-running software and product brand. It’s the
+              name I publish that work under, whether it’s an open-source
+              library or a commercial product.
             </p>
           </div>
         </div>

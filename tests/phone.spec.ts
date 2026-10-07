@@ -93,7 +93,7 @@ test("TagVault loads near its section, responds to drag, and preserves a fallbac
   await expect(canvas).toBeHidden();
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(canvas).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Meet TagVault" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "TagVault website" })).toBeVisible();
 });
 
 test("mobile poster skips both WebGL imports under reduced motion", async ({

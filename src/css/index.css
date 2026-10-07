@@ -479,18 +479,11 @@
   letter-spacing: -0.07em;
   display: block;
 }
-.fidan-identity p {
-  font-size: 20px;
-  line-height: 1.55;
-  margin-top: 22px;
-  letter-spacing: -0.04em;
-}
 .fidan-specimen {
   padding-top: 15px;
   min-width: 0;
 }
-.specimen-label,
-.specimen-caption {
+.specimen-label {
   font-family: Manrope, sans-serif;
   color: #b9c8be;
   font-size: 12px;
@@ -536,6 +529,9 @@
   color: #98a99e;
   user-select: none;
   text-align: right;
+}
+.code-scroll-hint {
+  display: none;
 }
 .syntax-keyword {
   color: #ddb6ee;
@@ -913,16 +909,26 @@ figcaption {
   text-underline-offset: 8px;
 }
 .contact-socials {
-  display: flex;
-  gap: 28px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 4px 12px;
   margin-top: 24px;
   font-size: 13px;
 }
 .contact-socials a {
+  grid-column: span 3;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   min-height: 44px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.contact-socials a:nth-child(n + 5) {
+  grid-column: span 4;
+}
+.contact-socials img {
+  flex-shrink: 0;
 }
 .contact-socials a:hover {
   text-decoration: underline;
@@ -1097,9 +1103,6 @@ figcaption {
   .hero-intro {
     flex-direction: column;
     gap: 5px;
-  }
-  .desktop-break {
-    display: none;
   }
   .hero-index {
     grid-template-columns: repeat(3, 1fr);
@@ -1357,10 +1360,6 @@ figcaption {
   .fidan-lockup img {
     width: 52px;
   }
-  .fidan-identity p {
-    font-size: 17px;
-    margin-top: 14px;
-  }
   .fidan-specimen {
     padding-top: 0;
   }
@@ -1370,9 +1369,27 @@ figcaption {
     padding: 16px 12px;
     margin-block: 22px;
   }
-  .specimen-label,
-  .specimen-caption {
+  .specimen-label {
     font-size: 11px;
+  }
+  .fidan-specimen pre {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+  }
+  .code-scroll-hint {
+    display: block;
+    margin-top: -12px;
+    color: #b9c8be;
+    font-size: 11px;
+  }
+  .fidan-specimen pre::-webkit-scrollbar {
+    height: 4px;
+  }
+  .fidan-specimen pre::-webkit-scrollbar-thumb {
+    background: #718c7c;
+  }
+  .fidan-specimen pre::-webkit-scrollbar-track {
+    background: #192f28;
   }
   .project-details {
     margin-top: 28px;
@@ -1617,14 +1634,18 @@ figcaption {
 .open-source-intro h2 {
   font-size: clamp(40px, 3.6vw, 58px);
 }
-.contact-socials {
-  flex-wrap: wrap;
-  gap: 8px 20px;
+@media (max-width: 1100px) {
+  .contact-socials a:nth-child(-n + 4) {
+    grid-column: span 6;
+  }
 }
-.contact-socials a {
-  min-height: 44px;
-  font-size: 13px;
-  gap: 7px;
+@media (max-width: 767px) {
+  .contact-socials {
+    column-gap: 6px;
+  }
+  .contact-socials a {
+    font-size: 12px;
+  }
 }
 .contact-support {
   display: flex;

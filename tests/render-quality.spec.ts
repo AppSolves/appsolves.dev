@@ -152,6 +152,7 @@ test("Fidan shows its official icon and exact five-line source without desktop w
         .locator(".fidan-specimen pre")
         .evaluate((element) => element.scrollWidth <= element.clientWidth),
     ).toBe(true);
+    await expect(page.locator(".code-scroll-hint")).toHaveCount(0);
   }
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
@@ -168,5 +169,20 @@ test("Fidan shows its official icon and exact five-line source without desktop w
     expect(await page.locator(".fidan-specimen code").textContent()).toBe(
       expected,
     );
+    const source = page.locator(".fidan-specimen pre");
+    await expect(page.locator(".code-scroll-hint")).toBeVisible();
+    await expect(source).toHaveAttribute(
+      "aria-describedby",
+      "fidan-scroll-hint",
+    );
+    await expect(source).toHaveCSS("scrollbar-width", "thin");
+    await source.focus();
+    await page.keyboard.press("ArrowRight");
+    await expect
+      .poll(() => source.evaluate((element) => element.scrollLeft))
+      .toBeGreaterThan(0);
+    await source.evaluate((element) => {
+      element.scrollLeft = 0;
+    });
   }
 });

@@ -1,9 +1,22 @@
 import TagVaultScene from "@/components/tagvault/TagVaultScene";
 import { ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const base = import.meta.env.BASE_URL;
 
 export default function ProjectsSection() {
+  const source = useRef<HTMLPreElement>(null);
+  const [sourceOverflows, setSourceOverflows] = useState(false);
+  useEffect(() => {
+    const element = source.current;
+    if (!element) return;
+    const measure = () =>
+      setSourceOverflows(element.scrollWidth > element.clientWidth);
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    measure();
+    return () => observer.disconnect();
+  }, []);
   return (
     <section
       id="work"
@@ -13,9 +26,9 @@ export default function ProjectsSection() {
       <div className="section-heading">
         <p className="section-label">Selected work</p>
         <h2 id="work-title">
-          Three projects.
+          A language, a traffic system,
           <br />
-          <span>Different layers of the stack.</span>
+          <span>and an Android app.</span>
         </h2>
       </div>
 
@@ -38,16 +51,9 @@ export default function ProjectsSection() {
               />
               <span className="fidan-wordmark">Fidan</span>
             </div>
-            <p>
-              Readable source.
-              <br />
-              Native execution.
-            </p>
           </div>
           <div className="fidan-specimen">
-            <span className="specimen-label">
-              A small piece of the language
-            </span>
+            <span className="specimen-label">Fidan source</span>
             <div className="fidan-editor">
               <div className="code-line-numbers" aria-hidden="true">
                 <span>1</span>
@@ -56,7 +62,14 @@ export default function ProjectsSection() {
                 <span>4</span>
                 <span>5</span>
               </div>
-              <pre tabIndex={0} aria-label="Fidan language example">
+              <pre
+                ref={source}
+                tabIndex={0}
+                aria-label="Fidan language example"
+                aria-describedby={
+                  sourceOverflows ? "fidan-scroll-hint" : undefined
+                }
+              >
                 <code>
                   <span className="syntax-keyword">action</span>{" "}
                   <span className="syntax-function">greet</span>{" "}
@@ -89,9 +102,11 @@ export default function ProjectsSection() {
                 </code>
               </pre>
             </div>
-            <span className="specimen-caption">
-              Static types. Native backends.
-            </span>
+            {sourceOverflows && (
+              <span id="fidan-scroll-hint" className="code-scroll-hint">
+                Scroll horizontally
+              </span>
+            )}
           </div>
         </div>
         <div className="project-details">
@@ -131,20 +146,19 @@ export default function ProjectsSection() {
           </div>
           <div className="project-description">
             <p className="project-lead">
-              A language is only as useful as the system around it.
-              <br />
-              I’m building both.
+              Fidan is a general-purpose programming language and compiler
+              toolchain I’m developing in Rust.
             </p>
             <p>
-              A general-purpose language and compiler toolchain written in Rust.
-              Typed HIR and MIR, static checking and an interpreter. Cranelift
-              provides JIT execution and AOT compilation to native binaries,
-              with an optional LLVM AOT backend. An LSP, package tooling and
-              concurrency primitives complete the workflow.
+              The compiler uses typed HIR and MIR for static checking and
+              execution through an interpreter or selective Cranelift JIT.
+              Cranelift AOT and an optional LLVM AOT backend compile programs to
+              native binaries.
             </p>
             <p>
-              Its AI tooling works with compiler-derived types and diagnostics,
-              grounding assistance in what the program actually means.
+              The toolchain includes a language server, package tooling, and
+              concurrency support. Its AI assistance uses compiler diagnostics
+              and type information to explain code and suggest changes.
             </p>
             <p className="project-tech">Rust / Cranelift / LLVM / LSP</p>
           </div>
@@ -160,18 +174,22 @@ export default function ProjectsSection() {
           <p className="project-category">02 / Deep learning & edge AI</p>
           <h3 id="lanepilot-title">LanePilot</h3>
           <p className="project-lead">
-            Traffic intelligence
-            <br />
-            on edge hardware.
+            Adaptive traffic management with edge AI.
           </p>
           <p>
-            Traffic perception and dynamic lane allocation, connecting computer
-            vision with graph-based optimization and edge hardware.
+            LanePilot investigates how changing lane assignments can reduce
+            congestion. Cameras detect and track vehicles, estimate their
+            movement, and provide the state used to recommend lane changes.
           </p>
           <p>
-            YOLO11n-seg and PyTorch for perception. GATv2 with PyTorch Geometric
-            for traffic intelligence. TensorRT / CUDA, NVIDIA Jetson and
-            Raspberry Pi for deployment.
+            Perception uses YOLO11n-seg and PyTorch. I explored interactions
+            between nearby vehicles with GATv2 in PyTorch Geometric, then moved
+            to reinforcement learning to model the consequences of lane changes.
+          </p>
+          <p>
+            NVIDIA Jetson runs inference with a CUDA / TensorRT deployment
+            pipeline. A Raspberry Pi handles camera input and the physical
+            prototype’s controls.
           </p>
           <p className="project-recognition">Jugend forscht, 2nd Prize</p>
           <div className="simulation-results">
@@ -206,7 +224,7 @@ export default function ProjectsSection() {
           <div className="lane-stage">
             <div className="lane-stage-heading">
               <span>LanePilot</span>
-              <span>Perception in practice</span>
+              <span>Prototype perception</span>
             </div>
             <div className="lane-crop">
               <picture>
@@ -234,13 +252,12 @@ export default function ProjectsSection() {
               </picture>
             </div>
             <div className="lane-stage-footer">
-              <span>Detection and tracking.</span>
+              <span>Vehicle detection and tracking</span>
               <span>Computer vision / Edge hardware</span>
             </div>
           </div>
           <figcaption>
-            Vehicle detection in the prototype test environment. Actual project
-            output.
+            Vehicle detection in LanePilot’s physical test setup.
           </figcaption>
         </figure>
       </article>
@@ -255,41 +272,52 @@ export default function ProjectsSection() {
             <span className="tag-stage-label">TagVault / Android</span>
             <TagVaultScene />
           </div>
-          <figcaption>
-            TagVault on Android. Encrypted storage for NFC workflows.
-          </figcaption>
+          <figcaption>The TagVault interface on Android.</figcaption>
         </figure>
         <div className="split-copy">
           <p className="project-category">03 / Product engineering</p>
           <h3 id="tagvault-title">TagVault</h3>
-          <p className="project-lead">
-            NFC tools for
-            <br />
-            everyday use.
+          <p className="project-lead">Scan, manage, and automate NFC tags.</p>
+          <p>
+            TagVault is an Android app I built and shipped in Flutter for people
+            who use NFC tags in their own workflows. It reads and writes
+            compatible tags and keeps saved data in encrypted local storage,
+            with biometric protection for sensitive actions.
           </p>
           <p>
-            An Android product for reading, writing and organizing NFC tags.
-            Built end to end in Flutter, with encrypted local storage and
-            biometric protection.
-          </p>
-          <p>
-            Automations, webhooks, widgets and backups make it useful beyond the
-            first scan. Available on Android with a paid Pro tier.
+            Tag scans can trigger automations and webhooks. Home-screen widgets
+            provide quick access, and encrypted backups help move data between
+            devices. A paid Pro tier adds further tools and backup options.
           </p>
           <p className="project-tech">Flutter / Android / NFC / Local-first</p>
-          <a
-            className="text-link"
-            href="https://tagvault.appsolves.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Meet TagVault{" "}
-            <ArrowUpRight
-              data-arrow-motion="external"
-              size={17}
-              aria-hidden="true"
-            />
-          </a>
+          <div className="project-links">
+            <a
+              className="text-link"
+              href="https://tagvault.appsolves.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TagVault website{" "}
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={17}
+                aria-hidden="true"
+              />
+            </a>
+            <a
+              className="text-link secondary-link"
+              href="https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google Play{" "}
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={17}
+                aria-hidden="true"
+              />
+            </a>
+          </div>
         </div>
       </article>
     </section>

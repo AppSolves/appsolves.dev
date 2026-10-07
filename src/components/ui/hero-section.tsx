@@ -19,8 +19,6 @@ export default function HeroSection() {
           </h1>
           <p className="hero-description">
             I build AI systems, compilers, and software products.
-            <br className="desktop-break" /> I work on the internals and carry
-            the software through to release.
           </p>
           <div className="hero-actions">
             <a className="text-link" href="#work">

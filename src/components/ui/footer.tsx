@@ -7,7 +7,6 @@ import {
   Instagram,
   Youtube,
   Mail,
-  Play,
   Coffee,
   Heart,
 } from "lucide-react";
@@ -29,7 +28,7 @@ const socials = [
   {
     label: "Google Play",
     href: "https://play.google.com/store/apps/dev?id=6007461154397933888",
-    icon: Play,
+    icon: null,
   },
   {
     label: "YouTube",
@@ -54,7 +53,7 @@ export default function Footer() {
         {!compact && (
           <div className="contact-composition">
             <div>
-              <p className="section-label">Have something in mind?</p>
+              <p className="section-label">Contact</p>
               <h2>
                 Good problems
                 <br />
@@ -87,7 +86,14 @@ export default function Footer() {
                         : "noopener noreferrer"
                     }
                   >
-                    {Icon ? (
+                    {label === "Google Play" ? (
+                      <img
+                        src={`${home}icons/google-play.svg`}
+                        alt=""
+                        width="16"
+                        height="16"
+                      />
+                    ) : Icon ? (
                       <Icon size={16} aria-hidden="true" />
                     ) : (
                       <svg

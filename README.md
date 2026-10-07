@@ -14,7 +14,7 @@ npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **69 browser / asset checks**: comprehensive Chromium regression at seven sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Results and captures go to ignored `test-results/`.
+Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **71 browser / asset checks**: comprehensive Chromium regression at seven sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Editorial checks add consistent metadata, the verified TagVault product listing, balanced footer rows at 14 widths and narrow-code scroll affordance/keyboard access. Results and captures go to ignored `test-results/`.
 
 `BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173.
 
@@ -28,7 +28,7 @@ On a Windows display with high DPI, the bundled WebKit may report a CSS viewport
 
 ## Design and assets
 
-[DESIGN.md](DESIGN.md), [STORYBOARD.md](STORYBOARD.md), [MOTION.md](MOTION.md) and [QA.md](QA.md) describe the actual direction and verification.
+[DESIGN.md](DESIGN.md), [STORYBOARD.md](STORYBOARD.md), [MOTION.md](MOTION.md) and [QA.md](QA.md) describe the actual direction and verification. [EDITORIAL.md](EDITORIAL.md) records every meaningful before/after copy change, the upstream evidence, retained text and the final phone/image decisions. [Google Play icon provenance](public/icons/README.md) records the official local artwork.
 
 System is the default. The parser-time theme bootstrap prevents a wrong-color initial paint. Desktop has a keyboard-accessible radio dropdown; mobile has native appearance radios inside the navigation. Explicit color changes use a 480ms radial View Transition; unsupported browsers, reduced motion, initialization and OS changes apply immediately.
 
