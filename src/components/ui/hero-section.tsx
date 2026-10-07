@@ -11,14 +11,16 @@ const HeroObject = () => {
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
 
-  const rotateY = useSpring(useTransform(pointerX, [-1, 1], [-11, 11]), {
-    stiffness: 120,
-    damping: 18,
+  const rotateY = useSpring(useTransform(pointerX, [-1, 1], [-7, 7]), {
+    stiffness: 110,
+    damping: 20,
   });
-  const rotateX = useSpring(useTransform(pointerY, [-1, 1], [8, -8]), {
-    stiffness: 120,
-    damping: 18,
+  const rotateX = useSpring(useTransform(pointerY, [-1, 1], [5, -5]), {
+    stiffness: 110,
+    damping: 20,
   });
+  const lightX = useTransform(pointerX, [-1, 1], ["34%", "72%"]);
+  const lightY = useTransform(pointerY, [-1, 1], ["32%", "68%"]);
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -35,42 +37,35 @@ const HeroObject = () => {
 
   return (
     <div
-      className="relative mx-auto aspect-square w-full max-w-[560px] [perspective:1400px]"
+      className="hero-object-wrap"
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
     >
       <motion.div
-        className="absolute inset-[8%] [transform-style:preserve-3d]"
+        className="hero-object"
         style={{ rotateX, rotateY }}
       >
-        <div className="absolute inset-[8%] border border-white/[0.06] [transform:translateZ(-90px)]" />
-        <div className="absolute inset-[15%] border border-white/[0.09] [transform:translateZ(-42px)_rotate(8deg)]" />
-        <div className="absolute inset-[21%] border border-white/[0.12] [transform:translateZ(4px)_rotate(-6deg)]" />
+        <div className="hero-object-shadow" />
+        <div className="hero-object-depth hero-object-depth-back" />
+        <div className="hero-object-depth hero-object-depth-mid" />
 
-        <motion.div
-          className="absolute inset-[20%] grid place-items-center [transform:translateZ(72px)]"
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
-        >
-          <img
-            src="/mark.svg"
-            alt="AppSolves"
-            className="h-auto w-full select-none drop-shadow-[0_28px_35px_rgba(0,0,0,0.38)]"
-            draggable={false}
+        <div className="hero-object-face">
+          <motion.div
+            className="hero-object-light"
+            style={{ left: lightX, top: lightY }}
           />
-        </motion.div>
-
-        <div className="absolute left-[4%] top-[4%] font-mono text-[10px] uppercase tracking-[0.22em] text-white/28 [transform:translateZ(18px)]">
-          AS / 26
+          <div className="hero-object-edge" />
+          <div className="hero-object-inner">
+            <div className="hero-object-mark-wrap">
+              <img
+                src="/mark.svg"
+                alt="AppSolves"
+                className="hero-object-mark"
+                draggable={false}
+              />
+            </div>
+          </div>
         </div>
-        <div className="absolute bottom-[7%] right-[3%] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-white/28 [transform:translateZ(18px)]">
-          systems
-          <br />
-          intelligence
-          <br />
-          products
-        </div>
-        <div className="absolute bottom-[2%] left-[8%] h-px w-[44%] bg-white/12 [transform:translateZ(18px)]" />
       </motion.div>
     </div>
   );
@@ -79,7 +74,7 @@ const HeroObject = () => {
 const HeroSection = () => {
   return (
     <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-20">
-      <div className="mx-auto grid w-full max-w-[1480px] grid-cols-1 items-center gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-8 lg:px-10 lg:py-24">
+      <div className="mx-auto grid w-full max-w-[1480px] grid-cols-1 items-center gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:px-10 lg:py-24">
         <div className="relative z-10">
           <div className="mb-9 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
             <span className="text-foreground">01</span>
@@ -154,7 +149,7 @@ const HeroSection = () => {
         </div>
 
         <motion.div
-          className="relative lg:pl-4"
+          className="relative lg:pl-8"
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
