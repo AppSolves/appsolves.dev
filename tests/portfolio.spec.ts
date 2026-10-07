@@ -267,7 +267,6 @@ test("desktop WebGL responds to pointer and falls back after context loss", asyn
           ?.getContextAttributes()?.preserveDrawingBuffer,
     ),
   ).toBe(false);
-  await canvas.hover({ position: { x: 30, y: 30 } });
   if (!process.env.CI) {
     // Real GPU/compositor runs can reliably verify the subtle pointer response
     // via pixels. SwiftShader in GitHub Actions renders the scene correctly,
@@ -275,6 +274,9 @@ test("desktop WebGL responds to pointer and falls back after context loss", asyn
     const initial = await canvas.screenshot();
     await canvas.hover({ position: { x: 30, y: 30 } });
     await expect.poll(() => canvas.screenshot()).not.toEqual(initial);
+  } else {
+    await canvas.hover({ position: { x: 30, y: 30 } });
+    await expect(canvas).toBeVisible();
   }
   await canvas.evaluate((element) => {
     const context = (element as HTMLCanvasElement).getContext("webgl2");
