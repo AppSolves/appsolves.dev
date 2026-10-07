@@ -72,6 +72,8 @@ for (const theme of ["light", "dark"] as const) {
         ["work", ".fidan-stage"],
         ["lane", ".lane-stage"],
         ["tag", ".tag-stage"],
+        ["about", ".about-section"],
+        ["open-source", ".open-source-section"],
         ["contact", "#contact"],
       ]) {
         await page
@@ -81,6 +83,13 @@ for (const theme of ["light", "dark"] as const) {
           );
         await page.screenshot({
           path: testInfo.outputPath(`${theme}-${size.name}-${name}.png`),
+        });
+      }
+      if (["desktop", "tablet", "mobile"].includes(size.name)) {
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.screenshot({
+          path: testInfo.outputPath(`${theme}-${size.name}-fullpage.png`),
+          fullPage: true,
         });
       }
     });
