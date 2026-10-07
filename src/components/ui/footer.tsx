@@ -1,95 +1,74 @@
-import { Linkedin, Mail } from "lucide-react";
-import { Button } from "./button";
-import { Icons } from "./icon";
+import { ArrowUpRight } from "lucide-react";
+
+const links = [
+  { label: "GitHub", href: "https://github.com/AppSolves" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/kaangoenueldinc" },
+  { label: "Instagram", href: "https://instagram.com/appsolves.dev" },
+  { label: "YouTube", href: "https://youtube.com/@appsolvesdev" },
+];
 
 const Footer = () => {
-  const socialLinks = [
-    {
-      name: "GitHub",
-      icon: Icons.Github,
-      url: "https://github.com/AppSolves",
-    },
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      url: "https://linkedin.com/in/kaangoenueldinc",
-    },
-    {
-      name: "X",
-      icon: Icons.X,
-      url: "https://x.com/AppSolves",
-    },
-    {
-      name: "Instagram",
-      icon: Icons.Instagram,
-      url: "https://instagram.com/appsolves.dev",
-    },
-    {
-      name: "Google Play",
-      icon: Icons.GooglePlay,
-      url: "https://play.google.com/store/apps/dev?id=6007461154397933888",
-    },
-    {
-      name: "YouTube",
-      icon: Icons.YouTube,
-      url: "https://youtube.com/@appsolvesdev",
-    },
-    {
-      name: "Email",
-      icon: Mail,
-      url: "mailto:contact@appsolves.dev",
-    },
-  ];
-
   return (
-    <footer
-      id="footer-section"
-      className="border-t border-border bg-background"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col items-center text-center gap-8">
-          {/* Social Links */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {socialLinks.map((link) => (
-              <Button
-                key={link.name}
-                variant="ghost"
-                size="sm"
-                asChild
-                className="text-muted-foreground hover:text-foreground"
+    <footer id="contact" className="border-t border-white/[0.08]">
+      <div className="mx-auto max-w-[1480px] px-5 pb-10 pt-24 sm:px-8 sm:pt-32 lg:px-10">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.34fr_0.66fr]">
+          <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="mr-4 text-foreground">04</span>
+            Contact
+          </div>
+
+          <div>
+            <p className="text-sm text-muted-foreground">Have something worth building?</p>
+            <a
+              href="mailto:contact@appsolves.dev"
+              className="group mt-4 inline-flex max-w-full items-end gap-3 text-[clamp(2.2rem,5.6vw,6.7rem)] font-medium leading-[0.95] tracking-[-0.055em] text-foreground"
+            >
+              <span className="break-all">contact@appsolves.dev</span>
+              <ArrowUpRight className="mb-[0.08em] h-[0.55em] w-[0.55em] shrink-0 transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1" />
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-24 grid grid-cols-1 gap-8 border-t border-white/[0.08] pt-7 text-sm sm:grid-cols-2 lg:grid-cols-[0.34fr_0.33fr_0.33fr]">
+          <div className="text-muted-foreground">
+            © {new Date().getFullYear()} Kaan Gönüldinc / AppSolves
+          </div>
+
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {links.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
               >
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.name}
-                >
-                  <link.icon className="h-5 w-5" />
-                </a>
-              </Button>
+                {link.label}
+              </a>
             ))}
           </div>
 
-          {/* Copyright */}
-          <div className="text-sm text-muted-foreground">
-            <p className="flex justify-center items-center gap-4">
-              <a href="/privacy_policy">Privacy Policy</a>
-              <span>|</span>
-              <a href="/terms_and_conditions">Terms & Conditions</a>
-            </p>
-            <br></br>
-            <p>
-              © {new Date().getFullYear()} Kaan Gönüldinc (aka AppSolves). All
-              rights reserved.
-            </p>
-            <br></br>
-            <p>
-              You may find more information on the{" "}
-              <a href="https://legacy.appsolves.dev" target="_blank">
-                legacy version
-              </a>{" "}
-              of this site.
-            </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 lg:justify-end">
+            <a
+              href="/privacy_policy"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Privacy
+            </a>
+            <a
+              href="/terms_and_conditions"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Terms
+            </a>
+            <a
+              href="https://github.com/sponsors/AppSolves"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Sponsor
+            </a>
           </div>
         </div>
       </div>
