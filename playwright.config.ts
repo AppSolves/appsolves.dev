@@ -9,7 +9,12 @@ export default defineConfig({
   use: {
     baseURL: process.env.PREVIEW_URL || "http://127.0.0.1:4173",
     browserName: "chromium",
-    launchOptions: { executablePath: process.env.BROWSER_PATH || undefined },
+    launchOptions: {
+      executablePath: process.env.BROWSER_PATH || undefined,
+      args: process.env.CI
+        ? ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
+        : undefined,
+    },
     trace: "retain-on-failure",
   },
   webServer: process.env.PREVIEW_URL
