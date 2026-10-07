@@ -156,6 +156,22 @@ test("theme picker supports arrows, selection, Escape and focus return", async (
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   const trigger = page.getByRole("button", { name: "Choose color theme" });
+  await trigger.click();
+  const darkOption = page.getByRole("menuitemradio", {
+    name: "Dark",
+    exact: true,
+  });
+  await darkOption.hover();
+  expect(
+    await darkOption.evaluate(
+      (element) => getComputedStyle(element).outlineStyle,
+    ),
+  ).toBe("none");
+  await page.screenshot({
+    path: testInfo.outputPath("desktop-theme-pointer-hover.png"),
+  });
+  await page.keyboard.press("Escape");
+  await page.mouse.move(0, 0);
   await trigger.focus();
   await page.keyboard.press("ArrowDown");
   await expect(
@@ -169,6 +185,11 @@ test("theme picker supports arrows, selection, Escape and focus return", async (
   await expect(
     page.getByRole("menuitemradio", { name: "Dark", exact: true }),
   ).toBeFocused();
+  expect(
+    await darkOption.evaluate(
+      (element) => getComputedStyle(element).outlineWidth,
+    ),
+  ).toBe("2px");
   await page.screenshot({
     path: testInfo.outputPath("desktop-theme-menu.png"),
   });

@@ -62,7 +62,7 @@ python -m http.server 4173 --bind 127.0.0.1 --directory /path/to/extracted-artif
 
 Open `http://127.0.0.1:4173/`. Review themes, work, menus, `/privacy_policy/`, `/terms_and_conditions/`, and `/404.html`. `file://` cannot serve the module application. The basic Python server returns its own response for unknown paths; GitHub Pages serves the generated custom `404.html` for those paths.
 
-The predecessor at `187198c` already has a [successful GitHub build/browser/artifact run](https://github.com/AppSolves/appsolves.dev/actions/runs/37653633687). Current launch-pass evidence is recorded in QA.md; no placeholder or claim that CI has never run remains.
+The launch implementation at `ebd9a71` has a [successful GitHub build/browser/artifact run](https://github.com/AppSolves/appsolves.dev/actions/runs/37676045521) with all 58 checks passing. Current launch-pass evidence is recorded in QA.md; no placeholder or claim that CI has never run remains.
 
 ## Deployment compatibility
 

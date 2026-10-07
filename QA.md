@@ -27,7 +27,7 @@ Fidan's compiler-toolchain category and specimen caption are more precise. LaneP
 
 The production page was captured and inspected in light and dark at **1920 × 1080, 1440 × 900, 1280 × 800, 960 × 900, 820 × 1180, 390 × 844 and 320 × 568**. Captures include hero, Fidan, LanePilot, TagVault, about, open source, contact, menus and full pages. Real WebGL, scroll / pointer response, phone drag and poster fallbacks were inspected separately from reduced-motion accessibility captures.
 
-Refinement passes corrected the phone's edge clearance, the 320px Fidan wordmark clipping, footer-support contrast and stale phone entrance selectors. The wordmark has a regression assertion for its real text bounds. No random technical artwork, extra card system, global glass or decorative 3D was added. Internal arrows and touch targets are coherent. Final captures have no horizontal overflow or page errors at any of the seven sizes.
+Refinement passes corrected the phone's edge clearance, the 320px Fidan wordmark clipping, footer-support contrast, stale phone entrance selectors and Radix pointer hover retaining a keyboard-style outline. The wordmark has a regression assertion for its real text bounds. No random technical artwork, extra card system, global glass or decorative 3D was added. Internal arrows and touch targets are coherent. Final captures have no horizontal overflow or page errors at any of the seven sizes.
 
 Raw local evidence is ignored under `.cache/launch-qa/` and `test-results/`. CI uploads the rendered review captures, rather than placeholder images. The new phone drag pixel comparison also passes with SwiftShader, including CI. The inherited hero test keeps its established CI handling because its much smaller pointer offsets can yield identical software-rendered captures.
 
@@ -40,7 +40,7 @@ Raw local evidence is ignored under `.cache/launch-qa/` and `test-results/`. CI 
 
 ## Review artifacts and GitHub evidence
 
-The predecessor `187198c81fe0c5ec624026795699e55c33e2a062` has a [successful GitHub run](https://github.com/AppSolves/appsolves.dev/actions/runs/37653633687) with build, browser checks and review artifacts. That older workflow produced duplicate push/PR runs; this pass removes the PR trigger.
+Launch implementation `ebd9a71a012c80fcf87b1ee11406c5240cd2fd06` has a [successful GitHub run](https://github.com/AppSolves/appsolves.dev/actions/runs/37676045521): clean install, typecheck, lint, build, all 58 Chromium / Firefox / WebKit checks, complete preview and real visual-review artifacts. The older predecessor at `187198c` produced duplicate push/PR runs; the launch workflow removes that PR trigger.
 
 The updated workflow runs only on redesign pushes and manual dispatch on that branch. It uploads `appsolves-preview-<full SHA>` (complete dist) and `appsolves-visual-review-<full SHA>` (real captures), retains seven days, uses read-only contents permissions and never deploys. README documents downloading and serving the extracted artifact with Python's standard library independently of the checkout.
 
