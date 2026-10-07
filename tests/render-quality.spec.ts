@@ -14,6 +14,9 @@ for (const theme of ["light", "dark"] as const) {
       browser,
       baseURL,
     }, testInfo) => {
+      // CI traces show ~10s for one high-DPI software compositor capture.
+      // This case captures five views; retain every quality assertion.
+      test.slow(Boolean(process.env.CI));
       const context = await browser.newContext({
         viewport: { width: 1440, height: 900 },
         deviceScaleFactor: dpr,
@@ -94,18 +97,14 @@ for (const theme of ["light", "dark"] as const) {
             )
             .toBeGreaterThanOrEqual(1.99);
         await page.locator(".fidan-stage").scrollIntoViewIfNeeded();
-        await page
-          .locator(".fidan-stage")
-          .screenshot({
-            path: testInfo.outputPath(`fidan-${theme}-dpr${dpr}-stage.png`),
-          });
-        await page
-          .locator(".fidan-editor")
-          .screenshot({
-            path: testInfo.outputPath(
-              `fidan-${theme}-dpr${dpr}-syntax-closeup.png`,
-            ),
-          });
+        await page.locator(".fidan-stage").screenshot({
+          path: testInfo.outputPath(`fidan-${theme}-dpr${dpr}-stage.png`),
+        });
+        await page.locator(".fidan-editor").screenshot({
+          path: testInfo.outputPath(
+            `fidan-${theme}-dpr${dpr}-syntax-closeup.png`,
+          ),
+        });
       } finally {
         await context.close();
       }

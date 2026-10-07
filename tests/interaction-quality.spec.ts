@@ -14,12 +14,23 @@ async function checkAction(
   delta: number[],
 ) {
   const arrow = link.locator(`[data-arrow-motion="${direction}"]`);
+  // Native smooth scrolling after keyboard navigation can move a link away
+  // from the pointer. Measure the interaction once its target is positioned.
+  await link.evaluate((element) =>
+    element.scrollIntoView({ block: "center", behavior: "instant" }),
+  );
   await link.hover();
+  expect(await link.evaluate((element) => element.matches(":hover"))).toBe(
+    true,
+  );
   await expect.poll(() => translation(arrow)).toEqual(delta);
   await page.mouse.move(0, 0);
   await expect.poll(() => translation(arrow)).toEqual([0, 0]);
   await page.keyboard.press("Tab");
-  await link.focus();
+  await link.evaluate((element) => {
+    element.scrollIntoView({ block: "center", behavior: "instant" });
+    (element as HTMLElement).focus({ preventScroll: true });
+  });
   expect(
     await link.evaluate((element) => element.matches(":focus-visible")),
   ).toBe(true);
@@ -32,6 +43,11 @@ test("directional arrows share semantic hover and keyboard focus motion", async 
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
+  // Exercise CSS/input independently of expensive software WebGL captures.
+  // The separate render/lifecycle suite keeps real scenes at full quality.
+  await page.route(/\/(?:brand|phone)-scene-[^/]+\.js$/, (route) =>
+    route.abort(),
+  );
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator(".hero-actions")).toHaveCSS("transform", "none");

@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 test("TagVault loads near its section, responds to drag, and preserves a fallback", async ({
   page,
 }, testInfo) => {
+  // High-DPI SwiftShader captures and drag renders run on the CI CPU.
+  test.slow(Boolean(process.env.CI));
   await page.setViewportSize({ width: 1440, height: 900 });
   const models: string[] = [];
   await page.addInitScript(() => {

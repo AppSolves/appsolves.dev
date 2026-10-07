@@ -47,7 +47,7 @@ Hero WebGL is limited to a fine pointer, ≥900px and no reduced motion. TagVaul
 
 ## Review without a checkout
 
-A push to the redesign branch starts [Redesign preview artifact](https://github.com/AppSolves/appsolves.dev/actions/workflows/preview-artifact.yml). Manual dispatch is also available on that branch. PR events are omitted to avoid duplicate runs. The workflow uses Node 22, `npm ci`, typecheck, lint, build and all browser checks in the official Playwright 1.63.0 Noble container. Its preinstalled browsers and OS dependencies avoid runtime Ubuntu mirror installation; update the container version alongside Playwright's lockfile version. This follows [Playwright's container CI setup](https://playwright.dev/docs/ci#via-containers). It has read-only contents permission and no deployment step.
+A push to the redesign branch starts [Redesign preview artifact](https://github.com/AppSolves/appsolves.dev/actions/workflows/preview-artifact.yml). Manual dispatch is also available on that branch. PR events are omitted to avoid duplicate runs. The workflow uses Node 22, `npm ci`, typecheck, lint, build and all browser checks in the official Playwright 1.63.0 Noble container. CI serializes software-rendered GPU captures and gives those six live-scene cases a 90-second budget; ordinary checks retain 30 seconds and retries remain disabled. Its preinstalled browsers and OS dependencies avoid runtime Ubuntu mirror installation; update the container version alongside Playwright's lockfile version. This follows [Playwright's container CI setup](https://playwright.dev/docs/ci#via-containers). It has read-only contents permission and no deployment step.
 
 A successful run provides two artifacts, retained seven days:
 

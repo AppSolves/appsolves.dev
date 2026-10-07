@@ -290,6 +290,7 @@ test("real project links, contact, metadata and Pages artifacts are preserved", 
 test("desktop WebGL responds to pointer and falls back after context loss", async ({
   page,
 }) => {
+  test.slow(Boolean(process.env.CI));
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   await expect(page.locator(".brand-scene")).toHaveAttribute(

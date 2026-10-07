@@ -3,7 +3,9 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
-  workers: 2,
+  // SwiftShader scenes share the runner's CPU; parallel GPU captures contend
+  // with browser input/compositing rather than exercising independent capacity.
+  workers: process.env.CI ? 1 : 2,
   timeout: 30000,
   retries: 0,
   use: {
