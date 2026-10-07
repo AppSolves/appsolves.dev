@@ -4,7 +4,17 @@
 
 An independent builder's body of work, presented with the precision of a technical publication and the material presence of an industrial design studio. The first impression is warm, quiet and physical. The second is specific: a Rust compiler, deployed computer vision, and a commercial Android product. AppSolves is Kaan Gönüldinc's umbrella brand, not an agency.
 
-The signature is the existing AppSolves mark turned into a solid, bevelled graphite-and-metal object. This is brand material, not an illustration of a fictitious system. Beside it, the headline **“Deep thinking. Real things.”** links technical depth to shipped work. The name, TUM context, and explicit AI / compiler / product positioning remain in the first viewport.
+The signature is the official AppSolves mark turned into a solid object: violet front surfaces, metal sides and bevels. This is brand material, not an illustration of a fictitious system. Beside it, **“Think deeply. Build real things.”** connects a deliberate engineering approach to usable work. The name, TUM context and explicit AI / compiler / product positioning remain in the first viewport. The official wordmark has no trailing period.
+
+## Launch-polish decisions
+
+Four requested headline candidates were rendered in the actual hero at 1440 × 900 and 390 × 844 before implementation; ignored evidence is in `.cache/headline-study/`. “Deep thinking. Real things.” has the strongest compact rhythm but asks the viewer to infer its meaning. “Think deeply. Build real things.” is the chosen refinement: active, immediately understandable, and broad enough for a language, edge system and shipped app. “Deep engineering. Real products.” is narrower and its first line is too wide. “Hard problems. Real systems.” is credible but interchangeable with many systems portfolios. No scribble is added.
+
+Reduce the first-content gap through a shorter header, viewport-aware hero height and a bounded object, rather than squeezing the text. Give the two headline baselines clear optical separation. Narrow phones keep three project names with useful tap targets and omit categories.
+
+Large media surfaces share a 24px radius (20px on mobile); reading fields and text rows remain flat. Open source loses its repeated large italic gesture. Mobile integrates native theme radios into the disclosure; desktop retains a quieter dropdown. Explicit theme changes use a restrained 480ms radial View Transition from the control, with immediate unsupported / reduced-motion fallback and no animation for OS changes.
+
+TagVault reuses its own GLB, camera, screen mapping and bounded drag / inertia from `AppSolves/TagVault/website/src/components/PhoneMockup3D.tsx`, pinned at `e17d6df11a6d1251b6f395c067ef6a82f50b5992`. Port to the existing Three.js runtime; preserve the phone rather than drawing another mockup. Lazy-load near its section, render on input and settle, pause offscreen / hidden, and provide a locally rendered poster for reduced motion / WebGL failure. Compress the original model without redesigning or simplifying its geometry. Preserve source / license provenance.
 
 ## Reference study, October 2026
 
@@ -29,20 +39,20 @@ Our countermeasure is content-specific composition: actual language syntax for F
 - **Manrope variable**, self-hosted WOFF2, weights 400–650. Its deliberate geometric shapes, broad counters and compact headlines give the brand a clean engineering voice without the standard Inter/Geist SaaS look.
 - **Newsreader italic variable**, self-hosted WOFF2, used only for the second hero line, brief editorial emphasis and Fidan's project specimen. It provides a human counterpoint to the geometric sans, not a second competing identity.
 - System monospace is confined to the real Fidan source specimen. No decorative terminal chrome, fake output, or floods of tiny metadata.
-- Hero approximately 112px at 1440; section display 64–80px; body 17–20px; utility text 13–15px. Fluid sizing, deliberate line breaks, generous line height. Mobile hero approximately 56px.
+- Hero approximately 102px at 1440; section display 64–80px; body 17–20px; utility text 13–15px. Fluid sizing, deliberate line breaks, generous line height. Mobile hero approximately 51px at 390.
 - Fonts ship with their OFL licenses. No third-party font request or analytics dependency.
 
 ## Color and materials
 
 - Paper `#f5f3ed`: primary page and hero background.
-- Ink `#242622`: headings and brand object.
+- Ink `#242622`: headings and reading text.
 - Muted ink `#63665d`: supporting text, always tested for contrast.
 - AppSolves violet `#6a5ce3`: official brand mark, typography emphasis and wayfinding. On paper, use a slightly deeper `#5f51cc` for small text / focus contrast; dark mode uses `#a398ff` for accessible text accents. The mark itself retains the official violet.
 - Forest `#203c32`: Fidan's single large project field, paired with warm paper text.
 - Pale mineral `#e6e8e0`: LanePilot image framing.
 - Warm sand `#e8e1d3`: TagVault product stage.
 
-No gradient page backgrounds, glow, glass, card shadows or universal rounded corners. Flat editorial fields support imagery; the only material lighting belongs to the actual 3D mark. Thin rules only separate meaningful lists, project details and footer utilities.
+No gradient page backgrounds, glow, glass, card shadows or universal rounded corners. Flat editorial fields support imagery; material lighting belongs to the actual mark and the reused product phone. Thin rules only separate meaningful lists, project details and footer utilities.
 
 ## Layout and whitespace
 
@@ -54,17 +64,17 @@ Sections use a shared rhythm of 12 / 20 / 28 / 40 / 56 / 80 / 112 / 144px, with 
 
 Light remains print-like: paper `#f5f3ed`, ink `#242622`, neutral secondary text. Dark is authored graphite: base `#11120f`, surface `#181a16`, warm foreground `#efede7`, secondary `#a3a59c`, quiet rules `#35382f`. Forest, mineral and sand are local project surfaces; they do not become global accents. Dark LanePilot / TagVault frames use subdued mineral / sand materials rather than a literal color inversion. Fidan retains its forest field and fixed warm text.
 
-The existing violet mark's exact path geometry is retained with a true transparent compound-path cutout. Navigation, favicon and touch icon use that identity. The 3D object remains graphite and metal with violet enamel only on its secondary curve. Light and dark each receive a matching poster / scene lighting treatment.
+The existing violet mark's exact path geometry is retained with a true transparent compound-path cutout. Navigation, favicon and touch icon use that identity. Both front surfaces of the 3D object use violet enamel; sides and bevels remain metal. Light and dark each receive a matching poster / scene lighting treatment.
 
-Theme defaults to System. A parser-time bootstrap applies the saved choice or OS preference before the application loads. The installed next-themes provider owns runtime persistence, OS changes and cross-tab updates. A small navigation icon opens a Radix radio menu for System / Light / Dark; it is keyboard and touch operable. Theme changes are immediate, without a theatrical transition.
+Theme defaults to System. A parser-time bootstrap applies the saved choice or OS preference before the application loads. The installed next-themes provider owns runtime persistence, OS changes and cross-tab updates. A small navigation icon opens a Radix radio menu for System / Light / Dark; it is keyboard and touch operable. Mobile uses an integrated native radio fieldset. Explicit color changes use a 480ms radial reveal; OS changes and reduced motion remain immediate.
 
 ## 3D and imagery
 
-Three.js directly, dynamically imported. Extrude the real SVG mark, including its cutout and secondary curve. Bevel the edges, use a graphite metallic material, violet enamel only on the secondary curve, warm studio environment and soft directional light. Dark mode lifts the graphite face so its material remains readable. Orthographic framing avoids exaggerated perspective. Pointer movement changes the viewing angle by only a few degrees; scroll turns the object modestly. No auto-spinning product, particles, nodes, wireframes or postprocessing pile-up.
+Three.js directly, dynamically imported. Extrude the real SVG mark, including its cutout and secondary curve. Bevel the edges, use violet physical enamel with clearcoat on both front faces, chrome sides, a warm studio environment and soft directional light. Dark mode gently adjusts exposure while retaining the same material identity. Orthographic framing avoids exaggerated perspective. Pointer movement changes the viewing angle by only a few degrees; scroll turns the object modestly. No auto-spinning product, particles, nodes, wireframes or postprocessing pile-up.
 
 The scene renders only when its state changes, only while visible, and suspends in background tabs. DPR is capped at 1.5. Production uses the default `preserveDrawingBuffer: false`; asset generation and tests capture the browser compositor. Reduced motion, mobile and WebGL failure use a matching transparent light or dark poster. All essential content exists outside the canvas. Geometry, environment maps, renderer, observers and listeners are disposed on unmount or theme change.
 
-LanePilot imagery comes from its repository, cropped to the actual perception viewport. TagVault imagery comes from its published product assets. Responsive AVIF / WebP derivatives are generated from preserved originals outside `public/`; provenance is recorded with both. Fidan syntax is sourced from its published documentation and labelled as a language specimen, not a live compiler. LanePilot's approximate −39% hard-braking / +29% average-speed figures are labelled twice as simulation results, with no public-road claim.
+LanePilot imagery comes from its repository, cropped to the actual perception viewport. TagVault uses the original 21-mesh phone, its screen selection and bounded drag response, with an actual published Android screenshot mapped to the display. The perspective camera is slightly widened from 23 to 26 degrees so the model clears its media edge. Responsive AVIF / WebP derivatives are generated from preserved originals outside `public/`; provenance is recorded with both. Fidan syntax is sourced from its published documentation and labelled as a language specimen, not a live compiler. LanePilot's approximate −39% hard-braking / +29% average-speed figures are labelled twice as simulation results, with no public-road claim.
 
 ## Functional boundaries
 

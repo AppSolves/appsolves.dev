@@ -1,24 +1,22 @@
 # AppSolves
 
-Kaan Gönüldinc's builder / founder portfolio. React, TypeScript, Vite and Tailwind, with Manrope / Newsreader, restrained GSAP motion and one lazy Three.js brand object. Warm paper and graphite themes share the official AppSolves violet identity.
+Kaan Gönüldinc's builder / founder portfolio. React, TypeScript, Vite and Tailwind; Manrope / Newsreader, warm paper / graphite, restrained GSAP, violet enamel on the official brand object, and the original interactive TagVault phone. Work stays on `redesign/portfolio-2026`; existing review is [PR #1](https://github.com/AppSolves/appsolves.dev/pull/1).
 
-Review branch: `redesign/portfolio-2026`. This work does not merge into main or deploy.
+## Develop and verify
 
-## Development and verification
-
-Use Node 22 (22.23.3 was verified) and npm.
+Use Node 22 and npm.
 
 ```sh
 npm ci
 npm run dev
 npm run check
-npx playwright install chromium
+npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-Development defaults to port 8080. `check` runs application / config / test TypeScript checks, ESLint and a production build. `npm test` builds first, then runs 43 checks against a production preview. Tests cover six viewport sizes in both themes, Axe, navigation, legal / 404 routes, metadata, assets, themes and WebGL lifecycle. Screenshots are saved under ignored `test-results/`.
+Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **58 browser / asset checks**: comprehensive Chromium regression at seven sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Results and captures go to ignored `test-results/`.
 
-An existing Chromium can be selected with `BROWSER_PATH`. Use `PREVIEW_URL` for an independently running production preview; otherwise Playwright starts port 4173. PowerShell example:
+`BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173.
 
 ```powershell
 $env:BROWSER_PATH = 'C:/path/to/chrome.exe'
@@ -26,36 +24,46 @@ $env:PREVIEW_URL = 'http://127.0.0.1:4173'
 npm test
 ```
 
-The actual direction, sequence and motion are documented in [DESIGN.md](DESIGN.md), [STORYBOARD.md](STORYBOARD.md) and [MOTION.md](MOTION.md). [QA.md](QA.md) records validation and limits.
+On a Windows display with high DPI, the bundled WebKit may report a CSS viewport smaller than requested. The smoke suite asserts the actual width. For that local environment only, `$env:__COMPAT_LAYER = 'DPIUNAWARE'` was verified to restore exact CSS sizes. Linux CI does not need this setting. Firefox needs permission to launch its tab subprocesses in a restricted tool environment.
 
-## Themes and assets
+## Design and assets
 
-System is the default. A parser-time bootstrap sets the initial background before React; next-themes handles persistence and OS changes. A small accessible radio menu offers System / Light / Dark on every route.
+[DESIGN.md](DESIGN.md), [STORYBOARD.md](STORYBOARD.md), [MOTION.md](MOTION.md) and [QA.md](QA.md) describe the actual direction and verification.
 
-Fonts are self-hosted with OFL licenses. Project imagery is actual AppSolves work. Preserved originals live outside the served directory in [assets/sources](assets/sources/README.md); published provenance is in [public/images/README.md](public/images/README.md).
+System is the default. The parser-time theme bootstrap prevents a wrong-color initial paint. Desktop has a keyboard-accessible radio dropdown; mobile has native appearance radios inside the navigation. Explicit color changes use a 480ms radial View Transition; unsupported browsers, reduced motion, initialization and OS changes apply immediately.
+
+Fonts are self-hosted with OFL licenses. Real imagery and original contours remain in [assets/sources](assets/sources/README.md); published provenance is in [public/images](public/images/README.md). TagVault's original model, source commit and license are preserved in [phone provenance](assets/sources/tagvault-phone/README.md).
 
 ```sh
 npm run assets:optimize
+node scripts/optimize-phone.mjs
 npm run assets:render
 npm run build
 ```
 
-`assets:optimize` uses Sharp to produce responsive AVIF / WebP derivatives and transparent violet brand icons. `assets:render` needs a running development site (default port 8080; accepts `PREVIEW_URL` / `BROWSER_PATH`) and captures the production scene through Chromium's compositor. It generates separate transparent 900 × 900 posters and the 1200 × 630 social card. Generated production assets are committed; visitors need no render service.
+Optimization produces responsive LanePilot imagery, the phone's actual screen texture, and all transparent icons from the same canonical SVG. Phone compression keeps all 21 original meshes without simplification. Render generation needs a running development site (default 8080; accepts `PREVIEW_URL` / `BROWSER_PATH`). It captures both hero posters, the phone poster and the 1200 × 630 social card through Chromium's compositor. These generated public assets are committed.
 
-The scene loads only with a fine pointer, width ≥900px and no reduced-motion preference. Mobile, reduced motion and WebGL failure use the matching theme poster. Production does not preserve its drawing buffer.
+Hero WebGL is limited to a fine pointer, ≥900px and no reduced motion. TagVault loads its code / 2.1 MB model only near its section, with bounded pointer drag and on-demand rendering. Both scenes cap DPR at 1.5, pause offscreen / hidden and preserve no drawing buffer. Mobile hero, reduced motion and WebGL failure use authored posters. The phone preserves vertical touch scrolling. No runtime dependencies were added; four glTF / meshopt development dependencies make model optimization reproducible.
 
-## Downloadable review artifact
+## Review without a checkout
 
-[preview-artifact.yml](.github/workflows/preview-artifact.yml) runs on pushes to the redesign branch, PRs from that branch targeting main, and manual dispatch on the redesign branch. Node 22 runs clean installation, typecheck, lint and build. `actions/upload-artifact@v4` uploads all of `dist/` as `appsolves-preview-<full commit SHA>`, retained for seven days. Permissions are `contents: read`; there is no deployment step.
+A push to the redesign branch starts [Redesign preview artifact](https://github.com/AppSolves/appsolves.dev/actions/workflows/preview-artifact.yml). Manual dispatch is also available on that branch. PR events are omitted to avoid duplicate runs. The workflow uses Node 22, `npm ci`, typecheck, lint, build, browser installation and all browser checks. It has read-only contents permission and no deployment step.
 
-After an authorized branch push, open GitHub Actions → **Redesign preview artifact** → successful run → artifact. Extract its ZIP and serve the directory containing `index.html` with a local HTTP static server. For example, from this checkout:
+A successful run provides two artifacts, retained seven days:
+
+- `appsolves-preview-<full SHA>`: complete `dist/`, including fonts, imagery, model, JS/CSS, CNAME, app-ads and legal entries.
+- `appsolves-visual-review-<full SHA>`: actual rendered screenshots at seven sizes, both themes, full-page desktop / tablet / mobile, seven scroll stages, menus and interaction captures.
+
+Download and extract the preview ZIP. Serve the directory containing `index.html` with Python's standard library; no repository or npm dependencies are needed:
 
 ```sh
-npm run preview -- --outDir /path/to/extracted-artifact --host 127.0.0.1
+python -m http.server 4173 --bind 127.0.0.1 --directory /path/to/extracted-artifact
 ```
 
-Review both themes, project sections, menus and legal routes. Opening HTML with `file://` will not load the module application correctly. The workflow has been validated locally with actionlint; it has not run on GitHub as part of this local refinement.
+Open `http://127.0.0.1:4173/`. Review themes, work, menus, `/privacy_policy/`, `/terms_and_conditions/`, and `/404.html`. `file://` cannot serve the module application. The basic Python server returns its own response for unknown paths; GitHub Pages serves the generated custom `404.html` for those paths.
+
+The predecessor at `187198c` already has a [successful GitHub build/browser/artifact run](https://github.com/AppSolves/appsolves.dev/actions/runs/37653633687). Current launch-pass evidence is recorded in QA.md; no placeholder or claim that CI has never run remains.
 
 ## Deployment compatibility
 
-The existing GitHub Pages deployment command is retained. Production builds create `404.html`, `privacy_policy/index.html` and `terms_and_conditions/index.html`, preserve CNAME / app-ads, and emit the sitemap. Legal Markdown remains the unchanged source of truth. Downloading a preview artifact does not deploy the site.
+Existing GitHub Pages output and deployment command remain. Static legal entries, truthful 404 metadata, CNAME, app-ads, sitemap, favicons and social cards survive the build. Legal Markdown is unchanged. The artifact workflow builds for review; it does not deploy or merge main.

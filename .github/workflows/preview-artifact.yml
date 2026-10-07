@@ -3,8 +3,6 @@ name: Redesign preview artifact
 on:
   push:
     branches: [redesign/portfolio-2026]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -16,9 +14,7 @@ concurrency:
 
 jobs:
   build:
-    if: >-
-      (github.event_name == 'pull_request' && github.head_ref == 'redesign/portfolio-2026') ||
-      (github.event_name != 'pull_request' && github.ref == 'refs/heads/redesign/portfolio-2026')
+    if: github.ref == 'refs/heads/redesign/portfolio-2026'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -35,22 +31,22 @@ jobs:
       - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
-          name: appsolves-preview-${{ github.event.pull_request.head.sha || github.sha }}
+          name: appsolves-preview-${{ github.sha }}
           path: dist/
           if-no-files-found: error
           retention-days: 7
 
       # Render the same production build in Chromium so external reviewers can
       # inspect real pixels without needing access to the developer's localhost.
-      - name: Install Chromium for visual review
-        run: npx playwright install --with-deps chromium
+      - name: Install browser engines for visual review
+        run: npx playwright install --with-deps chromium firefox webkit
       - name: Run browser regression and visual captures
         run: npx playwright test
       - name: Upload visual review captures
         if: always() && !cancelled()
         uses: actions/upload-artifact@v4
         with:
-          name: appsolves-visual-review-${{ github.event.pull_request.head.sha || github.sha }}
+          name: appsolves-visual-review-${{ github.sha }}
           path: test-results/
           if-no-files-found: warn
           retention-days: 7
