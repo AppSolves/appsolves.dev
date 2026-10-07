@@ -4,22 +4,22 @@ const projects = [
   [
     "fastapi-users-db-dynamodb",
     "An async DynamoDB adapter for FastAPI Users.",
-    "Python · AWS",
+    "Python / AWS",
   ],
   [
     "pylocalauth",
     "Native local authentication for Python applications.",
-    "Python · Authentication",
+    "Python / Authentication",
   ],
   [
     "rc522-mfc-recovery",
     "MIFARE Classic key-recovery research with MFRC522 hardware.",
-    "Python · Hardware security",
+    "Python / Hardware security",
   ],
   [
     "flutter_event_log",
     "The Windows Event Log API, available from Flutter.",
-    "Flutter · C++",
+    "Flutter / C++",
   ],
 ];
 
@@ -33,14 +33,12 @@ export default function OpenSourceSection() {
       <div className="open-source-intro">
         <p className="section-label">Open source & infrastructure</p>
         <h2 id="open-source-title">
-          Useful at
+          Tools and
           <br />
-          every scale.
+          infrastructure.
         </h2>
         <p>
-          Some problems need a whole system.
-          <br />
-          Others need one tool that does its job well.
+          Smaller projects for integration work and hardware research.
         </p>
         <a
           className="text-link"

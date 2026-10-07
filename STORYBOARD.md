@@ -4,7 +4,7 @@
 
 Sticky, opaque navigation: official transparent violet mark and AppSolves left; Work, About, Open source, contact and a small theme control right. At mobile widths, links become an accessible disclosure. Desktop has a compact System / Light / Dark dropdown. Mobile puts native appearance radios inside the expanded navigation, without a second popup.
 
-Left: **Kaan Gönüldinc / AppSolves**, **Think deeply. / Build real things.**, and “I build AI systems, compilers, and software products. From underlying architecture to systems people can actually use.” A text link to work and Computer Science at TUM complete the first viewport. Right: the real chrome extrusion, with violet enamel on both front surfaces. This identifies the brand without pretending to diagram a system.
+Left: **Kaan Gönüldinc / AppSolves**, **Think deeply. / Build real things.**, and “I build AI systems, compilers, and software products. I work on the internals and carry the software through to release.” A text link to work and Computer Science at TUM complete the first viewport. Right: the real chrome extrusion, with violet enamel on both front surfaces. This identifies the brand without pretending to diagram a system.
 
 A simple three-link project index closes the hero. Its repeated introductory sentence has been removed. It provides direct access to Fidan, LanePilot and TagVault; their categories establish the range of work on larger screens. At widths up to 480px, names alone retain 44px tap targets; internal arrows point down.
 
@@ -38,11 +38,11 @@ Copy is NFC-specific: Flutter, encrypted local storage, biometrics, automations,
 
 A quieter neutral field pairs **Understand the system. Build the whole thing.** with Kaan's engineering philosophy: compiler representation, edge-model behavior and a product's place in someone's day. AppSolves is the umbrella for these outputs. The unnamed SME venture sentence is removed; no services pitch replaces it.
 
-Three restrained recognition entries (Education / Recognition / Competition): Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / STEM distinction · Baden-Württemberg; Jugend forscht / 2nd Prize · LanePilot. The focus line connects AI / deep learning, compilers / developer infrastructure, edge AI and product engineering. Tablet and mobile stack reading columns and recognition entries deliberately.
+Three restrained recognition entries (Education / Recognition / Competition): Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / STEM distinction in Baden-Württemberg; Jugend forscht / 2nd Prize for LanePilot. The focus line connects AI / deep learning, compilers / developer infrastructure, edge AI and product engineering. Tablet and mobile stack reading columns and recognition entries deliberately.
 
 ## 6. Useful work at a smaller scale
 
-Four linked rows: fastapi-users-db-dynamodb, pylocalauth, rc522-mfc-recovery and flutter_event_log. Each has one concise purpose and a source destination. The derivative appscreen-mcp is removed. Thin row separators organize actual links; there are no project cards, badges or logo wall. Long repository names wrap on narrow screens. The all-sans “Useful at every scale.” heading is smaller and quieter than selected work, avoiding another oversized italic gesture.
+Four linked rows: fastapi-users-db-dynamodb, pylocalauth, rc522-mfc-recovery and flutter_event_log. Each has one concise purpose and a source destination. The derivative appscreen-mcp is removed. Thin row separators organize actual links; there are no project cards, badges or logo wall. Long repository names wrap on narrow screens. The all-sans “Tools and infrastructure.” heading is smaller and quieter than selected work, avoiding another oversized italic gesture.
 
 ## 7. A strong, direct ending
 

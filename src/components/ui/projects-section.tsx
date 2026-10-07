@@ -118,9 +118,9 @@ export default function ProjectsSection() {
           <p className="project-category">02 / Deep learning & edge AI</p>
           <h3 id="lanepilot-title">LanePilot</h3>
           <p className="project-lead">
-            Intelligence that has to work
+            Traffic intelligence
             <br />
-            outside the notebook.
+            on edge hardware.
           </p>
           <p>
             Traffic perception and dynamic lane allocation, connecting computer
@@ -131,7 +131,7 @@ export default function ProjectsSection() {
             for traffic intelligence. TensorRT / CUDA, NVIDIA Jetson and
             Raspberry Pi for deployment.
           </p>
-          <p className="project-recognition">Jugend forscht · 2nd Prize</p>
+          <p className="project-recognition">Jugend forscht, 2nd Prize</p>
           <div className="simulation-results">
             <p>Simulation results</p>
             <dl>
@@ -187,8 +187,8 @@ export default function ProjectsSection() {
               </picture>
             </div>
             <div className="lane-stage-footer">
-              <span>From pixels to decisions.</span>
-              <span>Computer vision → Edge hardware</span>
+              <span>Detection and tracking.</span>
+              <span>Computer vision / Edge hardware</span>
             </div>
           </div>
           <figcaption>
@@ -209,16 +209,16 @@ export default function ProjectsSection() {
             <TagVaultScene />
           </div>
           <figcaption>
-            The shipped Android app. Secure storage meets everyday NFC.
+            TagVault on Android. Encrypted storage for NFC workflows.
           </figcaption>
         </figure>
         <div className="split-copy">
           <p className="project-category">03 / Product engineering</p>
           <h3 id="tagvault-title">TagVault</h3>
           <p className="project-lead">
-            From a hardware capability
+            NFC tools for
             <br />
-            to a product you can use.
+            everyday use.
           </p>
           <p>
             An Android product for reading, writing and organizing NFC tags.

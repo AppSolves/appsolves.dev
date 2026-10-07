@@ -57,9 +57,9 @@ export default function Footer() {
             </div>
             <div className="contact-copy">
               <p>
-                Technical work, research, products.
+                If you have a project or research question,
                 <br />
-                If there’s something worth building, let’s talk.
+                let’s talk.
               </p>
               <a className="contact-email" href="mailto:contact@appsolves.dev">
                 contact@appsolves.dev{" "}

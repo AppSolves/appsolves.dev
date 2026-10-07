@@ -3,9 +3,9 @@ const recognition = [
   [
     "Recognition",
     "Ferry Porsche Prize 2026",
-    "STEM distinction · Baden-Württemberg",
+    "STEM distinction in Baden-Württemberg",
   ],
-  ["Competition", "Jugend forscht", "2nd Prize · LanePilot"],
+  ["Competition", "Jugend forscht", "2nd Prize for LanePilot"],
 ];
 
 export default function AboutSection() {

@@ -49,3 +49,15 @@ The final pointer-hover commit `f20cda5` passed build checks and produced a stan
 ## Limits
 
 Playwright WebKit / Firefox checks were run; physical Safari / iOS / Android devices, real field Core Web Vitals, production server headers, search indexing and social-platform caches were not verified. No Lighthouse score, GPU energy-consumption claim or full security-audit claim is made. The model's source license is preserved; its original GLB header contains no additional author/license attribution to invent.
+
+## Copy punctuation audit
+
+The copy pass covers every portfolio section, navigation and theme labels, footer, image captions and alt text, 404, metadata, the no-JavaScript fallback and the social-preview generator/image. Removed ornamental em dashes from social alt text and fallback prose, the LanePilot text arrow, and all portfolio middle-dot separators. Award details use normal wording; compact technology labels use slashes. Simplified repeated "from X to Y" framing and generic slogans in the hero description, LanePilot, TagVault, open source and contact. The headline and specific About examples remain.
+
+The production text scan for `—`, `–`, `→`, `↗` and `←` found only 15 intentionally retained em dashes in pre-existing legal source documents. Each was reviewed: privacy policy line 1 (heading); lines 49, 51, 53, 55, 57 and 59 (purpose/legal-basis separators); lines 83, 84 and 85 (provider explanations); line 103 (two parenthetical delimiters); line 137 (two consent-clause delimiters). Terms line 1 retains its heading separator. These legal documents were not introduced by the redesign and remain byte-for-byte unchanged. Their copied Markdown and bundled rendered text are intentionally retained; no dependency or generated JavaScript was edited to eliminate search hits.
+
+Also retained: `≈` and the mathematical minus `−` in approximate simulation results, percentages, `+29%`, compact technical slashes, ordinary hyphens, code syntax, natural apostrophes and the copyright symbol. Lucide/SVG directional icons remain navigation controls, not marketing punctuation. Real product screenshots are unchanged. The social card has no raw arrows or dash separators and needs no image regeneration because its visible text is unchanged.
+
+`tests/copy.spec.ts` checks rendered homepage/404 text, accessible labels and social metadata, plus every production HTML shell including the no-JavaScript fallback. It excludes scripts, styles and code examples and does not enforce a punctuation ban on legal documents.
+
+Copy-pass validation: typecheck, lint and production build passed; all 59 local browser checks passed (Chromium, Firefox and WebKit). Fresh desktop/mobile captures were inspected for headline/description wrapping, the longer open-source heading at 320px, LanePilot captions, recognition and footer copy. The unchanged social image was inspected directly. No layout/style or dependency change was needed.
