@@ -193,18 +193,12 @@ export default function ProjectsSection() {
           </p>
           <p className="project-recognition">Jugend forscht, 2nd Prize</p>
           <div className="simulation-results">
-            <p>Simulation results</p>
-            <dl>
-              <div>
-                <dt>Hard-braking events</dt>
-                <dd>≈ −39%</dd>
-              </div>
-              <div>
-                <dt>Average traffic speed</dt>
-                <dd>≈ +29%</dd>
-              </div>
-            </dl>
-            <span>Measured in simulation, not on public roads.</span>
+            <p>Simulation evaluation</p>
+            <p className="simulation-description">
+              Lane-change decisions are evaluated in a traffic simulation using
+              average speed, hard-braking events, and collisions.
+            </p>
+            <span>Simulation evaluation, not public-road measurements.</span>
           </div>
           <a
             className="text-link"

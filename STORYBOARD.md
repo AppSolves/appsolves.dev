@@ -24,7 +24,7 @@ Mobile stacks identity, readable source and details; only the code specimen can 
 
 A pale mineral field in light mode and subdued mineral field in dark mode frame the actual vehicle-perception image. The crop removes editor chrome while preserving the real physical test environment and detection output. No overlay is invented.
 
-The prose explains congestion, vehicle tracking and lane-change recommendations before the stack. It distinguishes GATv2 experiments from the later reinforcement-learning approach, with Jetson inference and Raspberry Pi camera/prototype control. YOLO11n-seg, PyTorch, PyTorch Geometric, CUDA/TensorRT and Jugend forscht, 2nd Prize remain. Two plain typographic figures retain the approved approximately **−39% hard-braking events** and **+29% average traffic speed**, titled “Simulation results” and qualified “Measured in simulation, not on public roads.” Their evidence limitation is recorded in EDITORIAL.md; no new result or public-road implication is introduced.
+The prose explains congestion, vehicle tracking and lane-change recommendations before the stack. It distinguishes GATv2 experiments from the later reinforcement-learning approach, with Jetson inference and Raspberry Pi camera/prototype control. YOLO11n-seg, PyTorch, PyTorch Geometric, CUDA/TensorRT and Jugend forscht, 2nd Prize remain. A restrained “Simulation evaluation” paragraph identifies average speed, hard-braking events and collisions as evaluation measures. It explicitly distinguishes simulation from public-road measurements. Numerical improvements are omitted because no supporting baseline comparison was found; the evidence search is recorded in EDITORIAL.md.
 
 The perception field and explanatory panel stack before either becomes cramped. The same 1288 × 720 source crop is preserved on mobile. The visitor understands that this work includes models, optimization, acceleration and physical deployment, with a carefully scoped outcome claim.
 
@@ -36,9 +36,9 @@ Copy states that Kaan built and shipped the Android/Flutter app, explains compat
 
 ## 5. The person behind the systems
 
-A quieter neutral field pairs **Behind AppSolves.** with Kaan’s identity as a Computer Science student at TUM. Concrete interests connect compiler representation, edge-model behavior and usable apps. AppSolves is his long-running software/product brand for published tools and commercial products. No unnamed venture sentence or services pitch is added.
+A quieter neutral field pairs **Behind AppSolves** with Kaan’s identity as a Computer Science student at TUM. Concrete interests connect compiler representation, edge-model behavior and usable apps. AppSolves is his long-running software/product brand for published tools and commercial products. No unnamed venture sentence or services pitch is added.
 
-Three restrained recognition entries (Education / Recognition / Competition): Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / Porsche award for STEM achievement at school; Jugend forscht / 2nd Prize for LanePilot. The focus line connects AI / deep learning, compilers / developer infrastructure, edge AI and product engineering. Tablet and mobile stack reading columns and recognition entries deliberately.
+Three restrained recognition entries (Education / Recognition / Competition): Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / Award for outstanding STEM achievement in the Abitur; Jugend forscht / 2nd Prize for LanePilot. The focus line connects AI / deep learning, compilers / developer infrastructure, edge AI and product engineering. Tablet and mobile stack reading columns and recognition entries deliberately.
 
 ## 6. Published tools and libraries
 

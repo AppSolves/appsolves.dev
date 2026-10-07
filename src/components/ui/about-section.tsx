@@ -3,7 +3,7 @@ const recognition = [
   [
     "Recognition",
     "Ferry Porsche Prize 2026",
-    "Porsche award for STEM achievement at school",
+    "Award for outstanding STEM achievement in the Abitur",
   ],
   ["Competition", "Jugend forscht", "2nd Prize for LanePilot"],
 ];
@@ -18,7 +18,7 @@ export default function AboutSection() {
             <h2 id="about-title" className="about-title">
               Behind
               <br />
-              <em>AppSolves.</em>
+              <em>AppSolves</em>
             </h2>
           </div>
           <div className="about-copy">

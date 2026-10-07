@@ -29,10 +29,16 @@ test("editorial surfaces share the positioning and link to the verified shipped 
     "href",
     "https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault",
   );
-  await expect(page.locator(".simulation-results")).toContainText("≈ −39%");
-  await expect(page.locator(".simulation-results")).toContainText("≈ +29%");
+  await expect(page.locator("#lanepilot")).not.toContainText(/39\s*%|29\s*%/);
+  await expect(page.locator(".simulation-description")).toHaveText(
+    "Lane-change decisions are evaluated in a traffic simulation using average speed, hard-braking events, and collisions.",
+  );
   await expect(page.locator(".simulation-results")).toContainText(
-    "Measured in simulation, not on public roads.",
+    "Simulation evaluation, not public-road measurements.",
+  );
+  await expect(page.locator("#about-title")).toHaveText("BehindAppSolves");
+  await expect(page.locator(".recognition-list")).toContainText(
+    "Award for outstanding STEM achievement in the Abitur",
   );
 });
 

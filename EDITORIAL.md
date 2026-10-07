@@ -71,3 +71,17 @@ Retrieved 2026-10-07/08; revisions recorded to distinguish documentation evidenc
 - LanePilot comparison: inspected the repository promotional GIF and navigation HUD concept alongside the existing physical vehicle-detection output. The former is less credible visual evidence, the latter an illustrative navigation concept rather than a stronger perception result. Keep the current real detection crop and responsive images; simplify its captions rather than invent a replacement.
 
 Validation and environment caveats are recorded in [QA.md](QA.md).
+
+## Pre-merge evidence cleanup, 2026-10-08
+
+This follow-up supersedes the earlier decision to retain the user-supplied simulation percentages. Searched the website source/history, both published LanePilot branch trees, both versions of Documentation.pdf, release notes/assets, current evaluation/environment/configuration code and the v1 lane-allocation dataset archive. The v2 revision remains `f628a3e8de5a468e26a613dd5b2b6321dc436925`; v1 is `dacba114cc3390068b699ac16407065a8c378359`. No saved baseline-versus-model episode results, comparison calculation, or record stating the two claimed percentage improvements was found. The older archive contains 2,800 training, validation and test tensor samples, not comparative simulation reports. Releases provide no result assets; current evaluation code looks for checkpoints under untracked runtime/logs.
+
+The current [evaluator](https://github.com/AppSolves/LanePilot/blob/f628a3e8de5a468e26a613dd5b2b6321dc436925/ai/lane_allocation/evaluate.py) aggregates per-episode average speed and hard-braking events, and sums collisions. Those definitions establish evaluation measures, not relative improvements. No new experiments or substitute figures are presented.
+
+| Surface | Before | After |
+| --- | --- | --- |
+| LanePilot simulation | Simulation results; approximately −39% hard-braking events and +29% average traffic speed; Measured in simulation, not on public roads. | Simulation evaluation; Lane-change decisions are evaluated in a traffic simulation using average speed, hard-braking events, and collisions.; Simulation evaluation, not public-road measurements. |
+| About heading | Behind AppSolves. | Behind AppSolves |
+| Ferry Porsche context | Porsche award for STEM achievement at school | Award for outstanding STEM achievement in the Abitur |
+
+Porsche's official 2026 announcement describes recognition of outstanding school-leaving achievement in mathematics, physics and technology among Baden-Württemberg Abitur graduates. The concise description reflects that scope without asserting recipient counts, personal rankings, or further affiliations. PR #1 is refreshed around the final editorial website, both themes/system mode, real brand/product scenes, performance lifecycle, accessibility, metadata/static routes and validated preview artifacts. All unrelated public copy and art direction remain unchanged.

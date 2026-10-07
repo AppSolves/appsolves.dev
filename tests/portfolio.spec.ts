@@ -36,10 +36,10 @@ for (const theme of ["light", "dark"] as const) {
       await expect(page.locator(".source-list li")).toHaveCount(4);
       await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
       await expect(page.locator(".simulation-results")).toContainText(
-        "Simulation results",
+        "Simulation evaluation",
       );
       await expect(page.locator(".simulation-results")).toContainText(
-        "not on public roads",
+        "not public-road measurements",
       );
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth,

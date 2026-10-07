@@ -622,28 +622,14 @@
 .simulation-results {
   margin-block: var(--space-md);
 }
-.simulation-results > p {
+.simulation-results > p:first-child {
   font-size: 12px;
   color: var(--subtle);
   margin-bottom: var(--space-xs);
 }
-.simulation-results dl {
-  display: flex;
-  gap: var(--space-lg);
-}
-.simulation-results dl > div {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 6px;
-}
-.simulation-results dt {
-  font-size: 12px;
+.simulation-description {
+  font-size: 14px;
   color: var(--subtle);
-}
-.simulation-results dd {
-  font-size: clamp(28px, 2.8vw, 42px);
-  letter-spacing: -0.06em;
-  line-height: 1.2;
 }
 .simulation-results > span {
   display: block;
