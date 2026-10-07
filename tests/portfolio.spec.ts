@@ -5,72 +5,86 @@ import { readFile } from "node:fs/promises";
 const sizes = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "wide", width: 1920, height: 1080 },
+  { name: "laptop", width: 1280, height: 800 },
   { name: "tablet", width: 820, height: 1180 },
   { name: "mobile", width: 390, height: 844 },
   { name: "small-mobile", width: 320, height: 568 },
 ];
 
-for (const size of sizes) {
-  test(`${size.name}: content, layout, assets and accessibility`, async ({
-    page,
-  }, testInfo) => {
-    await page.setViewportSize(size);
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    const errors: string[] = [];
-    page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto("/");
-    await page.evaluate(() => document.fonts.ready);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Deep thinking.Real things.",
-    );
-    await expect(page.locator("#fidan-title")).toHaveText("Fidan");
-    await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
-    await expect(page.locator("#tagvault-title")).toHaveText("TagVault");
-    await expect(page.locator(".source-list li")).toHaveCount(5);
-    const overflow = await page.evaluate(
-      () => document.documentElement.scrollWidth > innerWidth,
-    );
-    expect(overflow).toBe(false);
-    await expect(page.locator(".brand-poster")).toBeVisible();
-    await expect(page.locator(".brand-canvas")).toHaveCount(0);
-    expect(
-      await page.evaluate(() =>
-        performance
-          .getEntriesByType("resource")
-          .some((entry) => entry.name.includes("brand-scene-")),
-      ),
-    ).toBe(false);
-    for (const image of await page.locator("main img").all()) {
-      await image.scrollIntoViewIfNeeded();
-      await expect(image).toHaveJSProperty("complete", true);
+for (const theme of ["light", "dark"] as const) {
+  for (const size of sizes) {
+    test(`${theme} ${size.name}: content, layout, assets and accessibility`, async ({
+      page,
+    }, testInfo) => {
+      await page.setViewportSize(size);
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.addInitScript(
+        (theme) => localStorage.setItem("appsolves-theme", theme),
+        theme,
+      );
+      const errors: string[] = [];
+      page.on("pageerror", (error) => errors.push(error.message));
+      await page.goto("/");
+      await page.evaluate(() => document.fonts.ready);
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+        "Deep thinking.Real things.",
+      );
+      await expect(page.locator("#fidan-title")).toHaveText("Fidan");
+      await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
+      await expect(page.locator("#tagvault-title")).toHaveText("TagVault");
+      await expect(page.locator(".source-list li")).toHaveCount(4);
+      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+      await expect(page.locator(".simulation-results")).toContainText(
+        "Simulation results",
+      );
+      await expect(page.locator(".simulation-results")).toContainText(
+        "not on public roads",
+      );
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth > innerWidth,
+      );
+      expect(overflow).toBe(false);
+      await expect(page.locator(".brand-poster")).toBeVisible();
+      await expect(page.locator(".brand-canvas")).toHaveCount(0);
       expect(
-        await image.evaluate(
-          (element) => (element as HTMLImageElement).naturalWidth,
+        await page.evaluate(() =>
+          performance
+            .getEntriesByType("resource")
+            .some((entry) => entry.name.includes("brand-scene-")),
         ),
-      ).toBeGreaterThan(0);
-    }
-    const accessibility = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-      .analyze();
-    expect(accessibility.violations).toEqual([]);
-    expect(errors).toEqual([]);
-    for (const [name, selector] of [
-      ["top", ".hero"],
-      ["work", ".fidan-stage"],
-      ["lane", ".lane-stage"],
-      ["tag", ".tag-stage"],
-      ["contact", "#contact"],
-    ]) {
-      await page
-        .locator(selector)
-        .evaluate((element) =>
-          element.scrollIntoView({ block: "start", behavior: "instant" }),
-        );
-      await page.screenshot({
-        path: testInfo.outputPath(`${size.name}-${name}.png`),
-      });
-    }
-  });
+      ).toBe(false);
+      for (const image of await page.locator("main img").all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect(image).toHaveJSProperty("complete", true);
+        expect(
+          await image.evaluate(
+            (element) => (element as HTMLImageElement).naturalWidth,
+          ),
+        ).toBeGreaterThan(0);
+      }
+      const accessibility = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze();
+      expect(accessibility.violations).toEqual([]);
+      expect(errors).toEqual([]);
+      for (const [name, selector] of [
+        ["top", ".hero"],
+        ["work", ".fidan-stage"],
+        ["lane", ".lane-stage"],
+        ["tag", ".tag-stage"],
+        ["contact", "#contact"],
+      ]) {
+        await page
+          .locator(selector)
+          .evaluate((element) =>
+            element.scrollIntoView({ block: "start", behavior: "instant" }),
+          );
+        await page.screenshot({
+          path: testInfo.outputPath(`${theme}-${size.name}-${name}.png`),
+        });
+      }
+    });
+  }
 }
 
 test("mobile disclosure closes with Escape, selects anchors, and resets at desktop width", async ({
@@ -113,42 +127,75 @@ test("keyboard skip link reaches the main landmark", async ({ page }) => {
   await expect(page.locator("main")).toBeFocused();
 });
 
-for (const [route, title] of [
-  ["privacy_policy", "Privacy Policy"],
-  ["terms_and_conditions", "Terms and Conditions"],
-]) {
-  test(`${route}: direct entry, full document, accessible navigation and static deployment file`, async ({
-    page,
-    request,
-  }) => {
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    const response = await request.get(`/${route}/`);
-    expect(response.status()).toBe(200);
-    await page.goto(`/${route}`);
-    await expect(page.getByRole("heading", { level: 1 })).toContainText(title);
-    await expect(page.locator("main")).toContainText("contact@appsolves.dev");
-    await expect(page.locator("main h2")).not.toHaveCount(0);
-    await expect(page).toHaveTitle(/AppSolves/);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-      "href",
-      `https://appsolves.dev/${route}`,
-    );
-    expect(
-      (
-        await new AxeBuilder({ page })
-          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-          .analyze()
-      ).violations,
-    ).toEqual([]);
-    const entry = await readFile(`dist/${route}/index.html`, "utf8");
-    expect(entry).toContain(`https://appsolves.dev/${route}`);
+test("featured project anchors clear the sticky header without a doubled scroll offset", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const headerHeight = await page
+    .locator(".site-header")
+    .evaluate((element) => element.getBoundingClientRect().height);
+  for (const [name, id] of [
+    ["Fidan", "#fidan"],
+    ["LanePilot", "#lanepilot"],
+    ["TagVault", "#tagvault"],
+  ]) {
     await page
-      .getByRole("navigation", { name: "Main navigation" })
-      .getByRole("link", { name: "Work", exact: true })
+      .getByRole("navigation", { name: "Featured projects" })
+      .getByRole("link", { name: new RegExp(name) })
       .click();
-    await expect(page).toHaveURL(/\/#work$/);
-    await expect(page.locator("#work-title")).toBeVisible();
-  });
+    const top = await page
+      .locator(id)
+      .evaluate((element) => element.getBoundingClientRect().top);
+    expect(top).toBeGreaterThan(headerHeight);
+    expect(top).toBeLessThan(headerHeight + 56);
+  }
+});
+
+for (const theme of ["light", "dark"] as const) {
+  for (const [route, title] of [
+    ["privacy_policy", "Privacy Policy"],
+    ["terms_and_conditions", "Terms and Conditions"],
+  ]) {
+    test(`${theme} ${route}: direct entry, full document, accessible navigation and static deployment file`, async ({
+      page,
+      request,
+    }) => {
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.addInitScript(
+        (theme) => localStorage.setItem("appsolves-theme", theme),
+        theme,
+      );
+      const response = await request.get(`/${route}/`);
+      expect(response.status()).toBe(200);
+      await page.goto(`/${route}`);
+      await expect(page.getByRole("heading", { level: 1 })).toContainText(
+        title,
+      );
+      await expect(page.locator("main")).toContainText("contact@appsolves.dev");
+      await expect(page.locator("main h2")).not.toHaveCount(0);
+      await expect(page).toHaveTitle(/AppSolves/);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        "href",
+        `https://appsolves.dev/${route}`,
+      );
+      expect(
+        (
+          await new AxeBuilder({ page })
+            .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+            .analyze()
+        ).violations,
+      ).toEqual([]);
+      const entry = await readFile(`dist/${route}/index.html`, "utf8");
+      expect(entry).toContain(`https://appsolves.dev/${route}`);
+      await page
+        .getByRole("navigation", { name: "Main navigation" })
+        .getByRole("link", { name: "Work", exact: true })
+        .click();
+      await expect(page).toHaveURL(/\/#work$/);
+      await expect(page.locator("#work-title")).toBeVisible();
+    });
+  }
 }
 
 test("real project links, contact, metadata and Pages artifacts are preserved", async ({
@@ -203,15 +250,17 @@ test("desktop WebGL responds to pointer and falls back after context loss", asyn
     "true",
   );
   const canvas = page.locator(".brand-canvas");
-  const initial = await canvas.evaluate((element) =>
-    (element as HTMLCanvasElement).toDataURL(),
-  );
+  const initial = await canvas.screenshot();
+  expect(
+    await canvas.evaluate(
+      (element) =>
+        (element as HTMLCanvasElement)
+          .getContext("webgl2")
+          ?.getContextAttributes()?.preserveDrawingBuffer,
+    ),
+  ).toBe(false);
   await canvas.hover({ position: { x: 30, y: 30 } });
-  await expect
-    .poll(() =>
-      canvas.evaluate((element) => (element as HTMLCanvasElement).toDataURL()),
-    )
-    .not.toBe(initial);
+  await expect.poll(() => canvas.screenshot()).not.toEqual(initial);
   await canvas.evaluate((element) => {
     const context = (element as HTMLCanvasElement).getContext("webgl2");
     context?.getExtension("WEBGL_lose_context")?.loseContext();
@@ -269,9 +318,22 @@ test("unavailable WebGL preserves the poster and all content", async ({
   ).toBeVisible();
 });
 
-test("unknown routes have an accessible route home", async ({ page }) => {
-  await page.goto("/does-not-exist");
-  await expect(page.getByRole("heading", { name: "404" })).toBeVisible();
-  await page.getByRole("link", { name: "Back to AppSolves" }).click();
-  await expect(page).toHaveURL(/\/$/);
-});
+for (const theme of ["light", "dark"] as const) {
+  test(`${theme} unknown routes have an accessible route home`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: theme, reducedMotion: "reduce" });
+    await page.goto("/does-not-exist");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+    await expect(page.getByRole("heading", { name: "404" })).toBeVisible();
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+    await page.getByRole("link", { name: "Back to AppSolves" }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+}

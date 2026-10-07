@@ -25,18 +25,8 @@ export default tseslint.config(
         "warn",
         {
           allowConstantExport: true,
-          allowExportNames: [
-            "badgeVariants",
-            "buttonVariants",
-            "navigationMenuTriggerStyle",
-            "toast",
-            "toggleVariants",
-            "useFormField",
-            "useSidebar",
-          ],
         },
       ],
-      "@typescript-eslint/no-unused-vars": "off",
     },
   },
 );

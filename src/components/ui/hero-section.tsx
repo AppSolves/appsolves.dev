@@ -7,7 +7,7 @@ export default function HeroSection() {
       <div className="hero-composition">
         <div className="hero-copy">
           <p className="hero-intro">
-            Kaan Gönüldinc <span>Independent builder</span>
+            Kaan Gönüldinc <span>/ AppSolves</span>
           </p>
           <h1 id="hero-title">
             <span className="headline-mask">
@@ -19,8 +19,8 @@ export default function HeroSection() {
           </h1>
           <p className="hero-description">
             I build AI systems, compilers, and software products.
-            <br className="desktop-break" /> From the underlying architecture to
-            the thing you can actually use.
+            <br className="desktop-break" /> From underlying architecture to
+            systems people can actually use.
           </p>
           <div className="hero-actions">
             <a className="text-link" href="#work">
@@ -34,11 +34,6 @@ export default function HeroSection() {
         </div>
       </div>
       <nav className="hero-index" aria-label="Featured projects">
-        <span className="hero-index-label">
-          Ideas into
-          <br />
-          working systems.
-        </span>
         <a href="#fidan">
           <span>Fidan</span>
           <span>Language & compiler</span>

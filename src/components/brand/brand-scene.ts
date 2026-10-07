@@ -8,6 +8,7 @@ const SETTLE_THRESHOLD = 0.0001;
 export async function mountBrandScene(
   container: HTMLDivElement,
   signal: AbortSignal,
+  dark: boolean,
 ) {
   const response = await fetch(`${import.meta.env.BASE_URL}mark.svg`, {
     signal,
@@ -16,12 +17,15 @@ export async function mountBrandScene(
   const source = await response.text();
   signal.throwIfAborted();
   const svg = new SVGLoader().parse(source);
-  const shapes = svg.paths[0].toShapes();
-  shapes[0].holes.push(svg.paths[1].subPaths[0]);
-  shapes.push(...svg.paths[2].toShapes());
+  // The official compound SVG uses evenodd. Preserve its exact two contours.
+  const outer = new THREE.Shape();
+  outer.curves = svg.paths[0].subPaths[0].curves;
+  outer.holes.push(svg.paths[0].subPaths[1]);
+  const shapes = [outer];
+  const signatureShapes = svg.paths[1].toShapes();
   // Normalize the original mark before extrusion so bevels have physical dimensions.
   const normalized = new Set<THREE.Vector2>();
-  for (const shape of shapes) {
+  for (const shape of [...shapes, ...signatureShapes]) {
     for (const path of [shape, ...shape.holes]) {
       for (const curve of path.curves) {
         for (const key of ["v0", "v1", "v2", "v3"] as const) {
@@ -41,7 +45,6 @@ export async function mountBrandScene(
     alpha: true,
     antialias: true,
     powerPreference: "low-power",
-    preserveDrawingBuffer: true,
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, MAX_DPR));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -58,7 +61,7 @@ export async function mountBrandScene(
   scene.environment = environmentMap.texture;
   environment.dispose();
   pmrem.dispose();
-  const geometry = new THREE.ExtrudeGeometry(shapes, {
+  const extrusion = {
     depth: 0.42,
     bevelEnabled: true,
     bevelSegments: 5,
@@ -66,10 +69,11 @@ export async function mountBrandScene(
     bevelSize: 0.055,
     bevelThickness: 0.055,
     curveSegments: 24,
-  });
+  };
+  const geometry = new THREE.ExtrudeGeometry(shapes, extrusion);
   geometry.translate(0, 0, -0.21);
   const face = new THREE.MeshStandardMaterial({
-    color: "#333831",
+    color: dark ? "#53594f" : "#333831",
     metalness: 0.87,
     roughness: 0.24,
   });
@@ -81,6 +85,19 @@ export async function mountBrandScene(
   const object = new THREE.Mesh(geometry, [face, edge]);
   object.rotation.set(-0.2, -0.38, -0.09);
   object.castShadow = true;
+  const signatureGeometry = new THREE.ExtrudeGeometry(
+    signatureShapes,
+    extrusion,
+  );
+  signatureGeometry.translate(0, 0, -0.21);
+  const enamel = new THREE.MeshStandardMaterial({
+    color: "#6a5ce3",
+    metalness: 0.3,
+    roughness: 0.26,
+  });
+  const signature = new THREE.Mesh(signatureGeometry, [enamel, edge]);
+  signature.castShadow = true;
+  object.add(signature);
   scene.add(object);
   const key = new THREE.DirectionalLight("#fff3df", 4);
   key.position.set(-3, 7, 5);
@@ -213,6 +230,8 @@ export async function mountBrandScene(
     document.removeEventListener("visibilitychange", visibility);
     canvas.removeEventListener("webglcontextlost", lostContext);
     geometry.dispose();
+    signatureGeometry.dispose();
+    enamel.dispose();
     face.dispose();
     edge.dispose();
     floorGeometry.dispose();

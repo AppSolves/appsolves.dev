@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5f3ed" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="canonical" href="https://appsolves.dev/" />
     <link
       rel="preload"
@@ -24,29 +24,53 @@
       type="font/woff2"
       crossorigin
     />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta
-      http-equiv="Referrer-Policy"
-      content="strict-origin-when-cross-origin"
-    />
-    <meta
-      http-equiv="Permissions-Policy"
-      content="geolocation=(), microphone=(), camera=()"
-    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <meta
       http-equiv="Content-Security-Policy"
       content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval';
+      script-src 'self' 'unsafe-inline';
       style-src 'self' 'unsafe-inline';
       font-src 'self' data:;
       img-src 'self' data: https:;
       connect-src 'self';
-      frame-src 'self' https://github.com https://*.github.com;
+      frame-src 'none';
+      object-src 'none';
+      base-uri 'self';
     "
     />
 
+    <style>
+      html {
+        background: #f5f3ed;
+      }
+      html[data-theme="dark"] {
+        background: #11120f;
+      }
+    </style>
+    <script>
+      // This client-rendered app needs the theme before its React bundle loads.
+      (() => {
+        let preference = "system";
+        try {
+          const stored = localStorage.getItem("appsolves-theme");
+          if (["system", "light", "dark"].includes(stored)) preference = stored;
+          else if (stored !== null) localStorage.removeItem("appsolves-theme");
+        } catch {
+          /* Storage can be disabled; the OS preference still applies. */
+        }
+        const dark =
+          preference === "dark" ||
+          (preference === "system" &&
+            matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+        document.documentElement.style.colorScheme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = dark
+          ? "#11120f"
+          : "#f5f3ed";
+      })();
+    </script>
     <meta
       name="robots"
       content="index, follow, max-snippet:160, max-image-preview:large"
@@ -89,7 +113,6 @@
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@AppSolves" />
     <meta
       name="twitter:title"
       content="Kaan Gönüldinc / AppSolves | AI Systems & Software"
@@ -109,25 +132,38 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Kaan Gönüldinc",
-        "url": "https://appsolves.dev/",
-        "alternateName": "AppSolves",
-        "sameAs": [
-          "https://github.com/AppSolves",
-          "https://linkedin.com/in/kaangoenueldinc"
-        ],
-        "knowsAbout": [
-          "Artificial Intelligence",
-          "Deep Learning",
-          "Compilers",
-          "Edge AI",
-          "Software Engineering"
-        ],
-        "affiliation": {
-          "@type": "CollegeOrUniversity",
-          "name": "Technical University of Munich"
-        }
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://appsolves.dev/#kaan",
+            "name": "Kaan Gönüldinc",
+            "url": "https://appsolves.dev/",
+            "sameAs": [
+              "https://github.com/AppSolves",
+              "https://linkedin.com/in/kaangoenueldinc"
+            ],
+            "knowsAbout": [
+              "Artificial Intelligence",
+              "Deep Learning",
+              "Compilers",
+              "Edge AI",
+              "Software Engineering"
+            ],
+            "affiliation": {
+              "@type": "CollegeOrUniversity",
+              "name": "Technical University of Munich"
+            }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://appsolves.dev/#appsolves",
+            "name": "AppSolves",
+            "url": "https://appsolves.dev/",
+            "logo": "https://appsolves.dev/mark.svg",
+            "founder": { "@id": "https://appsolves.dev/#kaan" },
+            "sameAs": ["https://github.com/AppSolves"]
+          }
+        ]
       }
     </script>
   </head>

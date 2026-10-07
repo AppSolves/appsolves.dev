@@ -1,6 +1,10 @@
 const recognition = [
   ["Education", "Computer Science", "Technical University of Munich"],
-  ["Recognition", "Ferry Porsche Prize", "2026"],
+  [
+    "Recognition",
+    "Ferry Porsche Prize 2026",
+    "STEM distinction · Baden-Württemberg",
+  ],
   ["Research", "Jugend forscht", "2nd Prize · LanePilot"],
 ];
 
@@ -43,10 +47,6 @@ export default function AboutSection() {
               build the difficult parts, and carry the work through to something
               usable.
             </p>
-            <p className="venture-note">
-              Alongside my independent projects, I’m building an SME automation
-              business with a cofounder.
-            </p>
           </div>
         </div>
         <dl className="recognition-list">
@@ -64,7 +64,7 @@ export default function AboutSection() {
           <span>Current focus</span>
           <p>
             AI & deep learning <span>/</span> Compilers & infrastructure{" "}
-            <span>/</span> Physical AI <span>/</span> Products
+            <span>/</span> Edge AI <span>/</span> Products
           </p>
         </div>
       </div>

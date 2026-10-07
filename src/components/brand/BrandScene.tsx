@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
 export default function BrandScene() {
   const container = useRef<HTMLDivElement>(null);
+  const { resolvedTheme } = useTheme();
+  const dark =
+    (resolvedTheme ?? document.documentElement.dataset.theme) === "dark";
 
   useEffect(() => {
     const element = container.current;
@@ -25,7 +29,7 @@ export default function BrandScene() {
       try {
         const { mountBrandScene } = await import("./brand-scene");
         if (cancelled || current !== generation) return;
-        const cleanup = await mountBrandScene(element, signal);
+        const cleanup = await mountBrandScene(element, signal, dark);
         if (cancelled || current !== generation) cleanup();
         else dispose = cleanup;
       } catch (error) {
@@ -43,13 +47,13 @@ export default function BrandScene() {
       preference.removeEventListener("change", update);
       dispose?.();
     };
-  }, []);
+  }, [dark]);
 
   return (
     <div className="brand-scene" ref={container} aria-hidden="true">
       <img
         className="brand-poster"
-        src={`${import.meta.env.BASE_URL}images/brand-object.png`}
+        src={`${import.meta.env.BASE_URL}images/brand-object${dark ? "-dark" : ""}.png`}
         alt=""
         width="900"
         height="900"

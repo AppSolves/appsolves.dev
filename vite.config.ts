@@ -6,11 +6,6 @@ import sitemapPlugin from "vite-plugin-sitemap";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 const VENDOR_PACKAGES = ["react", "react-dom"];
-const UI_PACKAGES = [
-  "@radix-ui/react-accordion",
-  "@radix-ui/react-dialog",
-  "@radix-ui/react-slot",
-];
 
 const isNodeModulePackage = (id: string, packageName: string) =>
   id.includes(`/node_modules/${packageName}/`) ||
@@ -85,7 +80,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      // Enable code minification and obfuscation
+      // Minify production assets; legal content and WebGL remain separate imports.
       minify: "terser",
       chunkSizeWarningLimit: 750,
       terserOptions: {
@@ -95,16 +90,14 @@ export default defineConfig(({ mode }) => {
           pure_funcs: ["console.log", "console.info", "console.debug"],
         },
         mangle: {
-          // Mangle variable names for obfuscation
           toplevel: true,
-          eval: true,
           keep_fnames: false,
         },
         format: {
           comments: false, // Remove comments
         },
       },
-      // Split chunks to make reverse engineering harder
+      // Keep React reusable across the homepage and direct legal entries.
       rollupOptions: {
         output: {
           manualChunks(id) {
@@ -118,14 +111,6 @@ export default defineConfig(({ mode }) => {
               )
             ) {
               return "vendor";
-            }
-
-            if (
-              UI_PACKAGES.some((packageName) =>
-                isNodeModulePackage(id, packageName),
-              )
-            ) {
-              return "ui";
             }
 
             return undefined;

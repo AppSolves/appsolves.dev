@@ -21,11 +21,6 @@ const projects = [
     "The Windows Event Log API, available from Flutter.",
     "Flutter · C++",
   ],
-  [
-    "appscreen-mcp",
-    "MCP tooling for App Store screenshot workflows.",
-    "TypeScript · Developer tools",
-  ],
 ];
 
 export default function OpenSourceSection() {

@@ -1,6 +1,7 @@
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import ThemeControl from "@/components/ThemeControl";
 
 const links = [
   { name: "Work", href: "#work" },
@@ -18,7 +19,7 @@ export default function Navigation() {
   useEffect(() => {
     if (!open) return;
     const escape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && !event.defaultPrevented) {
         setOpen(false);
         toggle.current?.focus();
       }
@@ -41,36 +42,39 @@ export default function Navigation() {
       <header className="site-header">
         <div className="page-width header-inner">
           <a className="brand" href={home} aria-label="AppSolves home">
-            <img src={`${home}mark-mono.svg`} alt="" width="32" height="34" />
+            <img src={`${home}mark.svg`} alt="" width="32" height="34" />
             <span>
               AppSolves<span className="brand-period">.</span>
             </span>
           </a>
-          <nav className="desktop-nav" aria-label="Main navigation">
-            {links.map((link) => (
-              <a key={link.name} href={`${onHome ? "" : home}${link.href}`}>
-                {link.name}
+          <div className="header-actions">
+            <nav className="desktop-nav" aria-label="Main navigation">
+              {links.map((link) => (
+                <a key={link.name} href={`${onHome ? "" : home}${link.href}`}>
+                  {link.name}
+                </a>
+              ))}
+              <a className="nav-contact" href={`${onHome ? "" : home}#contact`}>
+                Let’s talk <ArrowUpRight aria-hidden="true" size={16} />
               </a>
-            ))}
-            <a className="nav-contact" href={`${onHome ? "" : home}#contact`}>
-              Let’s talk <ArrowUpRight aria-hidden="true" size={16} />
-            </a>
-          </nav>
-          <button
-            className="menu-toggle"
-            ref={toggle}
-            type="button"
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-            aria-label={open ? "Close navigation" : "Open navigation"}
-            onClick={() => setOpen((value) => !value)}
-          >
-            {open ? (
-              <X size={23} aria-hidden="true" />
-            ) : (
-              <Menu size={23} aria-hidden="true" />
-            )}
-          </button>
+            </nav>
+            <ThemeControl />
+            <button
+              className="menu-toggle"
+              ref={toggle}
+              type="button"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label={open ? "Close navigation" : "Open navigation"}
+              onClick={() => setOpen((value) => !value)}
+            >
+              {open ? (
+                <X size={23} aria-hidden="true" />
+              ) : (
+                <Menu size={23} aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
         <nav
           id="mobile-navigation"

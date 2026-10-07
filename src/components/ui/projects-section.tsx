@@ -28,9 +28,9 @@ export default function ProjectsSection() {
             <span className="project-number">01 / Language & compiler</span>
             <span className="fidan-wordmark">Fidan</span>
             <p>
-              Human-readable.
+              Readable source.
               <br />
-              Compiler-grounded.
+              Native execution.
             </p>
           </div>
           <div className="fidan-specimen">
@@ -92,8 +92,9 @@ export default function ProjectsSection() {
             </p>
             <p>
               A general-purpose language and compiler toolchain written in Rust.
-              Typed HIR and MIR, static checking, an interpreter, Cranelift
-              JIT/AOT and optional LLVM AOT. An LSP, package tooling and
+              Typed HIR and MIR, static checking and an interpreter. Cranelift
+              provides JIT execution and AOT compilation to native binaries,
+              with an optional LLVM AOT backend. An LSP, package tooling and
               concurrency primitives complete the workflow.
             </p>
             <p>
@@ -111,7 +112,7 @@ export default function ProjectsSection() {
         aria-labelledby="lanepilot-title"
       >
         <div className="split-copy">
-          <p className="project-category">02 / Deep learning & physical AI</p>
+          <p className="project-category">02 / Deep learning & edge AI</p>
           <h3 id="lanepilot-title">LanePilot</h3>
           <p className="project-lead">
             Intelligence that has to work
@@ -128,6 +129,20 @@ export default function ProjectsSection() {
             Raspberry Pi for deployment.
           </p>
           <p className="project-recognition">Jugend forscht · 2nd Prize</p>
+          <div className="simulation-results">
+            <p>Simulation results</p>
+            <dl>
+              <div>
+                <dt>Hard-braking events</dt>
+                <dd>≈ −39%</dd>
+              </div>
+              <div>
+                <dt>Average traffic speed</dt>
+                <dd>≈ +29%</dd>
+              </div>
+            </dl>
+            <span>Measured in simulation, not on public roads.</span>
+          </div>
           <a
             className="text-link"
             href="https://github.com/AppSolves/LanePilot"
@@ -144,14 +159,29 @@ export default function ProjectsSection() {
               <span>Perception in practice</span>
             </div>
             <div className="lane-crop">
-              <img
-                src={`${base}images/lanepilot-detection.png`}
-                alt="LanePilot detecting and tracking three small vehicles in a physical test setup"
-                width="3839"
-                height="2159"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                {["avif", "webp"].map((format) => (
+                  <source
+                    key={format}
+                    type={`image/${format}`}
+                    srcSet={[640, 960, 1288]
+                      .map(
+                        (width) =>
+                          `${base}images/lanepilot-${width}.${format} ${width}w`,
+                      )
+                      .join(", ")}
+                    sizes="(min-width: 1800px) 740px, (min-width: 900px) 48vw, (min-width: 768px) 85vw, 90vw"
+                  />
+                ))}
+                <img
+                  src={`${base}images/lanepilot-960.webp`}
+                  alt="LanePilot detecting and tracking three small vehicles in a physical test setup"
+                  width="1288"
+                  height="720"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div className="lane-stage-footer">
               <span>From pixels to decisions.</span>
@@ -174,24 +204,38 @@ export default function ProjectsSection() {
           <div className="tag-stage">
             <span className="tag-stage-label">TagVault / Android</span>
             <div className="tag-screens">
-              <img
-                className="tag-screen tag-screen-one"
-                src={`${base}images/tagvault-01.jpg`}
-                alt="TagVault Android app showing the NFC vault and automation entry points"
-                width="1080"
-                height="2214"
-                loading="lazy"
-                decoding="async"
-              />
-              <img
-                className="tag-screen tag-screen-two"
-                src={`${base}images/tagvault-02.jpg`}
-                alt="TagVault ready to scan an NFC tag using ISO 14443-A"
-                width="1080"
-                height="2214"
-                loading="lazy"
-                decoding="async"
-              />
+              {["tagvault-01", "tagvault-02"].map((name, index) => (
+                <picture
+                  key={name}
+                  className={`tag-screen tag-screen-${index === 0 ? "one" : "two"}`}
+                >
+                  {["avif", "webp"].map((format) => (
+                    <source
+                      key={format}
+                      type={`image/${format}`}
+                      srcSet={[320, 540, 800]
+                        .map(
+                          (width) =>
+                            `${base}images/${name}-${width}.${format} ${width}w`,
+                        )
+                        .join(", ")}
+                      sizes="(min-width: 1800px) 320px, (min-width: 900px) 22vw, (min-width: 768px) 32vw, 38vw"
+                    />
+                  ))}
+                  <img
+                    src={`${base}images/${name}-540.webp`}
+                    alt={
+                      index === 0
+                        ? "TagVault Android app showing the NFC vault and automation entry points"
+                        : "TagVault ready to scan an NFC tag using ISO 14443-A"
+                    }
+                    width="1080"
+                    height="2214"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              ))}
             </div>
           </div>
           <figcaption>
@@ -207,13 +251,13 @@ export default function ProjectsSection() {
             to a product you can use.
           </p>
           <p>
-            An Android product for reading, writing and organizing NFC / RFID
-            tags. Built end to end in Flutter, with encrypted local storage and
+            An Android product for reading, writing and organizing NFC tags.
+            Built end to end in Flutter, with encrypted local storage and
             biometric protection.
           </p>
           <p>
             Automations, webhooks, widgets and backups make it useful beyond the
-            first scan. A paid Pro tier makes it a commercial product, too.
+            first scan. Available on Android with a paid Pro tier.
           </p>
           <p className="project-tech">Flutter / Android / NFC / Local-first</p>
           <a
