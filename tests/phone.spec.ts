@@ -26,7 +26,15 @@ test("TagVault loads near its section, responds to drag, and preserves a fallbac
     "true",
   );
   expect(models).toEqual([]);
+  // Screen loading follows GLB decoding; keep that asynchronous prerequisite
+  // separate from the existing first-frame assertion's five-second budget.
+  const screenResponse = page.waitForResponse((response) =>
+    response.url().endsWith("/images/tagvault-01-1080.webp"),
+  );
   await page.locator("#tagvault").scrollIntoViewIfNeeded();
+  const screen = await screenResponse;
+  expect(screen.ok()).toBe(true);
+  expect(await screen.finished()).toBeNull();
   await expect(page.locator(".phone-scene")).toHaveAttribute(
     "data-rendered",
     "true",
