@@ -214,6 +214,19 @@ for (const fallback of ["reduced-motion", "unsupported"] as const) {
 test("automatic, same-color and hidden-tab changes bypass the reveal", async ({
   page,
 }) => {
+  // Check theme policy with the supported poster fallback. Dedicated midpoint
+  // pixel and scene tests still exercise real WebGL and native transitions.
+  await page.addInitScript(() => {
+    const getContext = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (
+      this: HTMLCanvasElement,
+      type: string,
+      ...args: unknown[]
+    ) {
+      if (type.startsWith("webgl")) return null;
+      return Reflect.apply(getContext, this, [type, ...args]);
+    } as typeof getContext;
+  });
   await page.emulateMedia({
     colorScheme: "light",
     reducedMotion: "no-preference",

@@ -93,6 +93,20 @@ test("footer social rows stay balanced at wrap boundaries and retain accessible 
 test("selective arrivals stay readable, finish once and revert under reduced motion", async ({
   page,
 }, testInfo) => {
+  // Exercise the real poster fallback so SwiftShader cannot starve GSAP's
+  // animation frames. Live scenes have their own quality/lifecycle checks.
+  await page.addInitScript(() => {
+    const getContext = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (
+      this: HTMLCanvasElement,
+      type: string,
+      ...args: unknown[]
+    ) {
+      if (type.startsWith("webgl")) return null;
+      return Reflect.apply(getContext, this, [type, ...args]);
+    } as typeof getContext;
+  });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const arrivals = page.locator(
     ".section-heading, .about-title, .recognition-list > div, .source-list li, .contact-composition h2",
