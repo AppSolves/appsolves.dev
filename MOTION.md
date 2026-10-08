@@ -6,7 +6,7 @@ The object feels solid; text feels editorial. Movement reveals hierarchy or mate
 
 ## Arrival
 
-One GSAP timeline scoped to the homepage: identity / introduction settles over 600ms, the three headline lines enter from a clipped baseline over 850ms with a 90ms separation, description follows at 180ms. Supporting copy moves 16px; headline travel follows the height of its clipping mask. Ease `power3.out`; no bounce, overshoot or elastic timing.
+One GSAP timeline scoped to the homepage: identity / introduction settles over 600ms, the two headline lines enter from a clipped baseline over 850ms with a 90ms separation, description follows at 180ms. Supporting copy moves 16px; headline travel follows the height of its clipping mask. Ease `power3.out`; no bounce, overshoot or elastic timing.
 
 The mark appears as soon as a poster can paint. Desktop WebGL replaces that same composition when ready; no blank canvas or skeleton flash. No content depends on loading Three.js.
 

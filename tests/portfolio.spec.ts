@@ -33,8 +33,7 @@ for (const theme of ["light", "dark"] as const) {
       );
       await expect(page.locator(".hero-line")).toHaveText([
         "I build software",
-        "from the",
-        "inside out.",
+        "from the inside out.",
       ]);
       const headline = await page.locator(".hero-line").evaluateAll((lines) =>
         lines.map((line) => {
@@ -46,19 +45,18 @@ for (const theme of ["light", "dark"] as const) {
             right: box.right,
             top: box.top,
             bottom: box.bottom,
+            columnRight: line.getBoundingClientRect().right,
           };
         }),
       );
       for (const line of headline) {
         expect(line.left).toBeGreaterThanOrEqual(0);
         expect(line.right).toBeLessThanOrEqual(size.width);
+        expect(line.right).toBeLessThanOrEqual(line.columnRight);
       }
       expect(headline[1].top).toBeGreaterThan(headline[0].top);
-      expect(headline[2].top).toBeGreaterThan(headline[1].top);
-      if (size.width >= 768) {
-        const actions = (await page.locator(".hero-actions").boundingBox())!;
-        expect(actions.y + actions.height).toBeLessThanOrEqual(size.height);
-      }
+      const actions = (await page.locator(".hero-actions").boundingBox())!;
+      expect(actions.y + actions.height).toBeLessThanOrEqual(size.height - 24);
       await expect(page.locator("#fidan-title")).toHaveText("Fidan");
       await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
       await expect(page.locator("#tagvault-title")).toHaveText("TagVault");

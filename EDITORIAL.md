@@ -1,5 +1,7 @@
 # Final editorial review
 
+Latest hero layout correction: the unchanged headline now has two lines, “I build software” and “from the inside out.” The latter remains violet Newsreader italic. This supersedes the three-line layout recorded in the earlier polish pass; supporting copy and metadata text are unchanged.
+
 Baseline: `a26a6f58d5d7b0c0614e7090a1121c2158916057`. The redesign branch was clean and already up to date when synchronized. This pass changes prose and three local interaction/layout details, without changing the approved visual system.
 
 ## Meaningful copy changes

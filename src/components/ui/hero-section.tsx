@@ -14,10 +14,7 @@ export default function HeroSection() {
               <span className="hero-line">I build software</span>
             </span>{" "}
             <span className="headline-mask">
-              <em className="hero-line">from the</em>
-            </span>{" "}
-            <span className="headline-mask">
-              <em className="hero-line">inside out.</em>
+              <em className="hero-line">from the inside out.</em>
             </span>
           </h1>
           <p className="hero-description">

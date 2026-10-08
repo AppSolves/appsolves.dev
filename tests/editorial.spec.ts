@@ -1,5 +1,54 @@
 import { expect, test } from "@playwright/test";
 
+test("two-line hero keeps its actions inside shorter first viewports", async ({
+  page,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const theme of ["light", "dark"]) {
+    await page.addInitScript(
+      (theme) => localStorage.setItem("appsolves-theme", theme),
+      theme,
+    );
+    for (const [width, height] of [
+      [1920, 600],
+      [1440, 650],
+      [1280, 600],
+      [1100, 600],
+      [960, 600],
+    ]) {
+      await page.setViewportSize({ width, height });
+      await page.goto("/");
+      await page.locator("h1").waitFor();
+      await page.evaluate(() => document.fonts.ready);
+      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+      await expect(page.locator(".hero-line")).toHaveText([
+        "I build software",
+        "from the inside out.",
+      ]);
+      for (const selector of [".hero-actions .text-link", ".hero-context"]) {
+        const box = (await page.locator(selector).boundingBox())!;
+        expect(box.y).toBeGreaterThan(0);
+        expect(box.y + box.height).toBeLessThanOrEqual(height - 24);
+      }
+      const fits = await page.locator(".hero-line").evaluateAll((lines) =>
+        lines.every((line) => {
+          const range = document.createRange();
+          range.selectNodeContents(line);
+          return (
+            range.getClientRects().length === 1 &&
+            range.getBoundingClientRect().right <=
+              line.getBoundingClientRect().right
+          );
+        }),
+      );
+      expect(fits).toBe(true);
+      await page.screenshot({
+        path: testInfo.outputPath(`hero-${theme}-${width}-${height}.png`),
+      });
+    }
+  }
+});
+
 test("editorial surfaces share the positioning and link to the verified shipped app", async ({
   page,
 }) => {

@@ -1033,6 +1033,11 @@ figcaption {
     height: 660px;
   }
 }
+@media (min-width: 1101px) and (max-height: 700px) {
+  .hero h1 {
+    font-size: min(6vw, 14svh);
+  }
+}
 @media (max-width: 1100px) {
   .page-width {
     width: calc(100% - 72px);
