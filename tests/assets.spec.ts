@@ -11,7 +11,7 @@ test("brand geometry is unchanged and the cutout is truly transparent", async ()
   const original = await readFile("assets/sources/mark-original.svg", "utf8");
   const final = await readFile("public/mark.svg", "utf8");
   const contours = (svg: string) =>
-    [...svg.matchAll(/d="([^"]+)"/g)].map((match) => match[1]);
+    [...svg.matchAll(/\bd="([^"]+)"/g)].map((match) => match[1]);
   const source = contours(original);
   expect(contours(final)).toEqual([source[0] + source[1], source[2]]);
   expect(final).toContain('fill-rule="evenodd"');
@@ -106,8 +106,8 @@ test("phone optimization is reproducible with original geometry and 2048px mater
 });
 
 test("responsive derivatives decode at their intended widths and retain bounded payloads", async () => {
-  for (const [name, widths] of [["lanepilot", [640, 960, 1288]]] as const) {
-    for (const width of widths)
+  for (const name of ["lanepilot-control", "lanepilot-baseline"]) {
+    for (const width of [480, 960, 1920])
       for (const format of ["avif", "webp"]) {
         const file = `public/images/${name}-${width}.${format}`;
         expect((await sharp(file).metadata()).width).toBe(width);
@@ -154,6 +154,45 @@ test("responsive derivatives decode at their intended widths and retain bounded 
   }
 });
 
+test("LanePilot preserves the complete original simulation comparison and each panel", async () => {
+  const source = await readFile("assets/sources/lanepilot-simulation.png");
+  expect(
+    createHash("sha1")
+      .update(Buffer.concat([Buffer.from(`blob ${source.length}\0`), source]))
+      .digest("hex"),
+  ).toBe("674cbc09538b49f8602085705f99cb3304268f21");
+  const full = "public/images/lanepilot-simulation-full.webp";
+  // Lossless WebP can discard invisible RGB beneath zero-alpha pixels.
+  for (const background of ["#ffffff", "#171a17"]) {
+    const pixels = (input: string | Buffer) =>
+      sharp(input).flatten({ background }).raw().toBuffer();
+    const hash = (buffer: Buffer) =>
+      createHash("sha256").update(buffer).digest("hex");
+    expect(hash(await pixels(full))).toBe(hash(await pixels(source)));
+  }
+  expect((await stat(full)).size).toBeLessThan(500_000);
+  for (const name of ["control", "baseline"])
+    for (const format of ["avif", "webp"]) {
+      const image = await sharp(
+        `public/images/lanepilot-${name}-1920.${format}`,
+      ).metadata();
+      expect([image.width, image.height]).toEqual([1920, 1508]);
+    }
+});
+
+test("monochrome Google Play retains the official prism contours", async () => {
+  const source = await readFile(
+    "assets/sources/google-play-original.svg",
+    "utf8",
+  );
+  const mark = await readFile("public/icons/google-play.svg", "utf8");
+  const paths = (svg: string) =>
+    [...svg.matchAll(/\bd="([^"]+)"/g)].map((match) => match[1]);
+  expect(paths(mark)).toEqual(paths(source));
+  expect(mark).toContain('id="mark" stroke="currentColor"');
+  expect(mark).not.toMatch(/fill="#[A-Fa-f0-9]+"/);
+});
+
 test("build artifact contains complete assets and legal entries without original megabyte captures", async () => {
   const html = await readFile("dist/index.html", "utf8");
   const graph = JSON.parse(
@@ -179,7 +218,9 @@ test("build artifact contains complete assets and legal entries without original
     "images/brand-object-dark.avif",
     "images/brand-object-dark.webp",
     "images/fidan-icon.webp",
-    "images/lanepilot-1288.avif",
+    "images/lanepilot-control-1920.avif",
+    "images/lanepilot-baseline-1920.avif",
+    "images/lanepilot-simulation-full.webp",
     "images/tagvault-01-1080.webp",
     "images/tagvault-phone.avif",
     "images/tagvault-phone.webp",

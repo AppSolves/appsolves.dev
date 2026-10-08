@@ -1,5 +1,5 @@
-import { ArrowDown } from "lucide-react";
 import BrandScene from "@/components/brand/BrandScene";
+import { ArrowDown } from "lucide-react";
 
 export default function HeroSection() {
   return (
@@ -11,14 +11,19 @@ export default function HeroSection() {
           </p>
           <h1 id="hero-title">
             <span className="headline-mask">
-              <span className="hero-line">Think deeply.</span>
-            </span>
+              <span className="hero-line">I build software</span>
+            </span>{" "}
             <span className="headline-mask">
-              <em className="hero-line">Build real things.</em>
+              <em className="hero-line">from the</em>
+            </span>{" "}
+            <span className="headline-mask">
+              <em className="hero-line">inside out.</em>
             </span>
           </h1>
           <p className="hero-description">
-            I build AI systems, compilers, and software products.
+            I develop AI systems for edge hardware and ship software products,
+            including Fidan, my own programming language and compiler. My goal
+            is to turn that work into an AI company.
           </p>
           <div className="hero-actions">
             <a className="text-link" href="#work">

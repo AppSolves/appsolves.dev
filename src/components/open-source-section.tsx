@@ -21,6 +21,11 @@ const projects = [
     "The Windows Event Log API, available from Flutter.",
     "Flutter / C++",
   ],
+  [
+    "appscreen-mcp",
+    "MCP automation for coding agents, built on YuzuHub’s app screenshot generator.",
+    "TypeScript / MCP",
+  ],
 ];
 
 export default function OpenSourceSection() {
@@ -38,8 +43,8 @@ export default function OpenSourceSection() {
           infrastructure.
         </h2>
         <p>
-          Libraries and tools I’ve published for Python, Flutter, and hardware
-          research.
+          Libraries and tools for application development, hardware research,
+          and coding agents.
         </p>
         <a
           className="text-link"

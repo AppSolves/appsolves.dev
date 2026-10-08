@@ -16,7 +16,7 @@ for (const theme of ["light", "dark"] as const) {
       await page.goto("/");
       expect(await page.evaluate(() => innerWidth)).toBe(viewport.width);
       await expect(page.locator("h1")).toHaveText(
-        "Think deeply.Build real things.",
+        "I build software from the inside out.",
       );
       const loadedFonts = await page.evaluate(async () => {
         const faces = await Promise.all([

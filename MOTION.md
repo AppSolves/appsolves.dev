@@ -6,7 +6,7 @@ The object feels solid; text feels editorial. Movement reveals hierarchy or mate
 
 ## Arrival
 
-One GSAP timeline scoped to the homepage: identity / introduction settles over 600ms, the two headline lines enter from a clipped baseline over 850ms with a 90ms separation, description follows at 180ms. Supporting copy moves 16px; headline travel follows the height of its clipping mask. Ease `power3.out`; no bounce, overshoot or elastic timing.
+One GSAP timeline scoped to the homepage: identity / introduction settles over 600ms, the three headline lines enter from a clipped baseline over 850ms with a 90ms separation, description follows at 180ms. Supporting copy moves 16px; headline travel follows the height of its clipping mask. Ease `power3.out`; no bounce, overshoot or elastic timing.
 
 The mark appears as soon as a poster can paint. Desktop WebGL replaces that same composition when ready; no blank canvas or skeleton flash. No content depends on loading Three.js.
 
@@ -14,7 +14,9 @@ The mark appears as soon as a poster can paint. Desktop WebGL replaces that same
 
 Desktop mark turns approximately 0.15 radians across the hero's scroll distance. This is camera / object orientation, not a rotating UI stack. No pinning. Frame updates happen only after pointer or scroll input and stop once the interpolation settles.
 
-Fidan's source specimen gets one short horizontal settle / opacity entrance at the work stage. LanePilot receives at most a modest 1.025 → 1 scale settle as its frame enters. The TagVault phone does not add a scroll entrance; its real drag interaction supplies the movement. Text beneath remains readable immediately. About, open-source rows and legal text stay static. This avoids the repetitive whole-page fade-up pattern.
+Fidan's source settles horizontally by 18px over 700ms, starting at .7 opacity. LanePilot's complete field settles from .99 to 1 over 800ms, retaining the full image. The TagVault phone's drag supplies its movement; legal text stays static.
+
+Three quiet patterns supplement those project entrances: Selected Work and Contact headings settle 16px vertically over 650ms with `power2.out`; About's heading settles 16px horizontally with the same timing; recognition and source rows use opacity only, 450ms `power1.out` and 70ms stagger. Initial opacity remains at least .65 on these additions, so offscreen content is still readable before its once-only trigger. Each completed entrance clears owned inline transforms/opacity. There is no pin, character splitting, image hover zoom or repeated whole-page fade-up.
 
 ScrollTriggers use once-only entrances. Refresh after font loading because typography changes layout. React `useGSAP` / matchMedia scopes and reverts all animations on unmount or when preferences change.
 
@@ -26,13 +28,13 @@ Links keep underline / color and focus feedback. Only directional arrows move: e
 
 Mobile menu opens as a straightforward disclosure without animated layout height. It remains a real keyboard-operable disclosure. Navigation is usable before animation initialization.
 
-The final editorial pass adds no new motion. Fidan’s overflowing source keeps native horizontal scrolling, keyboard access and selection; a static narrow-screen cue appears only when needed. Controlled footer rows and the official Google Play icon stay static. Phone camera/scale/posters remain unchanged after size comparisons.
+Fidan’s overflowing source keeps native horizontal scrolling, keyboard access and selection; a static narrow-screen cue appears only when needed. Footer rows and platform icons stay static. Phone camera/scale/posters remain unchanged after size comparisons. Media depth is static, not a misleading hover interaction; source links have a fine-pointer tonal hover and matching keyboard focus background.
 
 ## Theme changes
 
-System is the default; explicit choices persist. A parser-time script sets `data-theme`, `color-scheme` and theme-color before React, so even a delayed application does not paint the wrong background. next-themes owns runtime OS / persistence behavior. Only an explicit selection that changes the resolved color starts a View Transition. The new root reveals in a circle from the control to the farthest viewport corner over 480ms, easing cubic-bezier(.22,1,.36,1). Root snapshot blending is disabled. Initialization, OS changes, same-color choices, unsupported browsers and reduced motion apply immediately. Entrances do not replay.
+System is the default; explicit choices persist. A parser-time script sets `data-theme`, `color-scheme` and theme-color before React, so even a delayed application does not paint the wrong background. next-themes owns runtime OS / persistence behavior. Only an explicit selection that changes the resolved color starts a View Transition. The new root reveals in a circle from the control to the farthest viewport corner over 480ms, easing cubic-bezier(.4,0,.2,1). CSS variables carry the control origin/radius; the native `::view-transition-new(root)` owns the CSS animation. The DOM update remains flush-synchronized inside the snapshot callback. Root snapshot blending is disabled. Initialization, OS changes, same-color choices, hidden tabs, unsupported browsers and reduced motion apply immediately. Entrances do not replay.
 
-The Radix radio menu supports arrows, selection, Escape and focus return. On mobile, appearance is a native radio fieldset in the navigation; Escape closes the disclosure and returns focus to its toggle. Theme changes dispose the old Three.js scene and create one scene with the appropriate exposure. Its matching poster remains available throughout; both posters use identical framing and the same violet enamel. Superseded transitions are skipped; preference generations reject stale snapshot callbacks, and animations are cancelled on another choice or unmount. A skipped snapshot still leaves the requested theme usable.
+The Radix radio menu supports arrows, selection, Escape and focus return. On mobile, appearance is a native radio fieldset in the navigation; Escape closes the disclosure and returns focus to its toggle. Theme changes dispose the old Three.js scene and create one scene with the appropriate exposure. Its matching poster remains available throughout; both posters use identical framing and the same violet enamel. Superseded native transitions are skipped; preference generations reject stale snapshot callbacks, and the root class is cleaned on completion/unmount. A skipped snapshot still leaves the requested theme usable.
 
 ## Reduced motion, mobile, lifecycle
 
@@ -46,4 +48,4 @@ TagVault uses the existing Three.js runtime rather than another React 3D archite
 
 ## Validation
 
-Inspect arrival, mid-scroll, pointer movement, hover and mobile / theme menus in both themes at 1440 × 900, 1920 × 1080, 1280 × 800, 960 × 900, 820 × 1180, 390 × 844 and 320 × 568. Also inspect the 900–960px transition. Repeat with reduced motion and WebGL disabled. Check content visibility and every navigation / legal route with browser assertions. Keep the QA report in the repo; generated raw captures remain ignored. Local frame instrumentation verifies zero idle / offscreen draw calls in both themes without claiming a hardware energy benchmark.
+Inspect arrival, mid-scroll, pointer movement, hover and mobile / theme menus in both themes at 1440 × 900, 1920 × 1080, 1280 × 800, 1100 × 900, 960 × 900, 820 × 1180, 390 × 844 and 320 × 568. Repeat with reduced motion and WebGL disabled. Check content visibility and every navigation / legal route with browser assertions. Theme regression captures 0/240/480ms in both directions and desktop/mobile; midpoint pixels must contain both old and new themes. Firefox's automated capture omits native transition overlays, so verify its actual QA window separately. Detailed evidence and limitations belong in QA.md. Generated raw captures remain ignored. Local frame instrumentation verifies zero idle / offscreen draw calls in both themes without claiming a hardware energy benchmark.

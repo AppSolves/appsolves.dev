@@ -3,7 +3,7 @@ const recognition = [
   [
     "Recognition",
     "Ferry Porsche Prize 2026",
-    "Award for outstanding STEM achievement in the Abitur",
+    "Award for outstanding achievement in STEM subjects",
   ],
   ["Competition", "Jugend forscht", "2nd Prize for LanePilot"],
 ];
@@ -52,8 +52,8 @@ export default function AboutSection() {
         <div className="focus-line">
           <span>Current focus</span>
           <p>
-            AI & deep learning <span>/</span> Compilers & infrastructure{" "}
-            <span>/</span> Edge AI <span>/</span> Products
+            AI & Deep Learning <span>/</span> Software Engineering{" "}
+            <span>/</span> Products & Entrepreneurship
           </p>
         </div>
       </div>

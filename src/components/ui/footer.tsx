@@ -6,7 +6,6 @@ import {
   Linkedin,
   Instagram,
   Youtube,
-  Mail,
   Coffee,
   Heart,
 } from "lucide-react";
@@ -35,7 +34,6 @@ const socials = [
     href: "https://youtube.com/@appsolvesdev",
     icon: Youtube,
   },
-  { label: "Email", href: "mailto:contact@appsolves.dev", icon: Mail },
 ];
 
 export default function Footer() {
@@ -79,22 +77,20 @@ export default function Footer() {
                   <a
                     key={label}
                     href={href}
-                    target={href.startsWith("mailto:") ? undefined : "_blank"}
-                    rel={
-                      href.startsWith("mailto:")
-                        ? undefined
-                        : "noopener noreferrer"
-                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     {label === "Google Play" ? (
-                      <img
-                        src={`${home}icons/google-play.svg`}
-                        alt=""
+                      <svg
                         width="16"
                         height="16"
-                      />
+                        viewBox="0 0 40 40"
+                        aria-hidden="true"
+                      >
+                        <use href={`${home}icons/google-play.svg#mark`} />
+                      </svg>
                     ) : Icon ? (
-                      <Icon size={16} aria-hidden="true" />
+                      <Icon size={16} strokeWidth={1.65} aria-hidden="true" />
                     ) : (
                       <svg
                         width="16"
@@ -116,14 +112,16 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Heart size={14} aria-hidden="true" /> Sponsor the work
+                  <Heart size={14} strokeWidth={1.65} aria-hidden="true" />{" "}
+                  Sponsor the work
                 </a>
                 <a
                   href="https://www.buymeacoffee.com/AppSolves"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Coffee size={14} aria-hidden="true" /> Buy me a coffee
+                  <Coffee size={14} strokeWidth={1.65} aria-hidden="true" /> Buy
+                  me a coffee
                 </a>
               </div>
             </div>

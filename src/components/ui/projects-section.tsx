@@ -170,88 +170,107 @@ export default function ProjectsSection() {
         className="project split-project lane-project"
         aria-labelledby="lanepilot-title"
       >
-        <div className="split-copy">
-          <p className="project-category">02 / Deep learning & edge AI</p>
-          <h3 id="lanepilot-title">LanePilot</h3>
-          <p className="project-lead">
-            Adaptive traffic management with edge AI.
-          </p>
-          <p>
-            LanePilot investigates how changing lane assignments can reduce
-            congestion. Cameras detect and track vehicles, estimate their
-            movement, and provide the state used to recommend lane changes.
-          </p>
-          <p>
-            Perception uses YOLO11n-seg and PyTorch. I explored interactions
-            between nearby vehicles with GATv2 in PyTorch Geometric, then moved
-            to reinforcement learning to model the consequences of lane changes.
-          </p>
-          <p>
-            NVIDIA Jetson runs inference with a CUDA / TensorRT deployment
-            pipeline. A Raspberry Pi handles camera input and the physical
-            prototype’s controls.
-          </p>
-          <p className="project-recognition">Jugend forscht, 2nd Prize</p>
-          <div className="simulation-results">
-            <p>Simulation evaluation</p>
-            <p className="simulation-description">
-              Lane-change decisions are evaluated in a traffic simulation using
-              average speed, hard-braking events, and collisions.
+        <div className="lane-overview">
+          <div className="split-copy">
+            <p className="project-category">02 / Deep learning & edge AI</p>
+            <h3 id="lanepilot-title">LanePilot</h3>
+            <p className="project-lead">
+              Adaptive traffic management with edge AI.
             </p>
-            <span>Simulation evaluation, not public-road measurements.</span>
+            <p className="project-recognition">Jugend forscht, 2nd Prize</p>
+            <a
+              className="text-link"
+              href="https://github.com/AppSolves/LanePilot"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Explore the system{" "}
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={17}
+                aria-hidden="true"
+              />
+            </a>
           </div>
-          <a
-            className="text-link"
-            href="https://github.com/AppSolves/LanePilot"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Explore the system{" "}
-            <ArrowUpRight
-              data-arrow-motion="external"
-              size={17}
-              aria-hidden="true"
-            />
-          </a>
+          <div className="project-description">
+            <p>
+              LanePilot investigates how changing lane assignments can reduce
+              congestion. Cameras detect and track vehicles, estimate their
+              movement, and provide the state used to recommend lane changes.
+            </p>
+            <p>
+              Perception uses YOLO11n-seg and PyTorch. I explored interactions
+              between nearby vehicles with GATv2 in PyTorch Geometric, then
+              moved to reinforcement learning to model the consequences of lane
+              changes.
+            </p>
+            <p>
+              NVIDIA Jetson runs inference with a CUDA / TensorRT deployment
+              pipeline. A Raspberry Pi handles camera input and the physical
+              prototype’s controls.
+            </p>
+          </div>
         </div>
         <figure className="lane-figure">
           <div className="lane-stage">
             <div className="lane-stage-heading">
               <span>LanePilot</span>
-              <span>Prototype perception</span>
+              <span>Traffic simulation</span>
             </div>
-            <div className="lane-crop">
-              <picture>
-                {["avif", "webp"].map((format) => (
-                  <source
-                    key={format}
-                    type={`image/${format}`}
-                    srcSet={[640, 960, 1288]
-                      .map(
-                        (width) =>
-                          `${base}images/lanepilot-${width}.${format} ${width}w`,
-                      )
-                      .join(", ")}
-                    sizes="(min-width: 1800px) 740px, (min-width: 900px) 48vw, (min-width: 768px) 85vw, 90vw"
-                  />
-                ))}
-                <img
-                  src={`${base}images/lanepilot-960.webp`}
-                  alt="LanePilot detecting and tracking three small vehicles in a physical test setup"
-                  width="1288"
-                  height="720"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
+            <div className="lane-comparison">
+              {["control", "baseline"].map((panel) => (
+                <div className="lane-crop" key={panel}>
+                  <picture>
+                    {["avif", "webp"].map((format) => (
+                      <source
+                        key={format}
+                        type={`image/${format}`}
+                        srcSet={[480, 960, 1920]
+                          .map(
+                            (width) =>
+                              `${base}images/lanepilot-${panel}-${width}.${format} ${width}w`,
+                          )
+                          .join(", ")}
+                        sizes="(min-width: 1800px) 740px, (min-width: 768px) 44vw, 80vw"
+                      />
+                    ))}
+                    <img
+                      src={`${base}images/lanepilot-${panel}-960.webp`}
+                      alt={
+                        panel === "control"
+                          ? "LanePilot reinforcement-learning traffic simulation with vehicles and diagnostics"
+                          : "Baseline traffic simulation with vehicles and diagnostics at a different simulation step"
+                      }
+                      width="1920"
+                      height="1508"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+              ))}
             </div>
             <div className="lane-stage-footer">
-              <span>Vehicle detection and tracking</span>
-              <span>Computer vision / Edge hardware</span>
+              <span>Reinforcement learning / Baseline</span>
+              <a
+                className="text-link"
+                href={`${base}images/lanepilot-simulation-full.webp`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Full-resolution comparison{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={16}
+                  aria-hidden="true"
+                />
+              </a>
             </div>
           </div>
           <figcaption>
-            Vehicle detection in LanePilot’s physical test setup.
+            Illustrative simulation snapshots with speed, braking, and collision
+            diagnostics. The panels show different steps and vehicle counts,
+            rather than a controlled benchmark. No public-road validation.
           </figcaption>
         </figure>
       </article>

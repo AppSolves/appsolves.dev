@@ -13,31 +13,40 @@ const mark = Buffer.from(
   `<svg viewBox="525 286 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">\n  <path d="${paths[0][1]}${paths[1][1]}" fill="#6A5CE3" fill-rule="evenodd"/>\n  <path d="${paths[2][1]}" fill="#6A5CE3"/>\n</svg>\n`,
 );
 await writeFile("public/mark.svg", mark);
-const projects = [
-  {
-    name: "lanepilot",
-    source: "lanepilot-detection.png",
-    widths: [640, 960, 1288],
-    // The original perception viewport: identical to the former CSS crop.
-    crop: { left: 169, top: 225, width: 1288, height: 720 },
-  },
-  { name: "tagvault-01", source: "tagvault-01.jpg", widths: [1080] },
-];
-for (const { name, source, widths, crop } of projects) {
-  for (const width of widths) {
-    const image = sharp(`assets/sources/${source}`);
-    if (crop) image.extract(crop);
-    image.resize({ width, withoutEnlargement: true });
-    if (name === "lanepilot")
+await sharp("assets/sources/tagvault-01.jpg")
+  .resize({ width: 1080, withoutEnlargement: true })
+  .webp({ quality: 95, effort: 6 })
+  .toFile("public/images/tagvault-01-1080.webp");
+// Preserve both complete panels, including diagnostics, steps and vehicle counts.
+for (const [panel, left] of [
+  ["control", 0],
+  ["baseline", 1920],
+]) {
+  for (const width of [480, 960, 1920]) {
+    const image = sharp("assets/sources/lanepilot-simulation.png")
+      .extract({ left, top: 0, width: 1920, height: 1508 })
+      .resize({ width, withoutEnlargement: true });
+    for (const format of ["avif", "webp"]) {
       await image
         .clone()
-        .avif({ quality: 65, effort: 6, chromaSubsampling: "4:4:4" })
-        .toFile(`public/images/${name}-${width}.avif`);
-    await image
-      .webp({ quality: name === "tagvault-01" ? 95 : 88, effort: 6 })
-      .toFile(`public/images/${name}-${width}.webp`);
+        [format]({ quality: 90, effort: 6, chromaSubsampling: "4:4:4" })
+        .toFile(`public/images/lanepilot-${panel}-${width}.${format}`);
+    }
   }
 }
+await sharp("assets/sources/lanepilot-simulation.png")
+  .webp({ lossless: true, effort: 6 })
+  .toFile("public/images/lanepilot-simulation-full.webp");
+const play = await readFile("assets/sources/google-play-original.svg", "utf8");
+await writeFile(
+  "public/icons/google-play.svg",
+  play
+    .replace(
+      "<g>",
+      '<g id="mark" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round">',
+    )
+    .replace(/fill="#[A-Fa-f0-9]+"/g, 'fill="none"'),
+);
 await writeFile("public/favicon.svg", mark);
 await sharp(mark)
   .resize(180, 180, { fit: "contain" })

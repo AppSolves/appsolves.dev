@@ -6,6 +6,7 @@ const sizes = [
   { name: "desktop", width: 1440, height: 900 },
   { name: "wide", width: 1920, height: 1080 },
   { name: "laptop", width: 1280, height: 800 },
+  { name: "compact-desktop", width: 1100, height: 900 },
   { name: "landscape-tablet", width: 960, height: 900 },
   { name: "tablet", width: 820, height: 1180 },
   { name: "mobile", width: 390, height: 844 },
@@ -28,18 +29,74 @@ for (const theme of ["light", "dark"] as const) {
       await page.goto("/");
       await page.evaluate(() => document.fonts.ready);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-        "Think deeply.Build real things.",
+        "I build software from the inside out.",
       );
+      await expect(page.locator(".hero-line")).toHaveText([
+        "I build software",
+        "from the",
+        "inside out.",
+      ]);
+      const headline = await page.locator(".hero-line").evaluateAll((lines) =>
+        lines.map((line) => {
+          const text = document.createRange();
+          text.selectNodeContents(line);
+          const box = text.getBoundingClientRect();
+          return {
+            left: box.left,
+            right: box.right,
+            top: box.top,
+            bottom: box.bottom,
+          };
+        }),
+      );
+      for (const line of headline) {
+        expect(line.left).toBeGreaterThanOrEqual(0);
+        expect(line.right).toBeLessThanOrEqual(size.width);
+      }
+      expect(headline[1].top).toBeGreaterThan(headline[0].top);
+      expect(headline[2].top).toBeGreaterThan(headline[1].top);
+      if (size.width >= 768) {
+        const actions = (await page.locator(".hero-actions").boundingBox())!;
+        expect(actions.y + actions.height).toBeLessThanOrEqual(size.height);
+      }
       await expect(page.locator("#fidan-title")).toHaveText("Fidan");
       await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
       await expect(page.locator("#tagvault-title")).toHaveText("TagVault");
-      await expect(page.locator(".source-list li")).toHaveCount(4);
-      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-      await expect(page.locator(".simulation-results")).toContainText(
+      await expect(page.locator(".source-list li")).toHaveCount(5);
+      await expect(
+        page
+          .locator(".source-list")
+          .getByRole("link", { name: /appscreen-mcp/ }),
+      ).toHaveAttribute("href", "https://github.com/AppSolves/appscreen-mcp");
+      await expect(page.locator(".source-list")).toContainText(
+        "built on YuzuHub’s app screenshot generator",
+      );
+      await expect(page.locator(".focus-line p")).toHaveText(
+        "AI & Deep Learning / Software Engineering / Products & Entrepreneurship",
+      );
+      await expect(page.locator(".lane-comparison img")).toHaveCount(2);
+      await expect(page.locator("#lanepilot")).not.toContainText(
         "Simulation evaluation",
       );
-      await expect(page.locator(".simulation-results")).toContainText(
-        "not public-road measurements",
+      await expect(
+        page.getByRole("link", { name: "Full-resolution comparison" }),
+      ).toHaveAttribute("href", "/images/lanepilot-simulation-full.webp");
+      for (const panel of await page.locator(".lane-crop").all()) {
+        const framing = await panel.evaluate((element) => ({
+          radius: parseFloat(getComputedStyle(element).borderRadius),
+          width: element.clientWidth,
+          height: element.clientHeight,
+        }));
+        expect(framing.radius).toBe(size.width < 768 ? 12 : 14);
+        expect(framing.width / framing.height).toBeCloseTo(1920 / 1508, 2);
+        await expect(panel.locator("img")).toHaveCSS("object-fit", "contain");
+      }
+      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+      await expect(page.locator(".lane-stage-heading")).toContainText(
+        "Traffic simulation",
+      );
+      await expect(page.locator(".lane-figure figcaption")).toContainText(
+        "No public-road validation",
       );
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth,
@@ -246,7 +303,6 @@ test("real project links, contact, metadata and Pages artifacts are preserved", 
       "Google Play",
       "https://play.google.com/store/apps/dev?id=6007461154397933888",
     ],
-    ["Email", "mailto:contact@appsolves.dev"],
   ]) {
     await expect(
       page

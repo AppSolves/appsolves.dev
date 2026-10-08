@@ -152,6 +152,15 @@ test("Fidan shows its official icon and exact five-line source without desktop w
         .locator(".fidan-specimen pre")
         .evaluate((element) => element.scrollWidth <= element.clientWidth),
     ).toBe(true);
+    const separation = await page.evaluate(() => {
+      const word = document.createRange();
+      word.selectNodeContents(document.querySelector(".fidan-wordmark")!);
+      return (
+        document.querySelector(".fidan-editor")!.getBoundingClientRect().left -
+        word.getBoundingClientRect().right
+      );
+    });
+    expect(separation).toBeGreaterThanOrEqual(32);
     await expect(page.locator(".code-scroll-hint")).toHaveCount(0);
   }
   for (const width of [390, 320]) {

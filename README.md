@@ -14,7 +14,7 @@ npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **71 browser / asset checks**: comprehensive Chromium regression at seven sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Editorial checks add consistent metadata, the verified TagVault product listing, balanced footer rows at 14 widths and narrow-code scroll affordance/keyboard access. Results and captures go to ignored `test-results/`.
+Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **81 browser / asset checks**: comprehensive Chromium regression at eight sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Focused coverage includes hero line breaks, Fidan separation/source scrolling, simulation provenance and complete panels, footer layout at 14 widths, monochrome icon geometry, once-only entrances and actual mixed-theme pixels at 240ms. Results and captures go to ignored `test-results/`.
 
 `BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173.
 
@@ -52,7 +52,7 @@ A push to the redesign branch starts [Redesign preview artifact](https://github.
 A successful run provides two artifacts, retained seven days:
 
 - `appsolves-preview-<full SHA>`: complete `dist/`, including fonts, imagery, model, JS/CSS, CNAME, app-ads and legal entries.
-- `appsolves-visual-review-<full SHA>`: actual rendered screenshots at seven sizes, both themes, full-page desktop / tablet / mobile, seven scroll stages, menus and interaction captures, plus DPR 1 / 2 close-ups of the hero, Fidan syntax, phone front and dragged view.
+- `appsolves-visual-review-<full SHA>`: actual rendered screenshots at eight sizes, both themes, full-page desktop / tablet / mobile, seven scroll stages, menus and interaction captures, DPR 1 / 2 close-ups of the hero, Fidan syntax, phone front and dragged view, and desktop/mobile theme reveal frames at 0/240/480ms in both directions.
 
 Download and extract the preview ZIP. Serve the directory containing `index.html` with Python's standard library; no repository or npm dependencies are needed:
 

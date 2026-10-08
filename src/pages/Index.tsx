@@ -31,9 +31,9 @@ const Index = () => {
             0.18,
           );
         gsap.from(".fidan-specimen", {
-          x: 24,
-          opacity: 0.4,
-          duration: 0.9,
+          x: 18,
+          opacity: 0.7,
+          duration: 0.7,
           ease: "power3.out",
           clearProps: "all",
           scrollTrigger: {
@@ -42,17 +42,61 @@ const Index = () => {
             once: true,
           },
         });
-        gsap.from(".lane-crop", {
-          scale: 1.025,
-          duration: 1.1,
+        gsap.from(".lane-stage", {
+          scale: 0.99,
+          duration: 0.8,
           ease: "power2.out",
           clearProps: "all",
           scrollTrigger: {
-            trigger: ".lane-crop",
+            trigger: ".lane-stage",
             start: "top 85%",
             once: true,
           },
         });
+        // A few distinct arrivals; content is readable even before each reveal.
+        for (const selector of [
+          ".section-heading",
+          ".contact-composition h2",
+        ]) {
+          gsap.from(selector, {
+            y: 16,
+            opacity: 0.75,
+            duration: 0.65,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+            scrollTrigger: {
+              trigger: selector,
+              start: "clamp(top 88%)",
+              once: true,
+            },
+          });
+        }
+        gsap.from(".about-title", {
+          x: -16,
+          opacity: 0.8,
+          duration: 0.65,
+          ease: "power2.out",
+          clearProps: "transform,opacity",
+          scrollTrigger: {
+            trigger: ".about-composition",
+            start: "clamp(top 88%)",
+            once: true,
+          },
+        });
+        for (const selector of [".recognition-list > div", ".source-list li"]) {
+          gsap.from(selector, {
+            opacity: 0.65,
+            duration: 0.45,
+            stagger: 0.07,
+            ease: "power1.out",
+            clearProps: "opacity",
+            scrollTrigger: {
+              trigger: selector,
+              start: "clamp(top 90%)",
+              once: true,
+            },
+          });
+        }
       });
       let active = true;
       document.fonts.ready.then(() => {
