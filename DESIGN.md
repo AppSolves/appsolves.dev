@@ -14,7 +14,7 @@ Six footer destinations form compact 3 + 3 content-sized rows; the prominent ema
 
 An independent builder's body of work, presented with the precision of a technical publication and the material presence of an industrial design studio. The first impression is warm, quiet and physical. The second is specific: a Rust compiler, deployed computer vision, and a commercial Android product. AppSolves is Kaan Gönüldinc's umbrella brand, not an agency.
 
-The signature is the official AppSolves mark turned into a solid object: violet front surfaces, metal sides and bevels. This is brand material, not an illustration of a fictitious system. Beside it, **“Think deeply. Build real things.”** connects a deliberate engineering approach to usable work. The name, TUM context and explicit AI / compiler / product positioning remain in the first viewport. The official wordmark has no trailing period.
+The signature is the official AppSolves mark turned into a solid object: violet front surfaces, metal sides and bevels. This is brand material, not an illustration of a fictitious system. Beside it, **“I build software from the inside out.”** introduces engineering depth. Supporting copy connects AI and shipped products to the ambition of building an AI company, with Fidan as concrete evidence. The name and TUM context remain in the first viewport. The official wordmark has no trailing period.
 
 ## Launch-polish decisions
 
