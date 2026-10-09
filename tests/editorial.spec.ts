@@ -30,6 +30,8 @@ test("two-line hero keeps its actions inside shorter first viewports", async ({
         expect(box.y).toBeGreaterThan(0);
         expect(box.y + box.height).toBeLessThanOrEqual(height - 24);
       }
+      const index = (await page.locator(".hero-index").boundingBox())!;
+      expect(index.y).toBeGreaterThanOrEqual(height);
       const fits = await page.locator(".hero-line").evaluateAll((lines) =>
         lines.every((line) => {
           const range = document.createRange();
@@ -158,7 +160,7 @@ test("selective arrivals stay readable, finish once and revert under reduced mot
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const arrivals = page.locator(
-    ".section-heading, .about-title, .recognition-list > div, .source-list li, .contact-composition h2",
+    ".section-heading, .project-details > div, .lane-overview > div, .tag-project > .split-copy, .lane-stage, .tag-stage, .about-title, .recognition-list > div, .source-list li, .contact-composition h2",
   );
   for (const element of await arrivals.all()) {
     expect(
@@ -167,34 +169,64 @@ test("selective arrivals stay readable, finish once and revert under reduced mot
       ),
     ).toBeGreaterThan(0.6);
   }
+  const media = page.locator(".tag-stage");
+  await media.evaluate((element) =>
+    window.scrollTo({
+      top: scrollY + element.getBoundingClientRect().top - innerHeight * 0.75,
+      behavior: "instant",
+    }),
+  );
+  await expect
+    .poll(() =>
+      media.evaluate((element) => {
+        const opacity = Number(getComputedStyle(element).opacity);
+        const shift = new DOMMatrix(getComputedStyle(element).transform).m42;
+        return opacity > 0.7 && opacity < 1 && shift > 0 && shift < 20;
+      }),
+    )
+    .toBe(true);
+  await page.screenshot({
+    path: testInfo.outputPath("arrival-tagvault-intermediate.png"),
+  });
   for (const selector of [
     ".section-heading",
+    ".project-details > div:first-child",
+    ".project-description",
+    ".lane-stage",
+    ".tag-stage",
+    ".tag-project > .split-copy",
     ".about-title",
     ".recognition-list",
-    ".source-list",
+    ".source-list li:nth-child(1)",
+    ".source-list li:nth-child(2)",
+    ".source-list li:nth-child(3)",
+    ".source-list li:nth-child(4)",
+    ".source-list li:nth-child(5)",
     ".contact-composition h2",
   ]) {
-    const target = page.locator(selector);
-    await target.evaluate((element) =>
-      element.scrollIntoView({ block: "center", behavior: "instant" }),
-    );
-    await expect
-      .poll(() =>
-        target.evaluate((element) =>
-          [element, ...element.querySelectorAll<HTMLElement>("[style]")].every(
-            (element) => {
+    for (const target of await page.locator(selector).all()) {
+      await target.evaluate((element) =>
+        element.scrollIntoView({ block: "center", behavior: "instant" }),
+      );
+      await expect
+        .poll(() =>
+          target.evaluate((element) =>
+            [
+              element,
+              ...element.querySelectorAll<HTMLElement>("[style]"),
+            ].every((element) => {
               const style = (element as HTMLElement).style;
               return !style.opacity && !style.transform;
-            },
+            }),
           ),
+        )
+        .toBe(true);
+      await target.screenshot({
+        path: testInfo.outputPath(
+          `arrival-${selector.replace(/[^a-z0-9]/g, "")}-${await target.getAttribute("class")}.png`,
         ),
-      )
-      .toBe(true);
-    await target.screenshot({
-      path: testInfo.outputPath(
-        `arrival-${selector.replace(/[^a-z]/g, "")}.png`,
-      ),
-    });
+      });
+    }
   }
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await expect
@@ -213,4 +245,87 @@ test("selective arrivals stay readable, finish once and revert under reduced mot
       }),
     ),
   ).toBe(true);
+});
+
+test("media depth and source-link feedback respect keyboard, touch and reduced motion", async ({
+  page,
+  browser,
+}, testInfo) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  // Scene rendering has independent quality/lifecycle checks. Keep CSS input
+  // feedback independent of software-WebGL initialization on CI.
+  await page.route(/\/(?:brand|phone)-scene-[^/]+\.js$/, (route) =>
+    route.abort(),
+  );
+  await page.goto("/");
+  for (const theme of ["light", "dark"]) {
+    await page.evaluate((theme) => {
+      document.documentElement.dataset.theme = theme;
+    }, theme);
+    const stage = page.locator(".fidan-stage");
+    await stage.evaluate((element) =>
+      element.scrollIntoView({ block: "center", behavior: "instant" }),
+    );
+    await page.mouse.move(0, 0);
+    const resting = await stage.evaluate(
+      (element) => getComputedStyle(element).boxShadow,
+    );
+    await stage.hover();
+    const hovering = await stage.evaluate(
+      (element) => getComputedStyle(element).boxShadow,
+    );
+    expect(hovering).not.toBe(resting);
+    await page.mouse.move(0, 0);
+    await page.keyboard.press("Tab");
+    await stage.locator("pre").focus();
+    await expect(stage.locator("pre")).toBeFocused();
+    await expect(stage).toHaveCSS("box-shadow", hovering);
+    await stage.screenshot({
+      path: testInfo.outputPath(`media-depth-${theme}.png`),
+    });
+    await stage.locator("pre").blur();
+  }
+  const link = page.locator(".source-list a").first();
+  await link.scrollIntoViewIfNeeded();
+  await link.focus();
+  await expect(link).toHaveCSS("transform", "none");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await expect
+    .poll(() =>
+      link.evaluate(
+        (element) => new DOMMatrix(getComputedStyle(element).transform).m41,
+      ),
+    )
+    .toBe(2);
+  await expect(link).toBeFocused();
+  await link.blur();
+  await link.hover();
+  await expect
+    .poll(() =>
+      link.evaluate(
+        (element) => new DOMMatrix(getComputedStyle(element).transform).m41,
+      ),
+    )
+    .toBe(2);
+
+  const touch = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    reducedMotion: "reduce",
+  });
+  try {
+    const mobile = await touch.newPage();
+    await mobile.goto("/");
+    const stage = mobile.locator(".fidan-stage");
+    const resting = await stage.evaluate(
+      (element) => getComputedStyle(element).boxShadow,
+    );
+    await stage.tap();
+    await expect(stage).toHaveCSS("box-shadow", resting);
+    await expect(
+      mobile.locator(".hero-index").getByRole("link", { name: "Fidan" }),
+    ).toHaveAttribute("href", "#fidan");
+  } finally {
+    await touch.close();
+  }
 });

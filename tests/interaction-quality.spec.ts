@@ -14,8 +14,16 @@ async function checkAction(
   delta: number[],
 ) {
   const arrow = link.locator(`[data-arrow-motion="${direction}"]`);
-  // Native smooth scrolling after keyboard navigation can move a link away
-  // from the pointer. Measure the interaction once its target is positioned.
+  // Keyboard focus can enqueue native smooth scrolling after positioning,
+  // moving the target out from under the pointer. Isolate arrow interpolation;
+  // the navigation suite exercises scrolling and sticky-header clearance.
+  await page.evaluate(() =>
+    document.documentElement.style.setProperty(
+      "scroll-behavior",
+      "auto",
+      "important",
+    ),
+  );
   await link.evaluate((element) =>
     element.scrollIntoView({ block: "center", behavior: "instant" }),
   );

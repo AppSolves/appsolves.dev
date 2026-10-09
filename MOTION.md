@@ -14,9 +14,9 @@ The mark appears as soon as a poster can paint. Desktop WebGL replaces that same
 
 Desktop mark turns approximately 0.15 radians across the hero's scroll distance. This is camera / object orientation, not a rotating UI stack. No pinning. Frame updates happen only after pointer or scroll input and stop once the interpolation settles.
 
-Fidan's source settles horizontally by 18px over 700ms, starting at .7 opacity. LanePilot's complete field settles from .99 to 1 over 800ms, retaining the full image. The TagVault phone's drag supplies its movement; legal text stays static.
+Fidan's source settles horizontally by 18px over 700ms, starting at .7 opacity. LanePilot and TagVault media settle vertically by 20px over 800ms, also starting at .7 opacity. No field scales, so live canvas dimensions remain stable. Project details enter by 18px over 700ms with `power3.out`; paired text columns have an 80ms offset and individual triggers, so stacked mobile content arrives when it actually enters view. The TagVault phone's independent drag remains unchanged; legal text stays static.
 
-Three quiet patterns supplement those project entrances: Selected Work and Contact headings settle 16px vertically over 650ms with `power2.out`; About's heading settles 16px horizontally with the same timing; recognition and source rows use opacity only, 450ms `power1.out` and 70ms stagger. Initial opacity remains at least .65 on these additions, so offscreen content is still readable before its once-only trigger. Each completed entrance clears owned inline transforms/opacity. There is no pin, character splitting, image hover zoom or repeated whole-page fade-up.
+Three quiet patterns supplement those project entrances: Selected Work and Contact headings settle 16px vertically over 650ms with `power2.out`; About's heading settles 16px horizontally with the same timing; recognition uses opacity only, 450ms `power1.out` and 70ms stagger. Each source row has its own once-only trigger and a 12px horizontal settle over 500ms, rather than completing all rows when only the first is visible. Initial opacity remains at least .65 on these additions, so offscreen content is still readable before its trigger. Each completed entrance clears owned inline transforms/opacity. There is no pin, character splitting, image hover zoom or repeated whole-page fade-up.
 
 ScrollTriggers use once-only entrances. Refresh after font loading because typography changes layout. React `useGSAP` / matchMedia scopes and reverts all animations on unmount or when preferences change.
 
@@ -28,7 +28,7 @@ Links keep underline / color and focus feedback. Only directional arrows move: e
 
 Mobile menu opens as a straightforward disclosure without animated layout height. It remains a real keyboard-operable disclosure. Navigation is usable before animation initialization.
 
-Fidan’s overflowing source keeps native horizontal scrolling, keyboard access and selection; a static narrow-screen cue appears only when needed. Footer rows and platform icons stay static. Phone camera/scale/posters remain unchanged after size comparisons. Media depth is static, not a misleading hover interaction; source links have a fine-pointer tonal hover and matching keyboard focus background.
+Fidan’s overflowing source keeps native horizontal scrolling, keyboard access and selection; a static narrow-screen cue appears only when needed. Footer rows and platform icons stay static. Phone camera/scale/posters remain unchanged after size comparisons. Media has a stronger theme-aware resting shadow; fine-pointer hover and keyboard focus within the field deepen it over 300ms without translating, scaling or changing its cursor. Source links have a tonal background and 2px horizontal movement over 250ms on fine-pointer hover or keyboard focus. Touch does not inherit hover movement; reduced motion retains tonal/focus feedback without spatial transitions.
 
 ## Theme changes
 

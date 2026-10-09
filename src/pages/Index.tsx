@@ -42,17 +42,43 @@ const Index = () => {
             once: true,
           },
         });
-        gsap.from(".lane-stage", {
-          scale: 0.99,
-          duration: 0.8,
-          ease: "power2.out",
-          clearProps: "all",
-          scrollTrigger: {
-            trigger: ".lane-stage",
-            start: "top 85%",
-            once: true,
-          },
-        });
+        for (const selector of [".lane-stage", ".tag-stage"]) {
+          gsap.from(selector, {
+            y: 20,
+            opacity: 0.7,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+            scrollTrigger: {
+              trigger: selector,
+              start: "clamp(top 88%)",
+              once: true,
+            },
+          });
+        }
+        for (const selector of [
+          ".project-details > div",
+          ".lane-overview > div",
+          ".tag-project > .split-copy",
+        ]) {
+          gsap.utils
+            .toArray<HTMLElement>(selector, page.current)
+            .forEach((element, index) => {
+              gsap.from(element, {
+                y: 18,
+                opacity: 0.7,
+                duration: 0.7,
+                delay: index * 0.08,
+                ease: "power3.out",
+                clearProps: "transform,opacity",
+                scrollTrigger: {
+                  trigger: element,
+                  start: "clamp(top 88%)",
+                  once: true,
+                },
+              });
+            });
+        }
         // A few distinct arrivals; content is readable even before each reveal.
         for (const selector of [
           ".section-heading",
@@ -60,7 +86,7 @@ const Index = () => {
         ]) {
           gsap.from(selector, {
             y: 16,
-            opacity: 0.75,
+            opacity: 0.7,
             duration: 0.65,
             ease: "power2.out",
             clearProps: "transform,opacity",
@@ -83,20 +109,34 @@ const Index = () => {
             once: true,
           },
         });
-        for (const selector of [".recognition-list > div", ".source-list li"]) {
-          gsap.from(selector, {
-            opacity: 0.65,
-            duration: 0.45,
-            stagger: 0.07,
-            ease: "power1.out",
-            clearProps: "opacity",
-            scrollTrigger: {
-              trigger: selector,
-              start: "clamp(top 90%)",
-              once: true,
-            },
+        gsap.from(".recognition-list > div", {
+          opacity: 0.65,
+          duration: 0.45,
+          stagger: 0.07,
+          ease: "power1.out",
+          clearProps: "opacity",
+          scrollTrigger: {
+            trigger: ".recognition-list",
+            start: "clamp(top 90%)",
+            once: true,
+          },
+        });
+        gsap.utils
+          .toArray<HTMLElement>(".source-list li", page.current)
+          .forEach((row) => {
+            gsap.from(row, {
+              x: 12,
+              opacity: 0.65,
+              duration: 0.5,
+              ease: "power2.out",
+              clearProps: "transform,opacity",
+              scrollTrigger: {
+                trigger: row,
+                start: "clamp(top 92%)",
+                once: true,
+              },
+            });
           });
-        }
       });
       let active = true;
       document.fonts.ready.then(() => {

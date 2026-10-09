@@ -62,7 +62,7 @@ Our countermeasure is content-specific composition: actual language syntax for F
 - Pale mineral `#e6e8e0`: LanePilot image framing.
 - Warm sand `#e8e1d3`: TagVault product stage.
 
-No gradient page backgrounds, glow, glass, card shadows or universal rounded corners. Flat editorial fields support imagery; material lighting belongs to the actual mark and the reused product phone. Thin rules only separate meaningful lists, project details and footer utilities.
+No gradient page backgrounds, glow, glass or universal rounded corners. The three project media fields have soft theme-aware elevation and a restrained hover/focus shadow change; they never tilt or lift like clickable cards. Editorial text and lists retain open layouts. Material lighting belongs to the actual mark and the reused product phone. Thin rules only separate meaningful lists, project details and footer utilities.
 
 ## Layout and whitespace
 

@@ -14,7 +14,7 @@ npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **82 browser / asset checks**: comprehensive Chromium regression at eight sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Focused coverage includes hero line breaks, Fidan separation/source scrolling, simulation provenance and complete panels, footer layout at 14 widths, monochrome icon geometry, once-only entrances and actual mixed-theme pixels at 240ms. Results and captures go to ignored `test-results/`.
+Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **83 browser / asset checks**: comprehensive Chromium regression at eight sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Focused coverage includes hero line breaks and project-index exclusion from the first viewport, Fidan separation/source scrolling, simulation provenance and complete panels, footer layout at 14 widths, monochrome icon geometry, once-only entrances with an actual intermediate media state, keyboard/touch/reduced-motion depth feedback and actual mixed-theme pixels at 240ms. Results and captures go to ignored `test-results/`.
 
 `BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173.
 

@@ -57,6 +57,12 @@ for (const theme of ["light", "dark"] as const) {
       expect(headline[1].top).toBeGreaterThan(headline[0].top);
       const actions = (await page.locator(".hero-actions").boundingBox())!;
       expect(actions.y + actions.height).toBeLessThanOrEqual(size.height - 24);
+      const index = (await page.locator(".hero-index").boundingBox())!;
+      expect(index.y).toBeGreaterThanOrEqual(size.height);
+      if (size.width < 768 && size.height <= 650) {
+        const object = (await page.locator(".hero-object").boundingBox())!;
+        expect(object.y).toBeGreaterThanOrEqual(size.height);
+      }
       await expect(page.locator("#fidan-title")).toHaveText("Fidan");
       await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
       await expect(page.locator("#tagvault-title")).toHaveText("TagVault");

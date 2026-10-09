@@ -40,6 +40,9 @@
     --space-2xl: 80px;
     --space-section: 112px;
     --space-display: 144px;
+    --header-height: 88px;
+    --media-shadow: rgb(25 32 24 / 0.18);
+    --media-shadow-active: rgb(25 32 24 / 0.24);
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
@@ -53,6 +56,8 @@
     --mineral: #252925;
     --sand: #302e28;
     --footer: #1b1d18;
+    --media-shadow: rgb(0 0 0 / 0.5);
+    --media-shadow-active: rgb(0 0 0 / 0.65);
   }
   * {
     box-sizing: border-box;
@@ -127,7 +132,7 @@
   background: var(--paper);
 }
 .header-inner {
-  height: 88px;
+  height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -297,14 +302,16 @@
   transform: none;
 }
 .hero {
-  padding-top: 12px;
+  --hero-inset: 12px;
+  padding-top: var(--hero-inset);
 }
 .hero-composition {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 24px;
   align-items: center;
-  min-height: min(540px, calc(100svh - 180px));
+  /* The project index starts after the first screen, or after taller content. */
+  min-height: calc(100svh - var(--header-height) - var(--hero-inset));
 }
 .hero-copy {
   position: relative;
@@ -417,7 +424,7 @@
   gap: 36px;
   border-top: 1px solid var(--rule);
   padding-block: 25px 38px;
-  margin-top: 14px;
+  margin-top: 0;
 }
 .hero-index a {
   position: relative;
@@ -837,7 +844,8 @@ figcaption {
   padding-block: 25px;
   transition:
     color 0.2s,
-    background-color 0.2s;
+    background-color 0.2s,
+    transform 0.25s cubic-bezier(0.2, 0.65, 0.3, 1);
 }
 .source-list h3 {
   font-size: 19px;
@@ -1020,9 +1028,6 @@ figcaption {
 }
 
 @media (min-width: 1800px) {
-  .hero-composition {
-    min-height: min(640px, calc(100svh - 210px));
-  }
   .hero-description {
     max-width: 610px;
   }
@@ -1096,9 +1101,6 @@ figcaption {
   }
 }
 @media (max-width: 899px) {
-  .hero-composition {
-    min-height: 550px;
-  }
   .hero-description {
     font-size: 16px;
   }
@@ -1192,7 +1194,6 @@ figcaption {
 @media (min-width: 768px) and (max-width: 959px) {
   .hero-composition {
     grid-template-columns: 1.5fr 1fr;
-    min-height: 480px;
     gap: 20px;
   }
   .hero h1 {
@@ -1210,8 +1211,7 @@ figcaption {
     line-height: 1.7;
   }
   .hero-object {
-    align-self: end;
-    margin-bottom: 60px;
+    align-self: center;
   }
   .brand-scene {
     width: 100%;
@@ -1228,14 +1228,14 @@ figcaption {
   }
 }
 @media (max-width: 767px) {
+  :root {
+    --header-height: 76px;
+  }
   .header-actions {
     gap: 4px;
   }
   .page-width {
     width: calc(100% - 44px);
-  }
-  .header-inner {
-    height: 76px;
   }
   .brand {
     font-size: 21px;
@@ -1267,13 +1267,13 @@ figcaption {
     border-top: 1px solid var(--rule);
   }
   .hero {
-    padding-top: 30px;
+    --hero-inset: 30px;
   }
   .hero-composition {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    min-height: 0;
+    justify-content: space-between;
   }
   .hero-copy {
     padding-block: 15px 0;
@@ -1317,7 +1317,6 @@ figcaption {
   }
   .hero-index {
     gap: 12px;
-    margin-top: var(--space-xs);
     padding-block: 22px;
   }
   .hero-index a > span:first-child {
@@ -1600,26 +1599,37 @@ figcaption {
   }
 }
 
-/* Project media shares one soft material edge; typography and rows stay square. */
+/* Non-clickable media gains depth without a button-like lift or cursor. */
 .fidan-stage,
 .lane-stage,
 .tag-stage {
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 16px 34px -26px rgb(25 32 24 / 0.35);
+  box-shadow: 0 18px 36px -16px var(--media-shadow);
   outline: 1px solid color-mix(in srgb, var(--ink) 6%, transparent);
   outline-offset: -1px;
+  transition: box-shadow 0.3s ease-out;
 }
-:root[data-theme="dark"] :is(.fidan-stage, .lane-stage, .tag-stage) {
-  box-shadow: 0 16px 34px -26px rgb(0 0 0 / 0.65);
+:is(.fidan-stage, .lane-stage, .tag-stage):focus-within {
+  box-shadow: 0 26px 48px -18px var(--media-shadow-active);
 }
 @media (hover: hover) and (pointer: fine) {
+  :is(.fidan-stage, .lane-stage, .tag-stage):hover {
+    box-shadow: 0 26px 48px -18px var(--media-shadow-active);
+  }
   .source-list a:hover {
     background: color-mix(in srgb, var(--surface) 65%, transparent);
+    transform: translateX(2px);
   }
 }
 .source-list a:focus-visible {
   background: color-mix(in srgb, var(--surface) 65%, transparent);
+  transform: translateX(2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .source-list a:is(:hover, :focus-visible) {
+    transform: none;
+  }
 }
 @media (max-width: 767px) {
   .lane-comparison {
@@ -1637,6 +1647,12 @@ figcaption {
   .hero-description {
     font-size: 14px;
     margin-top: 20px;
+  }
+}
+@media (max-width: 767px) and (max-height: 650px) {
+  /* A short phone opens on the complete copy, rather than a sliver of poster. */
+  .hero-copy {
+    min-height: calc(100svh - var(--header-height) - var(--hero-inset));
   }
 }
 @media (prefers-reduced-motion: reduce) {
