@@ -16,6 +16,13 @@ export async function mountBrandScene(
   if (!response.ok) throw new Error(`Brand asset: ${response.status}`);
   const source = await response.text();
   signal.throwIfAborted();
+  // A late lazy-load must not build an environment/shaders during the reveal.
+  while (document.activeViewTransition) {
+    await document.activeViewTransition.finished.catch(() => {
+      /* Failed/skipped snapshots still release the renderer. */
+    });
+    signal.throwIfAborted();
+  }
   const svg = new SVGLoader().parse(source);
   // The official compound SVG uses evenodd. Preserve its exact two contours.
   const outer = new THREE.Shape();
@@ -125,6 +132,7 @@ export async function mountBrandScene(
   let visible = true;
   let disposed = false;
   let contextLost = false;
+  let waitingTransition: ViewTransition | null = null;
   const target = { x: -0.2, y: -0.38 };
   let pointerX = 0;
   let pointerY = 0;
@@ -132,6 +140,10 @@ export async function mountBrandScene(
   const render = () => {
     frame = 0;
     if (disposed || contextLost || !visible || document.hidden) return;
+    if (document.activeViewTransition) {
+      requestRender();
+      return;
+    }
     object.rotation.x = THREE.MathUtils.lerp(object.rotation.x, target.x, 0.12);
     object.rotation.y = THREE.MathUtils.lerp(object.rotation.y, target.y, 0.12);
     renderer.render(scene, camera);
@@ -144,8 +156,22 @@ export async function mountBrandScene(
       frame = requestAnimationFrame(render);
   };
   const requestRender = () => {
-    if (!frame && visible && !document.hidden && !disposed && !contextLost)
-      frame = requestAnimationFrame(render);
+    if (frame || !visible || document.hidden || disposed || contextLost) return;
+    const transition = document.activeViewTransition;
+    if (transition) {
+      // The viewport is showing native snapshots. Drawing their source canvas
+      // competes with the reveal, especially on software GPUs; resume afterwards.
+      if (waitingTransition !== transition) {
+        waitingTransition = transition;
+        const resume = () => {
+          if (waitingTransition === transition) waitingTransition = null;
+          requestRender();
+        };
+        void transition.finished.then(resume, resume);
+      }
+      return;
+    }
+    frame = requestAnimationFrame(render);
   };
   const updateTarget = () => {
     target.x = -0.2 + pointerY * 0.08;

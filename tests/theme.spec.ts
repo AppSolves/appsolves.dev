@@ -255,6 +255,15 @@ test("unpaused theme reveals advance through intermediate frames with the live h
   );
   const recordings = await page.evaluateHandle(() => {
     const runs: { time: number; progress: number }[][] = [];
+    const probe = { runs, drawsDuringTransition: 0, drawsAfterTransition: 0 };
+    const draw = WebGL2RenderingContext.prototype.drawElements;
+    WebGL2RenderingContext.prototype.drawElements = function (...args) {
+      if ((this.canvas as HTMLCanvasElement).className === "brand-canvas") {
+        if (document.activeViewTransition) probe.drawsDuringTransition++;
+        else probe.drawsAfterTransition++;
+      }
+      return Reflect.apply(draw, this, args);
+    };
     const start = document.startViewTransition.bind(document);
     document.startViewTransition = (update) => {
       const samples: { time: number; progress: number }[] = [];
@@ -280,7 +289,7 @@ test("unpaused theme reveals advance through intermediate frames with the live h
       void transition.finished.then(() => cancelAnimationFrame(frame));
       return transition;
     };
-    return runs;
+    return probe;
   });
   try {
     for (const label of ["Dark", "Light"]) {
@@ -294,7 +303,12 @@ test("unpaused theme reveals advance through intermediate frames with the live h
         label.toLowerCase(),
       );
     }
-    const frames = await recordings.jsonValue();
+    await expect
+      .poll(() => recordings.evaluate((probe) => probe.drawsAfterTransition))
+      .toBeGreaterThan(0);
+    const { runs: frames, drawsDuringTransition } =
+      await recordings.jsonValue();
+    expect(drawsDuringTransition).toBe(0);
     expect(frames).toHaveLength(2);
     for (const samples of frames) {
       // Paused midpoint screenshots cannot detect a renderer rebuild that blocks
