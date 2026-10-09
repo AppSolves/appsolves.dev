@@ -1,14 +1,13 @@
 # Terms and Conditions — AppSolves
 
-**Last updated:** September 19, 2025
+**Last updated:** October 9, 2026
 
 These Terms and Conditions (the “Terms”) govern your access to and use of the websites, applications, products, and services provided by **AppSolves** (referred to below as “AppSolves”, “we”, “us” or “our”). By accessing or using any of our Services, you agree to be bound by these Terms. These Terms apply to all current and future products and services offered by AppSolves unless otherwise stated.
 
-**Controller / Provider:**
+**Controller contact:**
 
-- AppSolves
-- **Postal Address**: Riegelstraße 55, 73760 Ostfildern
-- Baden-Württemberg, Germany
+- Kaan Gönüldinc, operating under the AppSolves business name
+- **Postal Address**: Massenhausener Straße 17, 85375 Neufahrn bei Freising, Deutschland
 - **Email**: [contact@appsolves.dev](mailto:contact@appsolves.dev)
 
 ---
@@ -149,8 +148,8 @@ These Terms, together with any supplemental terms, policies (including the AppSo
 If you have questions about these Terms, or wish to contact us, please write to:
 
 - AppSolves
-- **Postal Address**: Riegelstraße 55, 73760 Ostfildern
-- Baden-Württemberg, Germany
+- **Postal Address**: Massenhausener Straße 17, 85375 Neufahrn bei Freising
+- Deutschland
 - **Email**: [contact@appsolves.dev](mailto:contact@appsolves.dev)
 
 ---
