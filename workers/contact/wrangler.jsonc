@@ -6,19 +6,57 @@
   "workers_dev": false,
   "preview_urls": false,
   "routes": [
-    { "pattern": "api.appsolves.dev/contact/*", "zone_name": "appsolves.dev" },
+    {
+      "pattern": "api.appsolves.dev/contact/*",
+      "zone_name": "appsolves.dev"
+    },
   ],
-  "vars": { "ALLOWED_ORIGIN": "https://appsolves.dev" },
+  "vars": {
+    "ALLOWED_ORIGIN": "https://appsolves.dev"
+  },
   "ratelimits": [
     {
       "name": "BURST_LIMIT",
       "namespace_id": "1001",
-      "simple": { "limit": 3, "period": 60 },
+      "simple": {
+        "limit": 3,
+        "period": 60
+      },
     },
   ],
   "durable_objects": {
-    "bindings": [{ "name": "CONTACT_BUDGET", "class_name": "ContactBudget" }],
+    "bindings": [
+      {
+        "name": "CONTACT_BUDGET",
+        "class_name": "ContactBudget"
+      }
+    ],
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ContactBudget"] }],
-  "observability": { "enabled": false },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "ContactBudget"
+      ]
+    }
+  ],
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "redact_query_string": false,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true
+    },
+    "issues": {
+      "enabled": true
+    }
+  }
 }
