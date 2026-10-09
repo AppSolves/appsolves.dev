@@ -222,7 +222,7 @@ export async function mountBrandScene(
   canvas.addEventListener("webglcontextlost", lostContext);
   window.addEventListener("resize", resize);
   resize();
-  return () => {
+  const dispose = () => {
     disposed = true;
     cancelAnimationFrame(frame);
     window.removeEventListener("resize", resize);
@@ -245,5 +245,14 @@ export async function mountBrandScene(
     renderer.forceContextLoss();
     canvas.remove();
     delete container.dataset.rendered;
+  };
+  return {
+    dispose,
+    setTheme(dark: boolean) {
+      // Theme changes only affect exposure. Rebuilding shaders/geometry here
+      // blocks Firefox's snapshot animation for longer than the reveal itself.
+      renderer.toneMappingExposure = dark ? 1.05 : 1;
+      requestRender();
+    },
   };
 }

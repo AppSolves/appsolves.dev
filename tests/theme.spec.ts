@@ -201,7 +201,7 @@ test("theme picker supports arrows, selection, Escape and focus return", async (
   await expect(trigger).toBeFocused();
 });
 
-test("theme changes replace one WebGL scene without retaining its drawing buffer", async ({
+test("theme changes reuse the live WebGL scene without retaining its drawing buffer", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -216,7 +216,13 @@ test("theme changes replace one WebGL scene without retaining its drawing buffer
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect
     .poll(() => previous!.evaluate((element) => element.isConnected))
-    .toBe(false);
+    .toBe(true);
+  await expect(page.locator("html")).not.toHaveClass(/theme-reveal/);
+  expect(
+    await page
+      .locator(".brand-canvas")
+      .evaluate((element, original) => element === original, previous!),
+  ).toBe(true);
   await expect(page.locator(".brand-scene")).toHaveAttribute(
     "data-rendered",
     "true",
@@ -232,6 +238,77 @@ test("theme changes replace one WebGL scene without retaining its drawing buffer
             ?.getContextAttributes()?.preserveDrawingBuffer,
       ),
   ).toBe(false);
+});
+
+test("unpaused theme reveals advance through intermediate frames with the live hero", async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({
+    colorScheme: "light",
+    reducedMotion: "no-preference",
+  });
+  await page.goto("/");
+  await expect(page.locator(".brand-scene")).toHaveAttribute(
+    "data-rendered",
+    "true",
+  );
+  const recordings = await page.evaluateHandle(() => {
+    const runs: { time: number; progress: number }[][] = [];
+    const start = document.startViewTransition.bind(document);
+    document.startViewTransition = (update) => {
+      const samples: { time: number; progress: number }[] = [];
+      runs.push(samples);
+      const transition = start(update);
+      let frame = 0;
+      void transition.ready.then(() => {
+        const animation = document
+          .getAnimations()
+          .find(
+            (item) =>
+              item instanceof CSSAnimation &&
+              item.animationName === "theme-circle",
+          )!;
+        const record = (time: number) => {
+          const progress = animation.effect!.getComputedTiming().progress;
+          if (typeof progress === "number" && progress > 0 && progress < 1)
+            samples.push({ time, progress });
+          frame = requestAnimationFrame(record);
+        };
+        frame = requestAnimationFrame(record);
+      });
+      void transition.finished.then(() => cancelAnimationFrame(frame));
+      return transition;
+    };
+    return runs;
+  });
+  try {
+    for (const label of ["Dark", "Light"]) {
+      await page.getByRole("button", { name: "Choose color theme" }).click();
+      await page
+        .getByRole("menuitemradio", { name: label, exact: true })
+        .click();
+      await expect(page.locator("html")).not.toHaveClass(/theme-reveal/);
+      await expect(page.locator("html")).toHaveAttribute(
+        "data-theme",
+        label.toLowerCase(),
+      );
+    }
+    const frames = await recordings.jsonValue();
+    expect(frames).toHaveLength(2);
+    for (const samples of frames) {
+      // Paused midpoint screenshots cannot detect a renderer rebuild that blocks
+      // the entire 480ms reveal. These observations leave the native clock running.
+      expect(samples.length).toBeGreaterThanOrEqual(2);
+      expect(samples.at(-1)!.progress).toBeGreaterThan(samples[0].progress);
+    }
+    await testInfo.attach("unpaused-theme-frames", {
+      body: JSON.stringify(frames, null, 2),
+      contentType: "application/json",
+    });
+  } finally {
+    await recordings.dispose();
+  }
 });
 
 test("corrupt theme storage recovers to System", async ({ page }) => {
