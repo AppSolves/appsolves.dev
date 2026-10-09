@@ -1427,9 +1427,49 @@ figcaption {
   .menu-toggle {
     display: flex;
   }
+  .menu-icon path {
+    transform-origin: 12px 12px;
+    transition:
+      transform 220ms ease-out,
+      opacity 180ms ease-out;
+  }
+  .menu-icon path:first-child {
+    transform: translateY(-6px);
+  }
+  .menu-icon path:last-child {
+    transform: translateY(6px);
+  }
+  .menu-toggle[aria-expanded="true"] .menu-icon path:first-child {
+    transform: rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .menu-icon path:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .menu-toggle[aria-expanded="true"] .menu-icon path:last-child {
+    transform: rotate(-45deg);
+  }
   .mobile-nav {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      grid-template-rows 240ms ease-out,
+      opacity 200ms ease-out,
+      visibility 0s 240ms;
+  }
+  .mobile-nav[data-open="true"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .mobile-nav-clip {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .mobile-nav-content {
     padding-block: 10px 24px;
   }
   .mobile-nav a {
@@ -1447,7 +1487,7 @@ figcaption {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   .hero-copy {
     padding-block: 15px 0;
@@ -1823,10 +1863,10 @@ figcaption {
     margin-top: 20px;
   }
 }
-@media (max-width: 767px) and (max-height: 650px) {
-  /* A short phone opens on the complete copy, rather than a sliver of poster. */
-  .hero-copy {
-    min-height: calc(100svh - var(--header-height) - var(--hero-inset));
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .mobile-nav,
+  .menu-icon path {
+    transition: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

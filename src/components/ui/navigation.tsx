@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ThemeControl from "@/components/ThemeControl";
@@ -75,11 +75,21 @@ export default function Navigation() {
               aria-label={open ? "Close navigation" : "Open navigation"}
               onClick={() => setOpen((value) => !value)}
             >
-              {open ? (
-                <X size={23} aria-hidden="true" />
-              ) : (
-                <Menu size={23} aria-hidden="true" />
-              )}
+              <svg
+                className="menu-icon"
+                width="23"
+                height="23"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 12h16" />
+                <path d="M4 12h16" />
+                <path d="M4 12h16" />
+              </svg>
             </button>
           </div>
         </div>
@@ -87,26 +97,32 @@ export default function Navigation() {
           id="mobile-navigation"
           className="mobile-nav page-width"
           aria-label="Mobile navigation"
-          hidden={!open}
+          aria-hidden={!open}
+          inert={!open}
+          data-open={open}
         >
-          {[...links, { name: "Contact", href: "#contact" }].map((link) => (
-            <a
-              key={link.name}
-              href={`${onHome ? "" : home}${link.href}`}
-              onClick={() => {
-                setOpen(false);
-                toggle.current?.focus();
-              }}
-            >
-              {link.name}
-              <ArrowDown
-                data-arrow-motion="down"
-                size={22}
-                aria-hidden="true"
-              />
-            </a>
-          ))}
-          <ThemeControl {...themeSelection} mobile />
+          <div className="mobile-nav-clip">
+            <div className="mobile-nav-content">
+              {[...links, { name: "Contact", href: "#contact" }].map((link) => (
+                <a
+                  key={link.name}
+                  href={`${onHome ? "" : home}${link.href}`}
+                  onClick={() => {
+                    setOpen(false);
+                    toggle.current?.focus();
+                  }}
+                >
+                  {link.name}
+                  <ArrowDown
+                    data-arrow-motion="down"
+                    size={22}
+                    aria-hidden="true"
+                  />
+                </a>
+              ))}
+              <ThemeControl {...themeSelection} mobile />
+            </div>
+          </div>
         </nav>
       </header>
     </>

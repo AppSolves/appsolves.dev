@@ -36,6 +36,8 @@ System is the default; explicit choices persist. A parser-time script sets `data
 
 The Radix radio menu supports arrows, selection, Escape and focus return. On mobile, appearance is a native radio fieldset in the navigation; Escape closes the disclosure and returns focus to its toggle. Theme changes update the existing Three.js renderer's exposure, retaining its geometry, shaders and GPU context. Its next draw waits until native snapshots are released; a late lazy-load also defers GPU setup during an active transition. Rebuilding the scene blocks Firefox's animation frames, while competing draws can stall software-rendered snapshots. Its matching poster remains available throughout; both posters use identical framing and the same violet enamel. Superseded native transitions are skipped; preference generations reject stale snapshot callbacks, and the root class is cleaned on completion/unmount. A skipped snapshot still leaves the requested theme usable.
 
+Below 768px, navigation expands/collapses through a 240ms grid-row transition with a 200ms opacity settle. The hamburger's outer strokes rotate into a close icon over 220ms while its middle stroke fades. Closing immediately makes its contents inert and removes them from the accessibility tree, then finishes the visual collapse. CSS handles rapid reversals without timers; reduced motion applies both states immediately. Desktop navigation and styling are unchanged.
+
 ## Reduced motion, mobile, lifecycle
 
 `prefers-reduced-motion: reduce`: no entrance transforms, no scroll-triggered scale, no pointer motion; all content paints in its final state. CSS smooth scroll is disabled. The mark uses the static locally rendered poster; no WebGL is loaded.

@@ -129,6 +129,11 @@ test("directional arrows share semantic hover and keyboard focus motion", async 
   await page.evaluate(() => document.fonts.ready);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole("button", { name: "Open navigation" }).click();
+  // Test arrow feedback after the disclosure has finished moving its targets.
+  // The mobile motion suite independently verifies the intermediate states.
+  await page.locator("#mobile-navigation").evaluate((element) =>
+    Promise.all(element.getAnimations().map((animation) => animation.finished)),
+  );
   await checkAction(
     page,
     page

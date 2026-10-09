@@ -59,9 +59,13 @@ for (const theme of ["light", "dark"] as const) {
       expect(actions.y + actions.height).toBeLessThanOrEqual(size.height - 24);
       const index = (await page.locator(".hero-index").boundingBox())!;
       expect(index.y).toBeGreaterThanOrEqual(size.height);
-      if (size.width < 768 && size.height <= 650) {
+      if (size.width < 768) {
         const object = (await page.locator(".hero-object").boundingBox())!;
-        expect(object.y).toBeGreaterThanOrEqual(size.height);
+        // Keep the mark close to the action row even on short phones.
+        expect(object.y - (actions.y + actions.height)).toBeLessThanOrEqual(32);
+        expect(object.y - (actions.y + actions.height)).toBeGreaterThanOrEqual(
+          24,
+        );
       }
       await expect(page.locator("#fidan-title")).toHaveText("Fidan");
       await expect(page.locator("#lanepilot-title")).toHaveText("LanePilot");
