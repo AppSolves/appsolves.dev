@@ -4,11 +4,10 @@
 
 These Terms and Conditions (the “Terms”) govern your access to and use of the websites, applications, products, and services provided by **AppSolves** (referred to below as “AppSolves”, “we”, “us” or “our”). By accessing or using any of our Services, you agree to be bound by these Terms. These Terms apply to all current and future products and services offered by AppSolves unless otherwise stated.
 
-**Controller / Provider:**
+**Controller contact:**
 
-- AppSolves
-- **Postal Address**: Massenhausener Straße 17, 85375 Neufahrn bei Freising
-- Deutschland
+- Kaan Gönüldinc, operating under the AppSolves business name
+- **Postal Address**: Massenhausener Straße 17, 85375 Neufahrn bei Freising, Deutschland
 - **Email**: [contact@appsolves.dev](mailto:contact@appsolves.dev)
 
 ---

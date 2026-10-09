@@ -306,6 +306,7 @@ test("unconfigured production form fails safely; all direct routes retain legal 
 test("legal operator addresses, route artifacts and browser bundle exclude private configuration", async () => {
   for (const name of ["privacy_policy", "terms_and_conditions", "impressum"]) {
     const text = await readFile(`public/legal/${name}.md`, "utf8");
+    expect(text).toContain("Kaan Gönüldinc");
     expect(text).toContain("Massenhausener Straße 17");
     expect(text).toContain("85375 Neufahrn bei Freising");
     expect(text).not.toMatch(/Riegelstraße|73760|Ostfildern/);
