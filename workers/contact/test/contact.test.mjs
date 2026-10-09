@@ -343,6 +343,84 @@ test("missing essential secrets fails closed before providers", async () => {
   assert.equal(sent.length, 0);
 });
 
+test("essential protection failures stay closed without logging private inputs or errors", async () => {
+  const bundle = await readFile(".cache/contact-worker/index.js", "utf8");
+  // Test-only entry captures console arguments and injects failures, never deployed.
+  const harness = `import worker from './index.js';
+    export {ContactBudget} from './index.js';
+    export default {async fetch(request,env){
+      const entries=[];
+      const originalLog=console.error;
+      const originalImport=crypto.subtle.importKey;
+      console.error=(...args)=>entries.push(args);
+      const bindings={...env};
+      const fault=request.headers.get('X-Test-Fault');
+      if(fault==='ip'){const headers=new Headers(request.headers);headers.delete('CF-Connecting-IP');request=new Request(request,{headers});}
+      if(fault==='binding')delete bindings.MAILJET_API_KEY;
+      if(fault==='short_secret')bindings.RATE_LIMIT_SECRET='private-sentinel';
+      if(fault==='hmac')crypto.subtle.importKey=async()=>{throw new TypeError('private-sentinel');};
+      if(fault==='burst')bindings.BURST_LIMIT={limit:async()=>{const error=new Error('private-sentinel');error.name='private-sentinel';throw error;}};
+      try{
+        const response=await worker.fetch(request,bindings);
+        return Response.json({status:response.status,body:await response.json(),entries});
+      }finally{console.error=originalLog;crypto.subtle.importKey=originalImport;}
+    }};`;
+  const probe = new Miniflare(
+    convertV4MiniflareOptions({
+      name: "contact-protection-test",
+      compatibilityDate: "2026-10-09",
+      modules: [
+        { type: "ESModule", path: "probe.js", contents: harness },
+        { type: "ESModule", path: "index.js", contents: bundle },
+      ],
+      bindings: {
+        ALLOWED_ORIGIN: "https://appsolves.dev",
+        MAILJET_API_KEY: "private-sentinel",
+        MAILJET_SECRET_KEY: "private-sentinel",
+        TURNSTILE_SECRET_KEY: "private-sentinel",
+        RATE_LIMIT_SECRET:
+          "private-sentinel-long-enough-for-the-existing-policy",
+      },
+      durableObjects: {
+        CONTACT_BUDGET: { className: "ContactBudget", useSQLite: true },
+      },
+      ratelimits: {
+        BURST_LIMIT: { namespace_id: "1001", simple: { limit: 3, period: 60 } },
+      },
+      outboundService: () => {
+        throw new Error("Protection failures must not call providers");
+      },
+    }),
+  );
+  try {
+    for (const fault of ["binding", "short_secret", "ip", "hmac", "burst"]) {
+      const response = await probe.dispatchFetch(
+        "https://api.appsolves.dev/contact/submit",
+        {
+          method: "POST",
+          headers: {
+            Origin: "https://appsolves.dev",
+            "Content-Type": "application/json",
+            "X-Test-Fault": fault,
+            ...(fault === "ip" ? {} : { "CF-Connecting-IP": "192.0.2.99" }),
+          },
+          body: JSON.stringify({
+            ...valid(),
+            token: "private-sentinel",
+            message: "private-sentinel",
+          }),
+        },
+      );
+      const result = await response.json();
+      assert.equal(result.status, 503);
+      assert.deepEqual(result.body, { code: "UNAVAILABLE" }, fault);
+      assert.deepEqual(result.entries, [], fault);
+    }
+  } finally {
+    await probe.dispose();
+  }
+});
+
 test("real Durable Object enforces daily budgets across hours and resets at the UTC boundary", async () => {
   const bundle = await readFile(".cache/contact-worker/index.js", "utf8");
   // Test-only RPC harness controls the clock inside the actual budget class.

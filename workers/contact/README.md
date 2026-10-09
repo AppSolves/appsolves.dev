@@ -1,6 +1,8 @@
-# AppSolves contact API: operator setup
+# AppSolves contact API: production operations
 
-This code is implemented and tested locally. It has **not** been deployed, the account/domain configuration has not been verified, and real mailbox receipt has **not** been confirmed. Do not activate the frontend until the steps below are complete. No credentials belong in Git or chat.
+The website is live on GitHub Pages and `appsolves-contact` is deployed on Cloudflare. On 9 October 2026, the operator confirmed successful production Turnstile verification, Mailjet sending and end-to-end receipt in `contact@appsolves.dev`. This cleanup verifies the deployed API with an empty JSON request only; it does not send another real email. No credentials belong in Git or chat.
+
+The instructions below remain the reference for maintenance and authorized setup/recovery. Existing production DNS, routes, secrets and the budget namespace must be preserved during routine code deployments.
 
 ## Architecture and limits
 
@@ -19,13 +21,21 @@ The browser carries only a public Turnstile site key and API URL. The Worker val
 
 ## 1. Review existing Cloudflare resources first
 
-Run `npx wrangler login` interactively, then `npx wrangler whoami`. Confirm the correct account and ownership of zone `appsolves.dev`. Account authentication was expired during implementation; public DNS returned no API A/AAAA record, but dashboard configuration remains unverified.
+Use `npx wrangler whoami` to confirm authentication, the AppSolves account and ownership of zone `appsolves.dev`; use interactive login only if required. The production Worker and its API route already exist. Inspect them before future updates; do not repeat first-time provisioning over existing resources.
 
 In the dashboard inspect DNS, Workers routes, Custom Domains, existing `appsolves-contact` name, and rate-limiter namespace IDs. Record the existing personal automation/waste-calendar mappings. **Stop if any target already belongs to another service.** Do not overwrite, delete, or widen a route.
 
 Worker Routes require a proxied DNS record. If `api` has no existing record and no real origin, create **AAAA / name `api` / content `100::` / Proxied / TTL Auto**. This reserved placeholder cannot provide an origin; unmatched paths are not a functioning API. If a record already exists, preserve it and investigate its purpose. Do not assign the entire API hostname as a Custom Domain. See [Cloudflare's originless route guidance](https://developers.cloudflare.com/workers/best-practices/workers-best-practices/) and [route configuration](https://developers.cloudflare.com/workers/configuration/routing/routes/).
 
-Confirm that rate-limiter namespace `1001` is unused, or select an unused account-local namespace ID in `wrangler.jsonc` before deployment. Do not reuse an existing limiter namespace blindly. Ensure the account plan supports the configured rate binding and SQLite Durable Objects, and review platform costs. Future automation/AI/webhooks Workers can have their own path routes; none is implemented here.
+The production burst limiter uses namespace `1001`; preserve it and the existing SQLite Durable Object binding during updates. For an independent first-time installation, confirm that any chosen limiter namespace is unused. Review platform support and costs before provisioning. Future automation/AI/webhooks Workers can have their own path routes; none is implemented here.
+
+### Required visitor IP header setting
+
+Cloudflare must preserve **`CF-Connecting-IP`** for requests to `api.appsolves.dev/contact/submit`. The **Remove visitor IP headers** Managed Transform removes this header ([official reference](https://developers.cloudflare.com/rules/transform/managed-transforms/reference/#remove-visitor-ip-headers)); keep that setting disabled for API traffic and check that no other request-header rule strips it.
+
+The operator identified this setting as the original `503 UNAVAILABLE` cause and disabled it. An empty JSON submission then returned `400 INVALID_INPUT`. Without the header, the Worker deliberately returns `503 UNAVAILABLE` before provider calls because its per-client protections cannot operate. Do not replace that guard with a caller-supplied IP or a shared fallback identifier.
+
+This is a Cloudflare zone configuration requirement. The repository and `wrangler deploy` do not manage the Managed Transform; this cleanup does not change it, DNS or secrets.
 
 ## 2. Configure Mailjet
 
@@ -57,8 +67,13 @@ npm run worker:build
 Once the resource checks and permission to deploy are complete:
 
 ```sh
-# First deployment creates this new Worker and its isolated SQLite namespace.
+# Update only the existing production Worker; preserve its namespace and secrets.
 npx wrangler deploy --config workers/contact/wrangler.jsonc
+```
+
+Production secrets are already configured. The following commands are for first-time setup or explicitly authorized recovery, not routine code deployment:
+
+```sh
 # Each command prompts privately; never paste secret values as CLI arguments:
 npx wrangler secret put MAILJET_API_KEY --config workers/contact/wrangler.jsonc
 npx wrangler secret put MAILJET_SECRET_KEY --config workers/contact/wrangler.jsonc
@@ -66,7 +81,9 @@ npx wrangler secret put TURNSTILE_SECRET_KEY --config workers/contact/wrangler.j
 npx wrangler secret put RATE_LIMIT_SECRET --config workers/contact/wrangler.jsonc
 ```
 
-Use a separately generated cryptographically random value of at least 32 bytes for `RATE_LIMIT_SECRET`. The first deployment fails closed until every secret exists. Verify that only `api.appsolves.dev/contact/*` was added and all original mappings are unchanged. `workers.dev` and preview URLs remain disabled. Set route failure mode to **fail closed** in Cloudflare. Do not enable request-body logging; use non-sensitive request/status/error-rate metrics and provider account alerts. Default Worker logging is disabled.
+Use a separately generated cryptographically random value of at least 32 bytes for `RATE_LIMIT_SECRET` during initial setup. The Worker fails closed until every required secret/binding exists. Verify that only `api.appsolves.dev/contact/*` belongs to this Worker and all original mappings are unchanged. `workers.dev` and preview URLs remain disabled. Keep route failure mode **fail closed** in Cloudflare. Do not enable request-body logging; use non-sensitive request/status/error-rate metrics and provider account alerts. The production handler contains no diagnostic console logging; platform observability settings are unchanged.
+
+For a safe post-deployment check, send `POST https://api.appsolves.dev/contact/submit` with `Origin: https://www.appsolves.dev`, `Content-Type: application/json` and body `{}`. Expect HTTP **400** with `{"code":"INVALID_INPUT"}`. This consumes one burst-limit attempt but cannot reach Turnstile or Mailjet. Do not supply or fabricate `CF-Connecting-IP` in this external request; Cloudflare must add/preserve it.
 
 Test OPTIONS at the exact endpoint with Origin `https://appsolves.dev` and requested method POST; expect 204 and the exact origin. GET must return 405, sibling contact paths 404, unwanted origins 403. Confirm TLS and API DNS. A command-line request cannot replace genuine browser Turnstile verification.
 
@@ -100,11 +117,13 @@ The separate `.cache/contact-test-site` preview on port 4174 uses test keys and 
 
 After explicit website-release authorization, use the existing GitHub Pages deployment workflow/`npm run deploy` with the **configured production build**. This guide is not deployment permission. Verify direct-route refresh, canonical metadata, both themes and console CSP violations on the real domain.
 
-## 6. Required real end-to-end acceptance
+## 6. Confirmed end-to-end acceptance and future verification
 
-From the actual allowed site hostname, submit a genuine production Turnstile challenge and a uniquely identified message. Check the Worker response is `ACCEPTED`, Mailjet's message event/status, and **receipt in `contact@appsolves.dev`**, including the spam folder. Inspect authentication headers for SPF/DKIM/DMARC and verify Reply-To by replying. Verify failed/expired challenges and non-sensitive quota monitoring. Record date and outcome without copying personal message contents or secrets into Git.
+The operator confirmed real production challenge verification and end-to-end email delivery on 9 October 2026. That confirmation is separate from automated tests, which mock Siteverify and Mailjet. No further real-mail submission is automated during this cleanup.
 
-Mailjet acceptance does not guarantee inbox delivery. Until a real receipt is observed, deployment, anti-bot production verification and email delivery remain unconfirmed.
+For future explicitly authorized delivery checks, submit a genuine challenge from the allowed site hostname and confirm both `ACCEPTED` and **receipt in `contact@appsolves.dev`**, including the spam folder. Inspect authentication headers for SPF/DKIM/DMARC and verify Reply-To if those properties need checking; this guide does not assert that those additional checks were performed. Record date and outcome without copying personal message contents or secrets into Git.
+
+Mailjet acceptance alone does not guarantee inbox delivery. The operator's observed receipt establishes this deployment's end-to-end delivery test, not guaranteed delivery of every future message.
 
 ## Legal release checks
 
