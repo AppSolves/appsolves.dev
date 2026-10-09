@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => {
       "Use the verified HTTPS contact endpoint; credentials and query parameters are not allowed.",
     );
   }
-  let outputDirectory = resolve(__dirname, "dist");
+  let outputDirectory = resolve(import.meta.dirname, "dist");
 
   return {
     base: env.VITE_BASE_URL || "/",
@@ -171,8 +171,8 @@ export default defineConfig(({ mode }) => {
     ].filter(Boolean),
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
-        "@legal": path.resolve(__dirname, "./public/legal"),
+        "@": path.resolve(import.meta.dirname, "./src"),
+        "@legal": path.resolve(import.meta.dirname, "./public/legal"),
       },
     },
     build: {
