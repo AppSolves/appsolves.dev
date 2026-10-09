@@ -96,6 +96,8 @@ for (const theme of ["light", "dark"]) {
             .analyze()
         ).violations,
       ).toEqual([]);
+      // Native invalid-field focus scrolls; full-page capture would misplace sticky/fixed UI.
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
       await page.screenshot({
         path: testInfo.outputPath(`errors-${theme}-${width}.png`),
         fullPage: true,
