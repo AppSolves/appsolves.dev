@@ -57,7 +57,7 @@ test("editorial surfaces share the positioning and link to the verified shipped 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.locator(".hero-description")).toHaveText(
-    "I develop AI systems for edge hardware and ship software products, including Fidan, my own programming language and compiler. My goal is to turn that work into an AI company.",
+    "I develop AI systems, build and ship software products, and work on Fidan, my own programming language. My long-term goal is to found an AI company.",
   );
   await expect(page.locator(".specimen-label")).toHaveText("Fidan source");
   const description =
@@ -82,7 +82,7 @@ test("editorial surfaces share the positioning and link to the verified shipped 
   );
   await expect(page.locator("#lanepilot")).not.toContainText(/39\s*%|29\s*%/);
   await expect(page.locator(".lane-figure figcaption")).toHaveText(
-    "Illustrative simulation snapshots with speed, braking, and collision diagnostics. The panels show different steps and vehicle counts, rather than a controlled benchmark. No public-road validation.",
+    "Simulation snapshots of LanePilot and a baseline. Different simulation steps and vehicle counts; not a controlled performance comparison.",
   );
   await expect(page.locator("#about-title")).toHaveText("BehindAppSolves");
   await expect(page.locator(".recognition-list")).toContainText(

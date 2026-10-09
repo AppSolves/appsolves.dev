@@ -17,19 +17,24 @@ await sharp("assets/sources/tagvault-01.jpg")
   .resize({ width: 1080, withoutEnlargement: true })
   .webp({ quality: 95, effort: 6 })
   .toFile("public/images/tagvault-01-1080.webp");
-// Preserve both complete panels, including diagnostics, steps and vehicle counts.
+// Remove only the oversized source title and empty bottom margin.
+// Preserve the entire road and diagnostics, including steps and vehicle counts.
 for (const [panel, left] of [
   ["control", 0],
   ["baseline", 1920],
 ]) {
   for (const width of [480, 960, 1920]) {
     const image = sharp("assets/sources/lanepilot-simulation.png")
-      .extract({ left, top: 0, width: 1920, height: 1508 })
+      .extract({ left, top: 274, width: 1920, height: 960 })
       .resize({ width, withoutEnlargement: true });
     for (const format of ["avif", "webp"]) {
       await image
         .clone()
-        [format]({ quality: 90, effort: 6, chromaSubsampling: "4:4:4" })
+        [format]({
+          quality: 90,
+          effort: 6,
+          ...(format === "avif" ? { chromaSubsampling: "4:4:4" } : {}),
+        })
         .toFile(`public/images/lanepilot-${panel}-${width}.${format}`);
     }
   }

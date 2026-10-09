@@ -117,3 +117,20 @@ The hero leads with AI and products, gives Fidan concrete supporting prominence,
 - [appscreen-mcp](https://github.com/AppSolves/appscreen-mcp/tree/97e6f7f3ff13089cd6c10baa1105b1b895da878f), including its MCP-server README, documents the AppSolves automation bridge, agent interfaces and npm package atop YUZU-Hub/appscreen. The fifth row credits the upstream editor explicitly. The other four curated entries remain; reviewed public repositories did not provide a clearer replacement. No private/commercial project is exposed.
 - LanePilot `v2` at `5919b899de988ac8e7766acf0503b0139c980ada` adds [metrics.png](https://github.com/AppSolves/LanePilot/blob/5919b899de988ac8e7766acf0503b0139c980ada/assets/github/metrics.png). This image, not metrics_evaluation.png, is the requested source. Its two panels retain all diagnostics and original German labels. They show 13/15 vehicles and steps 674/921, with visible speed/braking/collision values; these are unmatched snapshots, not a reproducible controlled evaluation. No aggregate improvement or public-road claim is made. The withdrawn −39%/+29% remain withdrawn.
 - Both complete panels are responsive 480/960/1920px derivatives. Desktop comparison spans the available media width; mobile stacks the panels instead of cropping or shrinking the whole 2.55:1 screenshot. A lossless full-resolution comparison enables detailed inspection. Test source hashing and displayed-pixel equality protect provenance. Tiny embedded diagnostics require opening that image on mobile.
+
+## Final production implementation, 9 October 2026
+
+The preceding entries record earlier editorial passes. This implementation changes only the explicitly requested surfaces:
+
+| Surface | Before | Final |
+| --- | --- | --- |
+| Hero support | I develop AI systems for edge hardware and ship software products, including Fidan, my own programming language and compiler. My goal is to turn that work into an AI company. | I develop AI systems, build and ship software products, and work on Fidan, my own programming language. My long-term goal is to found an AI company. |
+| Recognition | 2nd Prize for LanePilot | 2nd Prize at the regional Jugend forscht competition |
+| Project recognition | Jugend forscht, 2nd Prize | Jugend forscht, regional 2nd Prize |
+| Simulation caption | Earlier illustrative-snapshot wording | Simulation snapshots of LanePilot and a baseline. Different simulation steps and vehicle counts; not a controlled performance comparison. |
+
+The two-line headline, Ferry Porsche wording, Fidan, TagVault, About and curated Open Source copy remain unchanged. LanePilot thumbnails now use source-faithful road/diagnostic crops at y=274, height=960; compact English control/baseline labels replace oversized embedded source headings in the thumbnail presentation. The full original comparison remains available unchanged. No values, vehicles or outcomes are altered, and no percentages are restored.
+
+The owner's [public profile](https://de.linkedin.com/in/kaangoenueldinc) identifies the regional Mittlerer Neckar competition and LanePilot. The repository README does not independently establish the award level, so the confirmed regional wording is retained without adding a more precise official title or suggesting national placement. An independent official recipient listing/certificate was not found during this pass.
+
+New Contact and Impressum copy describes actual functionality and the confirmed natural-person operator. Privacy/Terms edits are limited to current operator details and a contact-processing addendum. Neither a commercial company form nor an arbitration commitment is invented. Provider acceptance is described as acceptance for sending, never guaranteed inbox delivery.

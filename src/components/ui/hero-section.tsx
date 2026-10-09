@@ -18,9 +18,9 @@ export default function HeroSection() {
             </span>
           </h1>
           <p className="hero-description">
-            I develop AI systems for edge hardware and ship software products,
-            including Fidan, my own programming language and compiler. My goal
-            is to turn that work into an AI company.
+            I develop AI systems, build and ship software products, and work on
+            Fidan, my own programming language. My long-term goal is to found an
+            AI company.
           </p>
           <div className="hero-actions">
             <a className="text-link" href="#work">

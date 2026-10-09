@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Index from "./pages/Index";
 import { ThemeProvider } from "next-themes";
 import ThemeMetadata from "./components/ThemeMetadata";
+const Contact = lazy(() => import("./pages/Contact"));
+const Impressum = lazy(() => import("./pages/legal/impressum"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const PrivacyPolicy = lazy(() => import("./pages/legal/privacy_policy"));
 const TermsAndConditions = lazy(
@@ -31,6 +33,8 @@ const App = () => {
         >
           <Routes>
             <Route path={basePath} element={<Index />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/impressum" element={<Impressum />} />
             <Route path="/privacy_policy" element={<PrivacyPolicy />} />
             <Route
               path="/terms_and_conditions"

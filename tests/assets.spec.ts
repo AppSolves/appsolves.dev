@@ -176,7 +176,22 @@ test("LanePilot preserves the complete original simulation comparison and each p
       const image = await sharp(
         `public/images/lanepilot-${name}-1920.${format}`,
       ).metadata();
-      expect([image.width, image.height]).toEqual([1920, 1508]);
+      expect([image.width, image.height]).toEqual([1920, 960]);
+      if (format === "webp") {
+        const crop = await sharp(source)
+          .extract({
+            left: name === "control" ? 0 : 1920,
+            top: 274,
+            width: 1920,
+            height: 960,
+          })
+          .resize({ width: 1920, withoutEnlargement: true })
+          .webp({ quality: 90, effort: 6 })
+          .toBuffer();
+        expect(
+          await readFile(`public/images/lanepilot-${name}-1920.webp`),
+        ).toEqual(crop);
+      }
     }
 });
 

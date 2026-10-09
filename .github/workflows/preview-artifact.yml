@@ -34,6 +34,8 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
+      - name: Validate contact Worker in local Cloudflare runtime
+        run: npm run worker:test
       - uses: actions/upload-artifact@v4
         with:
           name: appsolves-preview-${{ github.sha }}

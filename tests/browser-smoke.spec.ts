@@ -96,6 +96,36 @@ for (const theme of ["light", "dark"] as const) {
         fullPage: true,
       });
       expect(errors).toEqual([]);
+      for (const route of ["/contact/", "/impressum/"]) {
+        await page.goto(route);
+        await expect(page.locator("main h1")).toHaveText(
+          route === "/contact/" ? "Let’s talk." : "Impressum",
+        );
+        await expect(
+          page
+            .locator(".legal-links")
+            .getByRole("link", { name: "Impressum", exact: true }),
+        ).toHaveAttribute("href", "/impressum");
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBe(true);
+        expect(
+          (
+            await new AxeBuilder({ page })
+              .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+              .analyze()
+          ).violations,
+        ).toEqual([]);
+        await page.screenshot({
+          path: testInfo.outputPath(
+            `${testInfo.project.name}-${theme}-${viewport.width}-${route.slice(1, -1)}.png`,
+          ),
+          fullPage: true,
+        });
+      }
+      expect(errors).toEqual([]);
     });
   }
 }

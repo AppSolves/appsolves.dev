@@ -27,3 +27,9 @@ playwright-report/
 *.sln
 *.sw?
 .gstack/
+
+# Worker state and private configuration
+.wrangler/
+.dev.vars*
+.env*
+!.env.example

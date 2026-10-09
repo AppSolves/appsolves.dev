@@ -9,7 +9,7 @@ import {
   Coffee,
   Heart,
 } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const socials = [
   { label: "GitHub", href: "https://github.com/AppSolves", icon: Github },
@@ -72,6 +72,9 @@ export default function Footer() {
                   aria-hidden="true"
                 />
               </a>
+              <Link className="text-link contact-form-link" to="/contact">
+                Send a message
+              </Link>
               <div className="contact-socials">
                 {socials.map(({ label, href, icon: Icon }) => (
                   <a
@@ -133,8 +136,10 @@ export default function Footer() {
           </a>
           <span>© {new Date().getFullYear()} Kaan Gönüldinc</span>
           <div className="legal-links">
-            <a href="/privacy_policy">Privacy policy</a>
-            <a href="/terms_and_conditions">Terms & conditions</a>
+            <Link to="/contact">Contact</Link>
+            <Link to="/impressum">Impressum</Link>
+            <Link to="/privacy_policy">Privacy policy</Link>
+            <Link to="/terms_and_conditions">Terms & conditions</Link>
           </div>
           <a className="back-top" href={compact ? home : "#main"}>
             {compact ? "Back home" : "Back to top"}{" "}

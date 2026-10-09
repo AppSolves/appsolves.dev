@@ -4,7 +4,7 @@
 
 Sticky, opaque navigation: official transparent violet mark and AppSolves left; Work, About, Open source, contact and a small theme control right. At mobile widths, links become an accessible disclosure. Desktop has a compact System / Light / Dark dropdown. Mobile puts native appearance radios inside the expanded navigation, without a second popup.
 
-Left: **Kaan Gönüldinc / AppSolves**, then two deliberate lines: **I build software / from the inside out.** The second uses violet Newsreader italic. Support: “I develop AI systems for edge hardware and ship software products, including Fidan, my own programming language and compiler. My goal is to turn that work into an AI company.” A text link to work and Computer Science at TUM complete the first desktop viewport. Right: the real chrome extrusion, with violet enamel on both front surfaces. The object remains separate from the text.
+Left: **Kaan Gönüldinc / AppSolves**, then two deliberate lines: **I build software / from the inside out.** The second uses violet Newsreader italic. Support: “I develop AI systems, build and ship software products, and work on Fidan, my own programming language. My long-term goal is to found an AI company.” A text link to work and Computer Science at TUM complete the first desktop viewport. Right: the real chrome extrusion, with violet enamel on both front surfaces. The object remains separate from the text.
 
 A simple three-link project index follows the first screen. The hero composition has a viewport-derived minimum height after subtracting its actual header and top inset; intrinsically taller content can grow. The divider sits at or below the viewport boundary and labels appear only on scrolling, with no clipping or opacity gate. The index provides direct access to Fidan, LanePilot and TagVault; their categories establish the range of work on larger screens. At widths up to 480px, names alone retain 44px tap targets; internal arrows point down.
 
@@ -22,11 +22,11 @@ Mobile stacks identity, readable source and details; only the code specimen can 
 
 ## 3. LanePilot moves AI onto edge hardware
 
-A pale mineral field in light mode and subdued mineral field in dark mode frame the authentic simulation comparison from `v2/assets/github/metrics.png`. A full-width desktop field shows both complete 1920 × 1508 panels; <=767px stacks them. Inner corners are 14px desktop / 12px mobile inside the existing 24px / 20px field. Diagnostics remain intact; a full-resolution link makes fine details accessible.
+A pale mineral field in light mode and subdued mineral field in dark mode frame the authentic simulation comparison from `v2/assets/github/metrics.png`. A full-width desktop field shows two 1920 × 960 road/diagnostic crops; <=767px stacks them. Compact external labels leave the vehicles visually prominent. Inner corners are 14px desktop / 12px mobile inside the existing 24px / 20px field. Diagnostics remain intact; a full-resolution link makes fine details accessible.
 
 The unchanged prose explains congestion, vehicle tracking and lane-change recommendations before the stack. It distinguishes GATv2 experiments from later reinforcement learning, with Jetson inference and Raspberry Pi camera/prototype control. YOLO11n-seg, PyTorch, PyTorch Geometric, CUDA/TensorRT and Jugend forscht, 2nd Prize remain. The former repeated evaluation block becomes one figure caption: these are illustrative snapshots with different steps/vehicle counts, not a controlled benchmark, and have no public-road validation. No percentages return.
 
-Desktop pairs the project identity with explanatory text above the comparison. Below 900px the media comes first and prose stacks. Both source panels remain complete on mobile. The visitor sees actual AI experimentation with carefully scoped claims, rather than a physical toy-car setup or invented diagram.
+Desktop pairs the project identity with explanatory text above the comparison. Below 900px the media comes first and prose stacks. Mobile stacks source-faithful 2:1 road/diagnostic crops with compact control/baseline labels. The unchanged complete comparison remains linked. The visitor sees actual AI experimentation with carefully scoped claims, rather than a physical toy-car setup or invented diagram.
 
 ## 4. TagVault proves product execution
 
@@ -38,7 +38,7 @@ Copy states that Kaan built and shipped the Android/Flutter app, explains compat
 
 A quieter neutral field pairs **Behind AppSolves** with Kaan’s identity as a Computer Science student at TUM. Concrete interests connect compiler representation, edge-model behavior and usable apps. AppSolves is his long-running software/product brand for published tools and commercial products. No unnamed venture sentence or services pitch is added.
 
-Three restrained recognition entries (Education / Recognition / Competition): Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / Award for outstanding achievement in STEM subjects; Jugend forscht / 2nd Prize for LanePilot. Current focus is “AI & Deep Learning / Software Engineering / Products & Entrepreneurship”. Tablet and mobile retain intentional reading-column/recognition stacking.
+Three restrained recognition entries (Education / Recognition / Competition): Computer Science / Technical University of Munich; Ferry Porsche Prize 2026 / Award for outstanding achievement in STEM subjects; Jugend forscht / 2nd Prize at the regional Jugend forscht competition. Current focus is “AI & Deep Learning / Software Engineering / Products & Entrepreneurship”. Tablet and mobile retain intentional reading-column/recognition stacking.
 
 ## 6. Published tools and libraries
 
@@ -50,6 +50,6 @@ The introduction covers application development, hardware research and coding ag
 
 Deep graphite, warm type and one violet serif gesture: **Good problems / welcome.** The heading has a restrained once-only arrival. Main email remains the primary action; its duplicate social entry is removed. GitHub, LinkedIn, X, Instagram, Google Play and YouTube form two compact rows, with monochrome 16px icons and 44px targets. GitHub Sponsors and Buy Me a Coffee stay below as smaller support links. Verified destinations, copyright, legal links and Back to top remain.
 
-Mobile retains large contained type, safe email wrapping and stacked utilities. Legal and 404 pages use the same navigation, theme control and a compact footer. Legal documents remain unchanged and accessible by direct static entry. Static and runtime 404s have truthful title / noindex metadata and no home canonical. Incoming project hashes are positioned after client content and fonts exist.
+Mobile retains large contained type, safe email wrapping and stacked utilities. Legal and 404 pages use the same navigation, theme control and a compact footer. Contact and Impressum join both existing legal routes with direct static entries and shared utility links. Confirmed addresses and the narrow contact privacy addendum are updated. Static and runtime 404s have truthful title / noindex metadata and no home canonical. Incoming project hashes are positioned after client content and fonts exist.
 
 Six socials use content-sized 3 + 3 rows across desktop/tablet/mobile. Google Play uses a monochrome outline of its official prism; the developer-page URL stays unchanged. Description/Open Graph/Twitter copy share the final AI/product positioning, and the regenerated social image, accessible image text and noscript match the new headline.

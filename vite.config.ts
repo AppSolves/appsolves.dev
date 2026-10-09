@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path, { resolve } from "path";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, type ResolvedConfig } from "vite";
 import sitemapPlugin from "vite-plugin-sitemap";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
@@ -14,6 +14,32 @@ const isNodeModulePackage = (id: string, packageName: string) =>
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
+  const apiUrl = env.VITE_CONTACT_API_URL || "";
+  const apiOrigin = apiUrl ? new URL(apiUrl).origin : "";
+  const siteKey = env.VITE_TURNSTILE_SITE_KEY || "";
+  if (Boolean(apiUrl) !== Boolean(siteKey))
+    throw new Error(
+      "Configure both the contact endpoint and Turnstile site key, or leave both unset.",
+    );
+  if (mode !== "contact-test" && /^[123]x0{20}(?:AA|AB|BB|FF)$/.test(siteKey)) {
+    throw new Error(
+      "Turnstile test keys must not be used in the production preview.",
+    );
+  }
+  if (
+    apiUrl &&
+    (new URL(apiUrl).pathname !== "/contact/submit" ||
+      new URL(apiUrl).username ||
+      new URL(apiUrl).password ||
+      new URL(apiUrl).search ||
+      new URL(apiUrl).hash ||
+      (mode !== "contact-test" && apiOrigin !== "https://api.appsolves.dev"))
+  ) {
+    throw new Error(
+      "Use the verified HTTPS contact endpoint; credentials and query parameters are not allowed.",
+    );
+  }
+  let outputDirectory = resolve(__dirname, "dist");
 
   return {
     base: env.VITE_BASE_URL || "/",
@@ -34,14 +60,33 @@ export default defineConfig(({ mode }) => {
       }),
       sitemapPlugin({
         hostname: "https://appsolves.dev/",
+        outDir: mode === "contact-test" ? ".cache/contact-test-site" : "dist",
         generateRobotsTxt: false,
         exclude: ["/404"],
       }),
       {
         name: "static-route-entries",
+        configResolved(config: ResolvedConfig) {
+          outputDirectory = resolve(config.root, config.build.outDir);
+        },
+        transformIndexHtml(html: string) {
+          return html
+            .replace(
+              "script-src 'self'",
+              "script-src 'self' https://challenges.cloudflare.com",
+            )
+            .replace(
+              "frame-src 'none'",
+              "frame-src https://challenges.cloudflare.com",
+            )
+            .replace(
+              "connect-src 'self' blob:",
+              `connect-src 'self' blob:${apiOrigin ? ` ${apiOrigin}` : ""}`,
+            );
+        },
         writeBundle() {
-          const indexPath = resolve(__dirname, "dist/index.html");
-          const notFoundPath = resolve(__dirname, "dist/404.html");
+          const indexPath = resolve(outputDirectory, "index.html");
+          const notFoundPath = resolve(outputDirectory, "404.html");
 
           if (!existsSync(indexPath)) {
             return;
@@ -71,11 +116,32 @@ export default defineConfig(({ mode }) => {
               "",
             );
           writeFileSync(notFoundPath, notFound);
-          for (const [route, title] of [
-            ["privacy_policy", "Privacy policy"],
-            ["terms_and_conditions", "Terms and conditions"],
+          const notFoundDirectory = resolve(outputDirectory, "404");
+          mkdirSync(notFoundDirectory, { recursive: true });
+          writeFileSync(resolve(notFoundDirectory, "index.html"), notFound);
+          for (const [route, title, description] of [
+            [
+              "privacy_policy",
+              "Privacy policy",
+              "Privacy information for AppSolves websites, products and the contact form.",
+            ],
+            [
+              "terms_and_conditions",
+              "Terms and conditions",
+              "Terms and conditions for AppSolves services.",
+            ],
+            [
+              "impressum",
+              "Impressum",
+              "Anbieterkennzeichnung und Kontaktangaben von Kaan Gönüldinc, AppSolves.",
+            ],
+            [
+              "contact",
+              "Contact",
+              "Send Kaan Gönüldinc a message about a project, an idea, or a question.",
+            ],
           ]) {
-            const directory = resolve(__dirname, "dist", route);
+            const directory = resolve(outputDirectory, route);
             mkdirSync(directory, { recursive: true });
             const page = html
               .replace(
@@ -89,6 +155,14 @@ export default defineConfig(({ mode }) => {
               .replace(
                 'property="og:url" content="https://appsolves.dev/"',
                 `property="og:url" content="https://appsolves.dev/${route}"`,
+              )
+              .replace(
+                /(<meta\s+(?:property="og:title"|name="twitter:title")\s+content=")[^"]*/g,
+                `$1${title} | AppSolves`,
+              )
+              .replace(
+                /(<meta\s+(?:property="og:description"|name="(?:description|twitter:description)")\s+content=")[^"]*/g,
+                `$1${description}`,
               );
             writeFileSync(resolve(directory, "index.html"), page);
           }

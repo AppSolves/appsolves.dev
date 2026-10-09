@@ -177,7 +177,9 @@ export default function ProjectsSection() {
             <p className="project-lead">
               Adaptive traffic management with edge AI.
             </p>
-            <p className="project-recognition">Jugend forscht, 2nd Prize</p>
+            <p className="project-recognition">
+              Jugend forscht, regional 2nd Prize
+            </p>
             <a
               className="text-link"
               href="https://github.com/AppSolves/LanePilot"
@@ -219,39 +221,44 @@ export default function ProjectsSection() {
             </div>
             <div className="lane-comparison">
               {["control", "baseline"].map((panel) => (
-                <div className="lane-crop" key={panel}>
-                  <picture>
-                    {["avif", "webp"].map((format) => (
-                      <source
-                        key={format}
-                        type={`image/${format}`}
-                        srcSet={[480, 960, 1920]
-                          .map(
-                            (width) =>
-                              `${base}images/lanepilot-${panel}-${width}.${format} ${width}w`,
-                          )
-                          .join(", ")}
-                        sizes="(min-width: 1800px) 740px, (min-width: 768px) 44vw, 80vw"
+                <div className="lane-panel" key={panel}>
+                  <p className="lane-panel-label">
+                    {panel === "control" ? "LanePilot control" : "Baseline"}
+                  </p>
+                  <div className="lane-crop">
+                    <picture>
+                      {["avif", "webp"].map((format) => (
+                        <source
+                          key={format}
+                          type={`image/${format}`}
+                          srcSet={[480, 960, 1920]
+                            .map(
+                              (width) =>
+                                `${base}images/lanepilot-${panel}-${width}.${format} ${width}w`,
+                            )
+                            .join(", ")}
+                          sizes="(min-width: 1800px) 740px, (min-width: 768px) 44vw, 80vw"
+                        />
+                      ))}
+                      <img
+                        src={`${base}images/lanepilot-${panel}-960.webp`}
+                        alt={
+                          panel === "control"
+                            ? "LanePilot reinforcement-learning traffic simulation with vehicles and diagnostics"
+                            : "Baseline traffic simulation with vehicles and diagnostics at a different simulation step"
+                        }
+                        width="1920"
+                        height="960"
+                        loading="lazy"
+                        decoding="async"
                       />
-                    ))}
-                    <img
-                      src={`${base}images/lanepilot-${panel}-960.webp`}
-                      alt={
-                        panel === "control"
-                          ? "LanePilot reinforcement-learning traffic simulation with vehicles and diagnostics"
-                          : "Baseline traffic simulation with vehicles and diagnostics at a different simulation step"
-                      }
-                      width="1920"
-                      height="1508"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </picture>
+                    </picture>
+                  </div>
                 </div>
               ))}
             </div>
             <div className="lane-stage-footer">
-              <span>Reinforcement learning / Baseline</span>
+              <span>Simulated traffic, not public-road measurements</span>
               <a
                 className="text-link"
                 href={`${base}images/lanepilot-simulation-full.webp`}
@@ -268,9 +275,9 @@ export default function ProjectsSection() {
             </div>
           </div>
           <figcaption>
-            Illustrative simulation snapshots with speed, braking, and collision
-            diagnostics. The panels show different steps and vehicle counts,
-            rather than a controlled benchmark. No public-road validation.
+            Simulation snapshots of LanePilot and a baseline. Different
+            simulation steps and vehicle counts; not a controlled performance
+            comparison.
           </figcaption>
         </figure>
       </article>

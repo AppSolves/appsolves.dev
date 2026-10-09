@@ -88,19 +88,19 @@ for (const theme of ["light", "dark"] as const) {
       for (const panel of await page.locator(".lane-crop").all()) {
         const framing = await panel.evaluate((element) => ({
           radius: parseFloat(getComputedStyle(element).borderRadius),
-          width: element.clientWidth,
-          height: element.clientHeight,
+          width: element.getBoundingClientRect().width,
+          height: element.getBoundingClientRect().height,
         }));
         expect(framing.radius).toBe(size.width < 768 ? 12 : 14);
-        expect(framing.width / framing.height).toBeCloseTo(1920 / 1508, 2);
+        expect(framing.width / framing.height).toBeCloseTo(1920 / 960, 2);
         await expect(panel.locator("img")).toHaveCSS("object-fit", "contain");
       }
       await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
       await expect(page.locator(".lane-stage-heading")).toContainText(
         "Traffic simulation",
       );
-      await expect(page.locator(".lane-figure figcaption")).toContainText(
-        "No public-road validation",
+      await expect(page.locator(".lane-stage-footer")).toContainText(
+        "not public-road measurements",
       );
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth > innerWidth,
@@ -343,7 +343,7 @@ test("real project links, contact, metadata and Pages artifacts are preserved", 
     '<div id="root"></div>',
   );
   const sitemap = await readFile("dist/sitemap.xml", "utf8");
-  expect(sitemap.match(/<loc>/g)).toHaveLength(3);
+  expect(sitemap.match(/<loc>/g)).toHaveLength(5);
   expect(sitemap).toContain("https://appsolves.dev/privacy_policy");
 });
 

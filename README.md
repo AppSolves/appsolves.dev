@@ -14,9 +14,9 @@ npx playwright install --with-deps chromium firefox webkit
 npm test
 ```
 
-Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **83 browser / asset checks**: comprehensive Chromium regression at eight sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Focused coverage includes hero line breaks and project-index exclusion from the first viewport, Fidan separation/source scrolling, simulation provenance and complete panels, footer layout at 14 widths, monochrome icon geometry, once-only entrances with an actual intermediate media state, keyboard/touch/reduced-motion depth feedback and actual mixed-theme pixels at 240ms. Results and captures go to ignored `test-results/`.
+Development defaults to 8080. `check` runs TypeScript, ESLint and the production build. `test` builds and runs **103 browser / asset checks**: comprehensive Chromium regression at eight sizes in both themes plus a small Firefox / WebKit smoke suite. Real screenshots, menus, accessibility, theme transitions, phone interaction / offscreen GPU submissions, metadata, legal routes and 404 output are covered. Focused coverage includes hero line breaks and project-index exclusion from the first viewport, Fidan separation/source scrolling, simulation provenance, readable road crops and the unchanged full comparison, footer layout at 14 widths, monochrome icon geometry, once-only entrances with an actual intermediate media state, keyboard/touch/reduced-motion depth feedback and actual mixed-theme pixels at 240ms. Results and captures go to ignored `test-results/`.
 
-`BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173.
+`BROWSER_PATH` overrides only Chromium. `PREVIEW_URL` selects an independently running production preview; otherwise Playwright starts 4173 and a separate production-format contact test preview on 4174. The latter uses test keys and provider interception; it is not uploaded as the production preview. Contact tests require that separate test preview.
 
 ```powershell
 $env:BROWSER_PATH = 'C:/path/to/chrome.exe'
@@ -60,10 +60,18 @@ Download and extract the preview ZIP. Serve the directory containing `index.html
 python -m http.server 4173 --bind 127.0.0.1 --directory /path/to/extracted-artifact
 ```
 
-Open `http://127.0.0.1:4173/`. Review themes, work, menus, `/privacy_policy/`, `/terms_and_conditions/`, and `/404.html`. `file://` cannot serve the module application. The basic Python server returns its own response for unknown paths; GitHub Pages serves the generated custom `404.html` for those paths.
+Open `http://127.0.0.1:4173/`. Review themes, work, menus, `/contact/`, `/impressum/`, both existing legal pages, and `/404.html`. `file://` cannot serve the module application. The basic Python server returns its own response for unknown paths; GitHub Pages serves the generated custom `404.html` for those paths.
 
 The launch implementation at `ebd9a71` has a [successful GitHub build/browser/artifact run](https://github.com/AppSolves/appsolves.dev/actions/runs/37676045521) with all 58 checks passing. Current launch-pass evidence is recorded in QA.md; no placeholder or claim that CI has never run remains.
 
 ## Deployment compatibility
 
-Existing GitHub Pages output and deployment command remain. Static legal entries, truthful 404 metadata, CNAME, app-ads, sitemap, favicons and social cards survive the build. Legal Markdown is unchanged. The artifact workflow builds for review; it does not deploy or merge main.
+Existing GitHub Pages output and deployment command remain. Static contact/legal entries, truthful 404 metadata, CNAME, app-ads, sitemap, favicons and social cards survive the build. Legal changes are limited to confirmed operator details and the new contact-form disclosure. The artifact workflow builds for review; it does not deploy or merge main.
+
+## Contact implementation and activation
+
+The independently deployable [contact Worker and operator setup guide](workers/contact/README.md) uses Mailjet v3.1, official Turnstile verification, a native burst limiter and a coordinated Durable Object email-attempt budget. `npm run worker:test` runs **31 security/provider/runtime checks** with real local Cloudflare storage and mocked providers; `npm test` runs these before the 103 browser checks. Wrangler and Miniflare are development-only dependencies. No existing locked dependency was upgraded.
+
+The shared API hostname uses only route `api.appsolves.dev/contact/*`; the exact endpoint is `/contact/submit`. No Custom Domain or catch-all is assigned. The existing public `www` hostname is included in the exact origin and challenge-hostname policy. The guide explains DNS inspection, non-destructive setup, secrets, sender verification, privacy agreements and mailbox receipt testing.
+
+**Activation is pending.** No infrastructure was deployed or modified, no Mailjet message was sent, and production Turnstile keys are not configured. Without both public frontend settings, submission is disabled and the email alternative remains available. The separate test preview exercises configured form states without publishing test keys. Do not describe mocked acceptance as real inbox delivery or the unconfigured preview as a fully operational production form.

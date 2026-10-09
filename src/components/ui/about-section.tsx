@@ -5,7 +5,11 @@ const recognition = [
     "Ferry Porsche Prize 2026",
     "Award for outstanding achievement in STEM subjects",
   ],
-  ["Competition", "Jugend forscht", "2nd Prize for LanePilot"],
+  [
+    "Competition",
+    "Jugend forscht",
+    "2nd Prize at the regional Jugend forscht competition",
+  ],
 ];
 
 export default function AboutSection() {
