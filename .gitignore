@@ -10,6 +10,10 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.cache/
+test-results/
+playwright-report/
+*.tsbuildinfo
 *.local
 
 # Editor directories and files
@@ -22,3 +26,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.gstack/
+
+# Worker state and private configuration
+.wrangler/
+.dev.vars*
+.env*
+!.env.example

@@ -1,13 +1,13 @@
 # Privacy Policy — AppSolves
 
-**Last updated:** November 16, 2025
+**Last updated:** October 9, 2026
 
-This Privacy Policy explains how **AppSolves** (the “Controller”, “we”, “us” or “our”), operating from Baden-Württemberg, Germany, collects, uses, shares, and stores personal data in connection with our websites, applications, services, and products (collectively, the “Services”). This Privacy Policy applies to all current and future products and services provided by AppSolves unless otherwise stated.
+This Privacy Policy explains how **AppSolves** (the “Controller”, “we”, “us” or “our”), operating from Bavaria, Germany, collects, uses, shares, and stores personal data in connection with our websites, applications, services, and products (collectively, the “Services”). This Privacy Policy applies to all current and future products and services provided by AppSolves unless otherwise stated.
 
 **Controller contact:**
 
-- AppSolves
-- **Postal Address**: Riegelstraße 55, 73760 Ostfildern, Germany
+- Kaan Gönüldinc, operating under the AppSolves business name
+- **Postal Address**: Massenhausener Straße 17, 85375 Neufahrn bei Freising, Deutschland
 - **Email**: [contact@appsolves.dev](mailto:contact@appsolves.dev)
 
 ---
@@ -93,6 +93,16 @@ Where transfers outside the European Economic Area (EEA) occur, data may be proc
 
 ## 7. Data Retention
 
+### Website contact form
+
+The contact form collects your email address and message, and your name and subject if supplied. Kaan Gönüldinc, operating under the AppSolves business name, uses these details to respond to your inquiry. Ordinary correspondence and abuse prevention are based on legitimate interests under GDPR Article 6(1)(f); requests for steps before entering a contract are processed under Article 6(1)(b), where applicable. Providing the information is voluntary, but an email address and message are necessary to use the form.
+
+Cloudflare processes requests through a Worker and provides Turnstile bot verification, which processes technical browser and network information, including IP address, User-Agent and TLS characteristics. Cloudflare also processes Turnstile signals as an independent controller to improve bot detection, as described in its privacy addendum. The Worker forwards validated messages to Mailjet for email transmission to contact@appsolves.dev. The sender's address is used as Reply-To. Access is limited to the operator and the providers needed for this processing. The form does not subscribe you to marketing.
+
+The Worker does not store messages or log submission contents. Its rate controls process a client IP transiently and store daily rotating, keyed identifiers with counters, deleted after the daily window. These identifiers remain pseudonymous personal data. Correspondence in the mailbox is retained while needed to address the inquiry, follow up, or meet applicable legal retention obligations, then deleted. Cloudflare and Mailjet process technical and delivery data under their applicable terms and policies; no fixed provider retention period or exclusive processing country is represented here.
+
+Provider processing can involve countries outside the EEA. The applicable contractual safeguards and transfer arrangements must be established for the configured accounts before the form is activated. See [Cloudflare's data processing addendum](https://www.cloudflare.com/cloudflare-customer-dpa/), [Turnstile's privacy addendum](https://www.cloudflare.com/turnstile-privacy-policy/), and [Mailjet's privacy information](https://www.mailjet.com/legal/privacy-policy/). The rights in section 8, including objection to legitimate-interest processing, apply. Contact contact@appsolves.dev to exercise them.
+
 We retain personal data only as long as necessary for the purposes listed above and in accordance with applicable law. Typical retention periods are:
 
 - **Account & profile data:** retained while the account exists and for **1 year** after a period of inactivity.
@@ -172,8 +182,8 @@ We may disclose personal data to comply with legal obligations, respond to lawfu
 
 If you have questions, requests, or complaints about this Privacy Policy or our data practices, please contact:
 
-- AppSolves
-- **Postal Address**: Riegelstraße 55, 73760 Ostfildern, Germany
+- Kaan Gönüldinc, operating under the AppSolves business name
+- **Postal Address**: Massenhausener Straße 17, 85375 Neufahrn bei Freising, Deutschland
 - **Email**: [contact@appsolves.dev](mailto:contact@appsolves.dev)
 
 ---

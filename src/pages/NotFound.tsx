@@ -1,48 +1,41 @@
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
-import { Button } from "@/components/ui/button";
-import { StepBack } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 
-const NotFound = () => {
-  const location = useLocation();
-
+export default function NotFound() {
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname,
+    const title = document.title;
+    const robots = document.querySelector<HTMLMetaElement>(
+      'meta[name="robots"]',
     );
-  }, [location.pathname]);
-
+    const previousRobots = robots?.content;
+    const misleading = [
+      ...document.querySelectorAll(
+        'link[rel="canonical"],meta[property="og:url"],meta[name="googlebot"],meta[name="bingbot"]',
+      ),
+    ];
+    misleading.forEach((element) => element.remove());
+    if (robots) robots.content = "noindex, follow";
+    document.title = "Page not found | AppSolves";
+    return () => {
+      document.title = title;
+      if (robots && previousRobots) robots.content = previousRobots;
+      misleading.forEach((element) => document.head.appendChild(element));
+    };
+  }, []);
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <>
       <Navigation />
-      <main className="flex-grow flex flex-col items-center justify-center pt-20">
-        <div className="text-center flex flex-col items-center flex-grow justify-center">
-          <h1 className="mb-4 text-6xl font-bold">404</h1>
-          <p className="mb-6 text-2xl text-gray-400">Oops! Page not found</p>
-          <br></br>
-          <Button
-            variant="default"
-            size="lg"
-            className="group flex items-center gap-2"
-            onClick={() => {
-              if (document.referrer) {
-                window.history.back();
-              } else {
-                window.location.href = "/";
-              }
-            }}
-          >
-            <StepBack className="h-4 w-4 transition-transform group-hover:-translate-x-1 mt-[0.1em]" />
-            Go Back
-          </Button>
-        </div>
+      <main id="main" tabIndex={-1} className="page-width not-found">
+        <h1>404</h1>
+        <p>There’s no page at this address.</p>
+        <a className="text-link" href={import.meta.env.BASE_URL}>
+          <ArrowLeft data-arrow-motion="left" size={18} aria-hidden="true" />{" "}
+          Back to AppSolves
+        </a>
       </main>
       <Footer />
-    </div>
+    </>
   );
-};
-
-export default NotFound;
+}

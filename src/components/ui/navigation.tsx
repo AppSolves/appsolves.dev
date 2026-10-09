@@ -1,153 +1,130 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Sling as Hamburger } from "hamburger-react";
-import { useState } from "react";
-import { Button } from "./button";
-import { Icons } from "./icon";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import ThemeControl from "@/components/ThemeControl";
+import { useThemeSelection } from "@/components/useThemeSelection";
 
-interface NavLink {
-  name: string;
-  href: string;
-}
+const links = [
+  { name: "Work", href: "#work" },
+  { name: "About", href: "#about" },
+  { name: "Open source", href: "#open-source" },
+];
 
-const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Navigation() {
+  const [open, setOpen] = useState(false);
+  const themeSelection = useThemeSelection();
+  const toggle = useRef<HTMLButtonElement>(null);
+  const { pathname } = useLocation();
+  const home = import.meta.env.BASE_URL;
+  const onHome = pathname === home;
 
-  const navLinks: NavLink[] = [];
+  useEffect(() => {
+    if (!open) return;
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !event.defaultPrevented) {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = () => setOpen(false);
+    document.addEventListener("keydown", escape);
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      document.removeEventListener("keydown", escape);
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
+  }, [open]);
 
   return (
-    <nav className="w-full border-b border-border bg-background/80 backdrop-blur-md fixed top-0 z-50 transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <a
-              href="/"
-              className="text-xl font-semibold text-foreground hover:text-nav-text-hover transition-all duration-300 hover:scale-105"
-            >
-              <img
-                src="/wordmark2.png"
-                alt="Wordmark"
-                className="non-draggable"
-                draggable={false}
-              />
-            </a>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="text-nav-text hover:text-nav-text-hover transition-all duration-300 text-sm font-medium relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-                >
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header className="site-header">
+        <div className="page-width header-inner">
+          <a className="brand" href={home} aria-label="AppSolves home">
+            <img src={`${home}mark.svg`} alt="" width="32" height="34" />
+            <span>AppSolves</span>
+          </a>
+          <div className="header-actions">
+            <nav className="desktop-nav" aria-label="Main navigation">
+              {links.map((link) => (
+                <a key={link.name} href={`${onHome ? "" : home}${link.href}`}>
                   {link.name}
                 </a>
               ))}
+              <a className="nav-contact" href="mailto:contact@appsolves.dev">
+                Let’s talk{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  aria-hidden="true"
+                  size={16}
+                />
+              </a>
+            </nav>
+            <div className="desktop-theme">
+              <ThemeControl {...themeSelection} />
             </div>
-          </div>
-
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-2.5">
-            <Button
-              variant="default"
-              size="sm"
-              className="w-full flex items-center justify-center gap-2 group"
-              onClick={() => {
-                window.open(
-                  "https://github.com/sponsors/AppSolves?o=esb",
-                  "_blank",
-                );
-              }}
+            <button
+              className="menu-toggle"
+              ref={toggle}
+              type="button"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+              aria-label={open ? "Close navigation" : "Open navigation"}
+              onClick={() => setOpen((value) => !value)}
             >
-              <Icons.GithubSponsors className="h-4 w-4 text-pink-500 flex-none align-middle transition-transform transform group-hover:scale-125 translate-y-[1px]" />
-              <span className="leading-none">Sponsor Me</span>
-            </Button>
-            <Button
-              variant="default"
-              size="sm"
-              className="w-full flex items-center justify-center group"
-              onClick={() => {
-                const section = document.getElementById("footer-section");
-                section?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Get in touch
-            </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center justify-center">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full flex items-center justify-center group"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <Hamburger
-                toggled={isMenuOpen}
-                size={20}
-                toggle={setIsMenuOpen}
-              />
-            </Button>
+              <svg
+                className="menu-icon"
+                width="23"
+                height="23"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 12h16" />
+                <path d="M4 12h16" />
+                <path d="M4 12h16" />
+              </svg>
+            </button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              className="md:hidden border-t border-border bg-background overflow-hidden"
-              initial={{ opacity: 0, height: 0, y: -30 }}
-              animate={{ opacity: 1, height: "auto", y: 0 }}
-              exit={{ opacity: 0, height: 0, y: -30 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <div className="px-2 pt-2 pb-3 space-x-2.5 items-center">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className="block px-3 py-2 text-nav-text hover:text-nav-text-hover transition-colors text-base font-medium"
-                  >
-                    {link.name}
-                  </a>
-                ))}
-                <div className="pt-2 flex flex-col items-center space-y-2.5">
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="w-full flex items-center justify-center gap-2 group"
-                    onClick={() => {
-                      window.open(
-                        "https://github.com/sponsors/AppSolves?o=esb",
-                        "_blank",
-                      );
-                    }}
-                  >
-                    <Icons.GithubSponsors className="h-4 w-4 text-pink-500 flex-none align-middle transition-transform transform group-hover:scale-125" />
-                    <span className="leading-none">Sponsor Me</span>
-                  </Button>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="w-full flex items-center justify-center group"
-                    onClick={() => {
-                      const section = document.getElementById("footer-section");
-                      section?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                  >
-                    Get in touch
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+        <nav
+          id="mobile-navigation"
+          className="mobile-nav page-width"
+          aria-label="Mobile navigation"
+          aria-hidden={!open}
+          inert={!open}
+          data-open={open}
+        >
+          <div className="mobile-nav-clip">
+            <div className="mobile-nav-content">
+              {[...links, { name: "Contact", href: "#contact" }].map((link) => (
+                <a
+                  key={link.name}
+                  href={`${onHome ? "" : home}${link.href}`}
+                  onClick={() => {
+                    setOpen(false);
+                    toggle.current?.focus();
+                  }}
+                >
+                  {link.name}
+                  <ArrowDown
+                    data-arrow-motion="down"
+                    size={22}
+                    aria-hidden="true"
+                  />
+                </a>
+              ))}
+              <ThemeControl {...themeSelection} mobile />
+            </div>
+          </div>
+        </nav>
+      </header>
+    </>
   );
-};
-
-export default Navigation;
+}

@@ -1,259 +1,345 @@
-import { ExternalLink, LockIcon } from "lucide-react";
-import { Button } from "./button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./card";
-import { Icons } from "./icon";
-import ScrollReveal from "./scroll-reveal";
+import TagVaultScene from "@/components/tagvault/TagVaultScene";
+import { ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-interface Project {
-  title: string;
-  description: string;
-  tech: string[];
-  liveUrl: string;
-  githubUrl: string | null;
-}
+const base = import.meta.env.BASE_URL;
 
-const ProjectsSection = () => {
-  const projects: Project[] = [
-    {
-      title: "Fidan",
-      description:
-        "Fidan is the world's first AI-native next-generation programming language that lets you prototype like Python, run like C, and ship with Rust-level safety.",
-      tech: [
-        "fidan",
-        "programming",
-        "language",
-        "modern",
-        "expressive",
-        "fast",
-        "safe",
-        "ai-native",
-      ],
-      liveUrl: "https://fidan.dev",
-      githubUrl: "https://github.com/fidan-lang/fidan",
-    },
-    {
-      title: "LanePilot",
-      description:
-        "The worlds first real-time AI-powered traffic management system, featuring automated vehicle detection, lane allocation optimization, and dynamic control for (autonomous) cars!",
-      tech: [
-        "python",
-        "pytorch",
-        "docker",
-        "opencv",
-        "nvidia-jetson",
-        "raspberrypi",
-      ],
-      liveUrl: "https://github.com/AppSolves?tab=packages&repo_name=LanePilot",
-      githubUrl: "https://github.com/AppSolves/LanePilot",
-    },
-    {
-      title: "TagVault",
-      description:
-        "TagVault is a mobile application for Android that allows users to scan, store, manage, and automate their own RFID/NFC chips, cards, and tags securely.",
-      tech: [
-        "flutter",
-        "android",
-        "mobile",
-        "app",
-        "rfid",
-        "nfc",
-        "secure",
-        "management",
-        "tags",
-      ],
-      liveUrl: "https://tagvault.appsolves.dev",
-      githubUrl: null,
-    },
-    {
-      title: "TikArcade Studio",
-      description:
-        "A full-stack desktop application for TikTok Live Automation at scale. Features interactive gaming sessions and custom bots during TikTok Lives via our Plug & Play system.",
-      tech: [
-        "python",
-        "tk-inter",
-        "fastapi",
-        "stripe",
-        "nuitka",
-        "tiktok",
-        "live",
-        "typescript",
-      ],
-      liveUrl: "https://tikarcade.appsolves.dev",
-      githubUrl: null,
-    },
-    {
-      title: "appscreen-mcp",
-      description:
-        "A MCP (Model Context Protocol) wrapper for YUZU-Hub's appscreen, enabling AI agents to create beautiful App Store optimized screenshots for your apps.",
-      tech: [
-        "typescript",
-        "nodejs",
-        "mcp",
-        "appscreen",
-        "ai-agents",
-        "automation",
-        "app-store-optimization",
-        "screenshots",
-      ],
-      liveUrl: "https://appsolves.github.io/appscreen-mcp",
-      githubUrl: "https://github.com/AppSolves/appscreen-mcp",
-    },
-    {
-      title: "carbonator",
-      description:
-        "An Engineering tool for calculating lay-up configurations of composite fiber materials and determining final component mass.",
-      tech: [
-        "flutter",
-        "android",
-        "mobile",
-        "carbon-fiber",
-        "composite-materials",
-        "engineering",
-        "layup-configurations",
-        "mass-calculation",
-      ],
-      liveUrl:
-        "https://play.google.com/store/apps/details?id=dev.appsolves.carbonator",
-      githubUrl: null,
-    },
-    {
-      title: "FastAPI Users - DynamoDB Adapter",
-      description:
-        "A ready-to-use database adapter for AWS DynamoDB, easy to use with FastAPI-Users!",
-      tech: [
-        "python",
-        "aws",
-        "aiopynamodb",
-        "async",
-        "adapter",
-        "databases",
-        "fastapi",
-      ],
-      liveUrl: "https://pypi.org/project/fastapi-users-db-dynamodb",
-      githubUrl: "https://github.com/AppSolves/fastapi-users-db-dynamodb",
-    },
-    {
-      title: "pylocalauth",
-      description:
-        "A cross-platform local authentication library for Python applications. Don't rely on multiple third-party services/packages, manage user authentication locally with ease!",
-      tech: [
-        "python",
-        "local-auth",
-        "authentication",
-        "bcrypt",
-        "winrt",
-        "cross-platform",
-        "security",
-      ],
-      liveUrl: "https://pypi.org/project/pylocalauth",
-      githubUrl: "https://github.com/AppSolves/pylocalauth",
-    },
-    {
-      title: "QuickClipAI",
-      description:
-        "A powerful tool to automatically generate AI-driven YouTube shorts, Instagram Reels and TikToks. Create engaging content in seconds with our AI-powered video generator!",
-      tech: ["python", "fooocus", "moviepy", "automation", "gpt4free"],
-      liveUrl: "https://youtube.com/@curioburstz",
-      githubUrl: "https://github.com/AppSolves/QuickClipAI",
-    },
-  ];
-
+export default function ProjectsSection() {
+  const source = useRef<HTMLPreElement>(null);
+  const [sourceOverflows, setSourceOverflows] = useState(false);
+  useEffect(() => {
+    const element = source.current;
+    if (!element) return;
+    const measure = () =>
+      setSourceOverflows(element.scrollWidth > element.clientWidth);
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    measure();
+    return () => observer.disconnect();
+  }, []);
   return (
-    <section id="projects-section" className="py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
-              Featured Projects
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Some of my recent work
+    <section
+      id="work"
+      className="selected-work page-width"
+      aria-labelledby="work-title"
+    >
+      <div className="section-heading">
+        <p className="section-label">Selected work</p>
+        <h2 id="work-title">
+          A language, a traffic system,
+          <br />
+          <span>and an Android app.</span>
+        </h2>
+      </div>
+
+      <article
+        id="fidan"
+        className="project fidan-project"
+        aria-labelledby="fidan-title"
+      >
+        <div className="fidan-stage">
+          <div className="fidan-identity">
+            <span className="project-number">01 / Language & compiler</span>
+            <div className="fidan-lockup">
+              <img
+                src={`${base}images/fidan-icon.webp`}
+                alt=""
+                width="256"
+                height="256"
+                loading="lazy"
+                decoding="async"
+              />
+              <span className="fidan-wordmark">Fidan</span>
+            </div>
+          </div>
+          <div className="fidan-specimen">
+            <span className="specimen-label">Fidan source</span>
+            <div className="fidan-editor">
+              <div className="code-line-numbers" aria-hidden="true">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+              </div>
+              <pre
+                ref={source}
+                tabIndex={0}
+                aria-label="Fidan language example"
+                aria-describedby={
+                  sourceOverflows ? "fidan-scroll-hint" : undefined
+                }
+              >
+                <code>
+                  <span className="syntax-keyword">action</span>{" "}
+                  <span className="syntax-function">greet</span>{" "}
+                  <span className="syntax-keyword">with</span>{" "}
+                  <span className="syntax-punctuation">(</span>
+                  <span className="syntax-keyword">certain</span>{" "}
+                  <span className="syntax-identifier">name</span>{" "}
+                  <span className="syntax-keyword">oftype</span>{" "}
+                  <span className="syntax-type">string</span>
+                  <span className="syntax-punctuation">)</span>{" "}
+                  <span className="syntax-keyword">returns</span>{" "}
+                  <span className="syntax-type">string</span>{" "}
+                  <span className="syntax-punctuation">{"{"}</span>
+                  {"\n    "}
+                  <span className="syntax-keyword">return</span>{" "}
+                  <span className="syntax-string">
+                    {'"Hello, '}
+                    <span className="syntax-interpolation">{"{name}"}</span>
+                    {'!"'}
+                  </span>
+                  {"\n"}
+                  <span className="syntax-punctuation">{"}"}</span>
+                  {"\n\n"}
+                  <span className="syntax-function">print</span>
+                  <span className="syntax-punctuation">(</span>
+                  <span className="syntax-function">greet</span>
+                  <span className="syntax-punctuation">(</span>
+                  <span className="syntax-string">{'"Fidan"'}</span>
+                  <span className="syntax-punctuation">))</span>
+                </code>
+              </pre>
+            </div>
+            {sourceOverflows && (
+              <span id="fidan-scroll-hint" className="code-scroll-hint">
+                Scroll horizontally
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="project-details">
+          <div>
+            <p className="project-category">
+              AI-native language & compiler toolchain
+            </p>
+            <h3 id="fidan-title">Fidan</h3>
+            <div className="project-links">
+              <a
+                className="text-link"
+                href="https://fidan.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Explore Fidan{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={17}
+                  aria-hidden="true"
+                />
+              </a>
+              <a
+                className="text-link secondary-link"
+                href="https://github.com/fidan-lang/fidan"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Source code{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={17}
+                  aria-hidden="true"
+                />
+              </a>
+            </div>
+          </div>
+          <div className="project-description">
+            <p className="project-lead">
+              Fidan is a general-purpose programming language and compiler
+              toolchain I’m developing in Rust.
+            </p>
+            <p>
+              The compiler uses typed HIR and MIR for static checking and
+              execution through an interpreter or selective Cranelift JIT.
+              Cranelift AOT and an optional LLVM AOT backend compile programs to
+              native binaries.
+            </p>
+            <p>
+              The toolchain includes a language server, package tooling, and
+              concurrency support. Its AI assistance uses compiler diagnostics
+              and type information to explain code and suggest changes.
+            </p>
+            <p className="project-tech">Rust / Cranelift / LLVM / LSP</p>
+          </div>
+        </div>
+      </article>
+
+      <article
+        id="lanepilot"
+        className="project split-project lane-project"
+        aria-labelledby="lanepilot-title"
+      >
+        <div className="lane-overview">
+          <div className="split-copy">
+            <p className="project-category">02 / Deep learning & edge AI</p>
+            <h3 id="lanepilot-title">LanePilot</h3>
+            <p className="project-lead">
+              Adaptive traffic management with edge AI.
+            </p>
+            <p className="project-recognition">
+              Jugend forscht, regional 2nd Prize
+            </p>
+            <a
+              className="text-link"
+              href="https://github.com/AppSolves/LanePilot"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Explore the system{" "}
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={17}
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+          <div className="project-description">
+            <p>
+              LanePilot investigates how changing lane assignments can reduce
+              congestion. Cameras detect and track vehicles, estimate their
+              movement, and provide the state used to recommend lane changes.
+            </p>
+            <p>
+              Perception uses YOLO11n-seg and PyTorch. I explored interactions
+              between nearby vehicles with GATv2 in PyTorch Geometric, then
+              moved to reinforcement learning to model the consequences of lane
+              changes.
+            </p>
+            <p>
+              NVIDIA Jetson runs inference with a CUDA / TensorRT deployment
+              pipeline. A Raspberry Pi handles camera input and the physical
+              prototype’s controls.
             </p>
           </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ScrollReveal key={index} delay={index * 200} threshold={0.2}>
-              <Card className="h-full flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-lg group cursor-pointer">
-                <CardHeader>
-                  <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription>{project.description}</CardDescription>
-                </CardHeader>
-
-                <CardContent className="flex-grow">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 text-xs bg-secondary text-secondary-foreground rounded-md transition-colors group-hover:bg-primary/10"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-
-                <CardFooter className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    asChild
-                    className="flex-1 transition-all hover:scale-105"
-                  >
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Live Demo
-                    </a>
-                  </Button>
-                  {project.githubUrl ? (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      asChild
-                      className="flex-1 transition-all hover:scale-105"
-                    >
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Icons.Github className="mr-2 h-4 w-4" />
-                        Source
-                      </a>
-                    </Button>
-                  ) : (
-                    <Button
-                      disabled
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 cursor-not-allowed opacity-50"
-                    >
-                      <LockIcon className="mr-2 h-4 w-4" />
-                      Source
-                    </Button>
-                  )}
-                </CardFooter>
-              </Card>
-            </ScrollReveal>
-          ))}
         </div>
-      </div>
+        <figure className="lane-figure">
+          <div className="lane-stage">
+            <div className="lane-stage-heading">
+              <span>LanePilot</span>
+              <span>Traffic simulation</span>
+            </div>
+            <div className="lane-comparison">
+              {["control", "baseline"].map((panel) => (
+                <div className="lane-panel" key={panel}>
+                  <p className="lane-panel-label">
+                    {panel === "control" ? "LanePilot control" : "Baseline"}
+                  </p>
+                  <div className="lane-crop">
+                    <picture>
+                      {["avif", "webp"].map((format) => (
+                        <source
+                          key={format}
+                          type={`image/${format}`}
+                          srcSet={[480, 960, 1920]
+                            .map(
+                              (width) =>
+                                `${base}images/lanepilot-${panel}-${width}.${format} ${width}w`,
+                            )
+                            .join(", ")}
+                          sizes="(min-width: 1800px) 740px, (min-width: 768px) 44vw, 80vw"
+                        />
+                      ))}
+                      <img
+                        src={`${base}images/lanepilot-${panel}-960.webp`}
+                        alt={
+                          panel === "control"
+                            ? "LanePilot reinforcement-learning traffic simulation with vehicles and diagnostics"
+                            : "Baseline traffic simulation with vehicles and diagnostics at a different simulation step"
+                        }
+                        width="1920"
+                        height="960"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="lane-stage-footer">
+              <span>Simulated traffic, not public-road measurements</span>
+              <a
+                className="text-link"
+                href={`${base}images/lanepilot-simulation-full.webp`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Full-resolution comparison{" "}
+                <ArrowUpRight
+                  data-arrow-motion="external"
+                  size={16}
+                  aria-hidden="true"
+                />
+              </a>
+            </div>
+          </div>
+          <figcaption>
+            Simulation snapshots of LanePilot and a baseline. Different
+            simulation steps and vehicle counts; not a controlled performance
+            comparison.
+          </figcaption>
+        </figure>
+      </article>
+
+      <article
+        id="tagvault"
+        className="project split-project tag-project"
+        aria-labelledby="tagvault-title"
+      >
+        <figure className="tag-figure">
+          <div className="tag-stage">
+            <span className="tag-stage-label">TagVault / Android</span>
+            <TagVaultScene />
+          </div>
+          <figcaption>The TagVault interface on Android.</figcaption>
+        </figure>
+        <div className="split-copy">
+          <p className="project-category">03 / Product engineering</p>
+          <h3 id="tagvault-title">TagVault</h3>
+          <p className="project-lead">Scan, manage, and automate NFC tags.</p>
+          <p>
+            TagVault is an Android app I built and shipped in Flutter for people
+            who use NFC tags in their own workflows. It reads and writes
+            compatible tags and keeps saved data in encrypted local storage,
+            with biometric protection for sensitive actions.
+          </p>
+          <p>
+            Tag scans can trigger automations and webhooks. Home-screen widgets
+            provide quick access, and encrypted backups help move data between
+            devices. A paid Pro tier adds further tools and backup options.
+          </p>
+          <p className="project-tech">Flutter / Android / NFC / Local-first</p>
+          <div className="project-links">
+            <a
+              className="text-link"
+              href="https://tagvault.appsolves.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TagVault website{" "}
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={17}
+                aria-hidden="true"
+              />
+            </a>
+            <a
+              className="text-link secondary-link"
+              href="https://play.google.com/store/apps/details?id=dev.appsolves.tag_vault"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google Play{" "}
+              <ArrowUpRight
+                data-arrow-motion="external"
+                size={17}
+                aria-hidden="true"
+              />
+            </a>
+          </div>
+        </div>
+      </article>
     </section>
   );
-};
-
-export default ProjectsSection;
+}

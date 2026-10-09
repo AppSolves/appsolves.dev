@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "appsolves-contact",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-09",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "api.appsolves.dev/contact/*", "zone_name": "appsolves.dev" },
+  ],
+  "vars": { "ALLOWED_ORIGIN": "https://appsolves.dev" },
+  "ratelimits": [
+    {
+      "name": "BURST_LIMIT",
+      "namespace_id": "1001",
+      "simple": { "limit": 3, "period": 60 },
+    },
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "CONTACT_BUDGET", "class_name": "ContactBudget" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ContactBudget"] }],
+  "observability": { "enabled": false },
+}

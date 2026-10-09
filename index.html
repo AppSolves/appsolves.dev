@@ -1,75 +1,181 @@
 <!doctype html>
-<html lang="en" class="dark" style="background-color: #101116">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#101116" />
-
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
-    <meta
-      http-equiv="Referrer-Policy"
-      content="strict-origin-when-cross-origin"
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f3ed" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="canonical" href="https://appsolves.dev/" />
+    <link
+      rel="preload"
+      href="/fonts/manrope-latin-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-    <meta
-      http-equiv="Permissions-Policy"
-      content="geolocation=(), microphone=(), camera=()"
+    <link
+      rel="preload"
+      href="/fonts/newsreader-latin-italic-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <!-- Content Security Policy -->
     <meta
       http-equiv="Content-Security-Policy"
       content="
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval';
-      style-src 'self' 'unsafe-inline' fonts.googleapis.com https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/termynal.css https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/custom.css;
-      font-src 'self' fonts.gstatic.com;
-      img-src 'self' data: https:;
-      connect-src 'self' https://github-readme-stats.vercel.app/api https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/termynal.css https://raw.githubusercontent.com/tiangolo/tiangolo.com/refs/heads/master/docs/css/custom.css;
-      frame-src 'self' https://github.com https://*.github.com;
+      script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval';
+      style-src 'self' 'unsafe-inline';
+      font-src 'self' data:;
+      img-src 'self' data: blob: https:;
+      connect-src 'self' blob:;
+      frame-src 'none';
+      object-src 'none';
+      base-uri 'self';
     "
     />
 
-    <!-- Bot Detection Meta Tags -->
+    <style>
+      html {
+        background: #f5f3ed;
+      }
+      html[data-theme="dark"] {
+        background: #11120f;
+      }
+    </style>
+    <script>
+      // This client-rendered app needs the theme before its React bundle loads.
+      (() => {
+        let preference = "system";
+        try {
+          const stored = localStorage.getItem("appsolves-theme");
+          if (["system", "light", "dark"].includes(stored)) preference = stored;
+          else if (stored !== null) localStorage.removeItem("appsolves-theme");
+        } catch {
+          /* Storage can be disabled; the OS preference still applies. */
+        }
+        const dark =
+          preference === "dark" ||
+          (preference === "system" &&
+            matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+        document.documentElement.style.colorScheme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = dark
+          ? "#11120f"
+          : "#f5f3ed";
+      })();
+    </script>
     <meta
       name="robots"
-      content="index, follow, max-snippet:150, max-image-preview:large"
+      content="index, follow, max-snippet:160, max-image-preview:large"
     />
     <meta name="googlebot" content="index, follow" />
     <meta name="bingbot" content="index, follow" />
 
-    <title>AppSolves</title>
-    <meta name="description" content="The official AppSolves website" />
-    <meta name="author" content="AppSolves" />
+    <title>Kaan Gönüldinc / AppSolves | AI & Software Products</title>
     <meta
-      name="keywords"
-      content="full-stack developer, python, docker, pytorch, machine-learning, tensorflow, flutter, apps, aws"
+      name="description"
+      content="I’m Kaan Gönüldinc, a Computer Science student at TUM. I develop AI systems and software products under AppSolves, with the goal of building an AI company."
     />
+    <meta name="author" content="Kaan Gönüldinc" />
 
     <meta
       property="og:title"
-      content="AppSolves - Full-Stack Developer & Deep Learning Engineer"
+      content="Kaan Gönüldinc / AppSolves | AI & Software Products"
     />
     <meta
       property="og:description"
-      content="Smart solutions for applications and games."
+      content="I’m Kaan Gönüldinc, a Computer Science student at TUM. I develop AI systems and software products under AppSolves, with the goal of building an AI company."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://appsolves.dev/wordmark.png" />
+    <meta property="og:url" content="https://appsolves.dev/" />
+    <meta property="og:site_name" content="AppSolves" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://appsolves.dev/social-preview.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="AppSolves by Kaan Gönüldinc. I build software from the inside out."
+    />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@AppSolves" />
-    <meta name="twitter:image" content="https://appsolves.dev/wordmark.png" />
-
-    <meta name="x-twitter:card" content="summary_large_image" />
-    <meta name="x-twitter:site" content="@AppSolves" />
-    <meta name="x-twitter:image" content="https://appsolves.dev/wordmark.png" />
+    <meta
+      name="twitter:title"
+      content="Kaan Gönüldinc / AppSolves | AI & Software Products"
+    />
+    <meta
+      name="twitter:description"
+      content="I’m Kaan Gönüldinc, a Computer Science student at TUM. I develop AI systems and software products under AppSolves, with the goal of building an AI company."
+    />
+    <meta
+      name="twitter:image"
+      content="https://appsolves.dev/social-preview.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="AppSolves by Kaan Gönüldinc. I build software from the inside out."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://appsolves.dev/#kaan",
+            "name": "Kaan Gönüldinc",
+            "url": "https://appsolves.dev/",
+            "sameAs": [
+              "https://github.com/AppSolves",
+              "https://linkedin.com/in/kaangoenueldinc"
+            ],
+            "knowsAbout": [
+              "Artificial Intelligence",
+              "Deep Learning",
+              "Compilers",
+              "Edge AI",
+              "Software Engineering"
+            ],
+            "affiliation": {
+              "@type": "CollegeOrUniversity",
+              "name": "Technical University of Munich"
+            }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://appsolves.dev/#appsolves",
+            "name": "AppSolves",
+            "url": "https://appsolves.dev/",
+            "logo": "https://appsolves.dev/mark.svg",
+            "founder": { "@id": "https://appsolves.dev/#kaan" },
+            "sameAs": ["https://github.com/AppSolves"]
+          }
+        ]
+      }
+    </script>
   </head>
 
-  <body style="background-color: #101116">
+  <body>
+    <noscript
+      ><p>
+        Kaan Gönüldinc / AppSolves. I build software from the inside out.
+        Explore <a href="https://fidan.dev">Fidan</a>,
+        <a href="https://github.com/AppSolves/LanePilot">LanePilot</a> and
+        <a href="https://tagvault.appsolves.dev">TagVault</a>. Contact
+        <a href="mailto:contact@appsolves.dev">contact@appsolves.dev</a>.
+        <a href="/legal/privacy_policy.md">Privacy policy</a> and
+        <a href="/legal/terms_and_conditions.md">Terms and conditions</a>.
+      </p></noscript
+    >
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
